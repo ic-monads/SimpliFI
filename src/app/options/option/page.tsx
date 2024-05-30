@@ -1,12 +1,7 @@
 
 import GenericButton from '@/app/ui/generic-button';
 import prisma from '@/app/lib/prisma';
-
-type Evidence = {
-  id: string;
-  title: string;
-  date: Date;
-}
+import { Evidence } from '@prisma/client';
 
 export default async function Page() {
   let evs: Evidence[] = await prisma.evidence.findMany();
