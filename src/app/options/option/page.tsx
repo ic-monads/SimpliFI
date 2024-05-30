@@ -30,7 +30,7 @@ export default async function Page() {
             <div className="text-lg">{ev.title}</div>
           </div>
         ))}
-      </div> */}
+      </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>
       <div className="w-1/2 mx-auto grid p-4">
