@@ -1,10 +1,9 @@
 
 import GenericButton from '@/app/ui/generic-button';
 import prisma from '@/app/lib/prisma';
-import { Evidence } from '@prisma/client';
 
 export default async function Page() {
-  let evs: Evidence[] = await prisma.evidence.findMany();
+  let evs = await prisma.evidence.findMany();
   
   return (
     <div className="w-full">
@@ -17,7 +16,7 @@ export default async function Page() {
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>
       <div>
-        {evs.map((ev: Evidence) => (
+        {evs.map((ev) => (
           <div key={ev.id}>
             {ev.title} - {ev.date.getDate()}/{ev.date.getMonth()}
           </div>
