@@ -14,10 +14,26 @@ export default async function Page() {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>
-      <div className="mb-10">
+      {/* <div className="mb-10">
         {evs.map((ev) => (
           <div key={ev.id}>
             {ev.title} - {ev.date.getDate()}/{ev.date.getMonth()}
+          </div>
+        ))}
+      </div> */}
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+      </div>
+      <div className="w-1/2 mx-auto grid p-4">
+        <div className="flex items-center bg-white py-4 border-y-2">
+          <div className="flex-1 text-lg font-bold">Date</div>
+          <div className="text-lg font-bold">Title</div>
+        </div>
+        {evs.map((ev) => (
+          <div key={ev.id} className="flex items-center bg-white py-4 border-b-2">
+            <div className="flex-1 text-sm text-gray-500 font-bold">
+              {ev.date.getDate()}/{ev.date.getMonth() + 1}
+            </div>
+            <div className="text-lg">{ev.title}</div>
           </div>
         ))}
       </div>
