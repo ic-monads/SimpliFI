@@ -1,15 +1,11 @@
 
 import GenericButton from '@/app/ui/generic-button';
 import prisma from '@/app/lib/prisma';
-
-async function getEvidence() {
-  const evs = await prisma.evidence.findMany();
-  return evs;
-}
+import { Evidence } from '@prisma/client';
 
 export default async function Page() {
-  let evs = getEvidence();
-  console.log("Evidence", evs);
+  let evs: Evidence[] = await prisma.evidence.findMany();
+  
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -20,7 +16,13 @@ export default async function Page() {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>
-      {/* Pull evidence data from evidence table using Prisma*/}
+      <div>
+        {evs.map((ev: Evidence) => (
+          <div key={ev.id}>
+            {ev.title} - {ev.date.getDate()}/{ev.date.getMonth()}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
