@@ -1,5 +1,5 @@
 import GenericButton from '@/app/ui/generic-button';
-
+import { Card } from '@/app/ui/options/cards';
 
 export default async function Page() {
   return (
@@ -10,6 +10,11 @@ export default async function Page() {
           <GenericButton text='Add Option'></GenericButton>
           <GenericButton text='Generate Report'></GenericButton>
         </div>
+      </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Card id='1'/>
+        <Card id='2'/>
+        <Card id='3'/>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>
