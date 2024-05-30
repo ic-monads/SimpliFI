@@ -16,6 +16,7 @@
     "@prisma/client": "^5.14.0",
     "@vercel/postgres": "^0.8.0",
     "clsx": "^2.1.1",
+    "flowbite-datepicker": "^1.2.6",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"

@@ -15,11 +15,11 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Options', href: '/options', icon: EllipsisHorizontalCircleIcon },
-  {
-    name: 'Tasks',
-    href: '/tasks',
-    icon: RectangleStackIcon,
-  },
+  // {
+  //   name: 'Tasks',
+  //   href: '/tasks',
+  //   icon: RectangleStackIcon,
+  // },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
@@ -34,9 +34,9 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-purple-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-green-50 hover:text-green-600 md:flex-none md:justify-start md:p-2 md:px-3',
               {
-                'bg-sky-100 text-purple-600': pathname === link.href,
+                'bg-green-50 text-green-600': pathname === link.href,
               },
             )}          >
             <LinkIcon className="w-6" />
