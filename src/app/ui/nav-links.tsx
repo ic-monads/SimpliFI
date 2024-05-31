@@ -2,9 +2,7 @@
 
 
 import {
-  EllipsisHorizontalCircleIcon,
-  RectangleStackIcon,
-  Cog6ToothIcon,
+  HomeIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -14,7 +12,7 @@ import clsx from 'clsx';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Options', href: '/options', icon: EllipsisHorizontalCircleIcon },
+  { name: 'My Options', href: '/options', icon: HomeIcon },
   // {
   //   name: 'Tasks',
   //   href: '/tasks',
