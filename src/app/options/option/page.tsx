@@ -1,7 +1,6 @@
 "use client";
 
 import type { Evidence } from '@prisma/client';
-import { useState, useEffect } from 'react';
 import Link from "next/link";
 import useSWR from "swr";
 

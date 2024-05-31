@@ -16,5 +16,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return new Response(result, { status: 200});
+  return new Response(JSON.stringify(result), { status: 200});
 }
