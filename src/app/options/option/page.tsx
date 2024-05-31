@@ -1,6 +1,6 @@
 import GenericButton from '@/app/ui/generic-button';
 import prisma from '@/app/lib/prisma';
-import { Evidence } from '@prisma/client';
+import type { Evidence } from '@prisma/client';
 import Link from "next/link";
 
 export default async function Page() {
