@@ -20,7 +20,7 @@ const links = [
   //   href: '/tasks',
   //   icon: RectangleStackIcon,
   // },
-  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
+  // { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
 export default function NavLinks() {

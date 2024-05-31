@@ -1,7 +1,6 @@
 "use client"; // This is a client-side component
 
 import { useState } from "react";
-import prisma from '@/app/lib/prisma';
 import { useRouter } from "next/navigation";
 
 export default function Page() {

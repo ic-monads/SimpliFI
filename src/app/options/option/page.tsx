@@ -1,10 +1,12 @@
-import GenericButton from '@/app/ui/generic-button';
-import prisma from '@/app/lib/prisma';
-import type { Evidence } from '@prisma/client';
-import Link from "next/link";
+"use client";
 
-export default async function Page() {
-  let evs: Evidence[] = await prisma.evidence.findMany();
+import type { Evidence } from '@prisma/client';
+import { useState, useEffect } from 'react';
+import Link from "next/link";
+import useSWR from "swr";
+
+export default function Page() {
+  const { data } = useSWR("/api/evidence", (url) => fetch(url).then((res) => res.json()).then((data) => data as Evidence[]));
   
   return (
     <div className="w-full">
@@ -22,10 +24,10 @@ export default async function Page() {
           <div className="flex-1 text-lg font-bold">Date</div>
           <div className="text-lg font-bold">Title</div>
         </div>
-        {evs.map((ev) => (
+        {data && data.map((ev) => (
           <div key={ev.id} className="flex items-center bg-white py-4 border-b-2">
             <div className="flex-1 text-sm text-gray-500 font-bold">
-              {ev.date.getDate()}/{ev.date.getMonth() + 1}
+              {new Date(ev.date).getDate()}/{new Date(ev.date).getMonth() + 1}
             </div>
             <div className="text-lg">{ev.title}</div>
           </div>
