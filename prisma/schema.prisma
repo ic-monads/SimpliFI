@@ -14,15 +14,29 @@ model Evidence {
   date      DateTime @default(now())
   title     String
   fileUrl   String   @default("")
+  option    Option  @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  actCode   String
+  parcelId  String
 }
 
 model Action {
   code      String   @id
   name      String
   govUrl    String
+  options   Option[]
 }
 
 model LandParcel {
   id        String   @id
   name      String   
+  options   Option[]
+}
+
+model Option {
+  action      Action      @relation(fields: [actionCode], references: [code])
+  actionCode  String      
+  parcel      LandParcel  @relation(fields: [parcelId], references: [id])
+  parcelId    String      
+  evidences   Evidence[]
+  @@id([actionCode, parcelId])
 }
