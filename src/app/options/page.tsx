@@ -1,7 +1,9 @@
 import { Card } from '@/app/ui/options/cards';
 import { AddOption } from '../ui/options/buttons';
+import { fetchAllOptions } from '../lib/data';
 
 export default async function Page() {
+  const options = await fetchAllOptions();
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between border-red-500">
@@ -9,7 +11,7 @@ export default async function Page() {
         <AddOption />
       </div>
       <div className="pt-2 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Card id='1'/>
+        {options.map((o) => <Card key={`${o.actionCode}${o.parcelId}`} action={o.actionName} parcel={o.parcelName} />)}
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>

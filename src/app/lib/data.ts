@@ -24,3 +24,31 @@ export async function fetchLandParcels() {
 }
 
 /* TODO: Add fetchUserLandParcels */
+
+export async function fetchAllOptions() {
+  try {
+    const options = await prisma.option.findMany({
+      include: {
+        action: {
+          select: {
+            name: true
+          }
+        },
+        parcel: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+    const formatted = options.map(option => ({
+      actionName: option.action.name,
+      parcelName: option.parcel.name,
+      ...option
+    }));
+    return formatted;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch options');
+  }
+}
