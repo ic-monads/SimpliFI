@@ -12,27 +12,39 @@ export default function Page() {
       <div className="flex-row w-1/2 mx-auto items-center justify-between">
         <h2 className={`text-2xl`}>Gunthorpe, Buildings 1</h2>
         <h1 className={`text-bold text-4xl`}>AHL1 - Pollinator Mix</h1>
-        {/* <div className='flex gap-4'>
-          <GenericButton text='Generate Report'></GenericButton>
-        </div> */}
       </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-      </div>
-      <div className="w-1/2 mx-auto grid p-4">
-        <div className="flex items-center bg-white py-4 border-y-2">
-          <div className="flex-1 text-lg font-bold">Date</div>
-          <div className="text-lg font-bold">Title</div>
-        </div>
-        {data && data.map((ev) => (
-          <div key={ev.id} className="flex items-center bg-white py-4 border-b-2">
-            <div className="flex-1 text-sm text-gray-500 font-bold">
-              {new Date(ev.date).getDate()}/{new Date(ev.date).getMonth() + 1}
-            </div>
-            <div className="text-lg">{ev.title}</div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+      <h2 className="text-xl font-semibold">Evidence</h2>
+      <div className="my-5 mx-auto max-w-4xl relative overflow-x-auto">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" className="px-6 py-3">
+                          Title
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Date
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          File
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                {data && data.map((ev) => (
+                  <tr key={ev.id} className="bg-white dark:bg-gray-800">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {ev.title}
+                      </th>
+                      <td className="px-6 py-4">
+                          {new Date(ev.date).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4">
+                          {ev.fileUrl}
+                      </td>
+                  </tr>
+                ))}
+              </tbody>
+          </table>
       </div>
       <Link className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none" href="/options/add-evidence">Add Evidence</Link>
     </div>
