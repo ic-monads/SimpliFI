@@ -7,12 +7,13 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { title, date } = await req.json();
+  const { title, date, fileUrl } = await req.json();
 
   const result = await prisma.evidence.create({
     data: {
-      title: title,
-      date: date,
+      title,
+      date,
+      fileUrl
     },
   });
 
