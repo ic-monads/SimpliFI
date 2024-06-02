@@ -13,10 +13,5 @@ model Evidence {
   id        String   @default(cuid()) @id
   date      DateTime @default(now())
   title     String
-}
-
-model LandParcel {
-  id        String   @default(cuid()) @id
-  name      String
-  rpaId     String
+  fileUrl   String   @default("")
 }
