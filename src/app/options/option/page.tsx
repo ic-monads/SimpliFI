@@ -31,7 +31,7 @@ export default function Page() {
               </thead>
               <tbody>
                 {data && data.map((ev) => (
-                  <tr className="bg-white dark:bg-gray-800">
+                  <tr key={ev.id} className="bg-white dark:bg-gray-800">
                       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {ev.title}
                       </th>
