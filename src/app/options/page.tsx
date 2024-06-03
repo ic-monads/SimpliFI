@@ -10,8 +10,8 @@ export default async function Page() {
         <h1 className="text-2xl font-semibold">My Options</h1>
         <AddOption />
       </div>
-      <div className="pt-2 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {options.map((o) => <Card key={`${o.actionCode}${o.parcelId}`} action={o.actionName} parcel={o.parcelName} />)}
+      <div className="pt-2 grid gap-4 grid-cols-4 sm:grid-cols-2">
+        {options.map((o) => <Card key={`${o.actionCode}${o.parcelId}`} action={o.action} parcel={o.parcel} />)}
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
       </div>

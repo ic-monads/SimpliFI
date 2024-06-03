@@ -31,24 +31,31 @@ export async function fetchAllOptions() {
       include: {
         action: {
           select: {
+            code: true,
             name: true
           }
         },
         parcel: {
           select: {
+            id: true,
             name: true
           }
         }
       }
     });
-    const formatted = options.map(option => ({
-      actionName: option.action.name,
-      parcelName: option.parcel.name,
-      ...option
-    }));
-    return formatted;
+    return options;
   } catch (e) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch options');
   }
 }
+
+// export async function fetchAllEvidence() {
+//   try {
+//     const evidence = await prisma.evidence.findMany();
+//     return evidence;
+//   } catch (e) {
+//     console.error('Database Error:', e);
+//     throw new Error('failed to fetch evidence');
+//   }
+// }
