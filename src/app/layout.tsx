@@ -1,4 +1,4 @@
-import { inter } from "./ui/fonts";
+// import { inter } from "./ui/fonts";
 import "./globals.css";
 import SideNav from "./ui/sidenav";
 
@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className="antialiased">
         <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
           <div className="w-full flex-none md:w-64">
             <SideNav />
