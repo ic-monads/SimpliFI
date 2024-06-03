@@ -1,7 +1,7 @@
 import type { Evidence } from '@prisma/client';
 import { Button } from 'flowbite-react';
 import Link from "next/link";
-import { fetchOptionEvidence } from '@/app/lib/data';
+import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
 
 export default async function Page({
   searchParams,
@@ -11,12 +11,17 @@ export default async function Page({
     parcelId: string;
   };
 }) {
-  const data = await fetchOptionEvidence(searchParams.actCode, searchParams.parcelId);
+  const { actCode, parcelId } = searchParams;
+  const data = await fetchOptionEvidence(actCode, parcelId);
+  const [parcelName, actName] = await Promise.all([
+    fetchParcelName(parcelId),
+    fetchActionName(actCode)
+  ])
   return (
     <div className="w-full">
       <div className="flex-row w-1/2 mx-auto items-center justify-between">
-        <h2 className={`text-2xl`}>Parcel Name</h2>
-        <h1 className={`text-bold text-4xl`}>Action Id & Description</h1>
+        <h2 className={`text-2xl`}>{parcelName}</h2>
+        <h1 className={`text-bold text-4xl`}>{actCode} - {actName}</h1>
       </div>
       <h2 className="text-xl font-semibold">Evidence</h2>
       <div className="my-5 mx-auto max-w-4xl relative overflow-x-auto">

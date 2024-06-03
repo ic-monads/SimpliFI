@@ -69,3 +69,37 @@ export async function fetchOptionEvidence(actCode: string, parcelId: string) {
     throw new Error('failed to fetch evidence');
   }
 }
+
+export async function fetchParcelName(parcelId: string) {
+  try {
+    const name = await prisma.landParcel.findUniqueOrThrow({
+      where: {
+        id: parcelId
+      },
+      select: {
+        name: true
+      }
+    });
+    return name.name;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch parcel name');
+  }
+}
+
+export async function fetchActionName(actCode: string) {
+  try {
+    const name = await prisma.action.findUniqueOrThrow({
+      where: {
+        code: actCode
+      },
+      select: {
+        name: true
+      }
+    });
+    return name.name;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch action name');
+  }
+}
