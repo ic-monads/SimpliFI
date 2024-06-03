@@ -4,13 +4,16 @@ import Link from "next/link";
 import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
-
+import Submit from "@/app/ui/submit";
   
 export default function Form({ actCode, parcelId }: { actCode: string, parcelId: string}) {
   const [error, setError] = useState<string | null>(null);
+  // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
+    // setLoading(true);
+    // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
     if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
       console.log("Attempting file upload");
@@ -27,6 +30,9 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
       await createEvidence(formData);
     } catch (error) {
       setError('Failed to submit form');
+    }
+    finally {
+      // setLoading(false);
     }
   };
 
@@ -62,7 +68,7 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
           }}>
             <button className="btn btn-neutral-content">Cancel</button>
           </Link>
-          <button className="btn btn-primary" type="submit">Submit Evidence</button>
+          <Submit text="Submit Evidence" />
         </div>
       </form>
     </div>

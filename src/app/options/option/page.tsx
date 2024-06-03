@@ -2,6 +2,7 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
 import { deleteEvidence } from '@/app/lib/actions';
+import Submit from '@/app/ui/options/option/submit-error';
 
 export default async function Page({
   searchParams,
@@ -66,7 +67,7 @@ export default async function Page({
                 </td>
                 <td>
                   <form action={deleteEvidence.bind(null, ev.id)}>
-                    <button className="btn btn-sm text-white btn-error">Delete</button>
+                    <Submit />
                   </form>
                 </td>
               </tr>
@@ -83,3 +84,4 @@ export default async function Page({
     </div>
   );
 }
+

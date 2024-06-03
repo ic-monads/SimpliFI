@@ -15,7 +15,7 @@ async function main() {
       },
       {
         code: 'CSAM1',
-        name: 'Assess soil, produce a soil management plan and test soil organic matter',
+        name: 'Soil Assessment and Management Plan',
         govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/csam1-assess-soil-produce-a-soil-management-plan-and-test-soil-organic-matter',
       }
     ],
