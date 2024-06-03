@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
+import { deleteEvidence } from '@/app/lib/actions';
 
 export default async function Page({
   searchParams,
@@ -16,6 +17,7 @@ export default async function Page({
     fetchParcelName(parcelId),
     fetchActionName(actCode)
   ])
+
   return (
     <div className="w-full">
       <div className="flex">
@@ -43,6 +45,9 @@ export default async function Page({
               <th scope="col">
                 File
               </th>
+              <th scope="col">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +60,14 @@ export default async function Page({
                   {new Date(ev.date).toLocaleDateString()}
                 </td>
                 <td>
-                  {ev.fileUrl}
+                  <a className="btn btn-sm btn-content-neutral" href={ev.fileUrl} target="_blank" rel="noreferrer">
+                    View File
+                  </a>
+                </td>
+                <td>
+                  <form action={deleteEvidence.bind(null, ev.id)}>
+                    <button className="btn btn-sm text-white btn-error">Delete</button>
+                  </form>
                 </td>
               </tr>
             ))}

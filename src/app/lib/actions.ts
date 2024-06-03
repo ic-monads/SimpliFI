@@ -57,3 +57,11 @@ export async function createEvidence(formData: FormData) {
   redirect(`/options/option?${params.toString()}`);
 }
 
+export async function deleteEvidence(id: string) {
+  await prisma.evidence.delete({
+    where: {
+      id
+    }
+  });
+  revalidatePath('/options/option');
+}
