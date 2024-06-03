@@ -11,13 +11,13 @@ export default function Form({ actions, parcels }: { actions: Action[], parcels:
           <Label htmlFor="actions" value="Select SFI Action" />
         </div>
         <Select id="actions" name="actionCode" required>
-          {actions.map((a) => <option key={a.code} value={a.code}>{a.name}</option>)}
+          {actions.map((a) => <option key={a.code}>{a.name}</option>)}
         </Select>
         <div className="mb-2 block">
           <Label htmlFor="parcels" value="Select Land Parcel" />
         </div>
         <Select id="parcels" name="parcelId" required>
-          {parcels.map((p) => <option key={p.id} value={p.id}>{`${p.name}(${p.id})`}</option>)}
+          {parcels.map((p) => <option key={p.id}>{`${p.name}(${p.id})`}</option>)}
         </Select>
         <div className="mt-6 flex justify-end gap-4">
           <Link
