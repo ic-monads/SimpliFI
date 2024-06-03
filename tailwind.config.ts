@@ -19,7 +19,18 @@ const config: Config = {
     },
   },
   plugins: [
-    flowbite.plugin()
+    flowbite.plugin(),
+    require("daisyui")
   ],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "green",
+        }
+      }
+    ]
+  }
 };
 export default config;
