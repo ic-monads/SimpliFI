@@ -1,4 +1,4 @@
-import type { Evidence } from '@prisma/client';
+import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import { Button } from 'flowbite-react';
 import Link from "next/link";
 import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
@@ -19,12 +19,18 @@ export default async function Page({
   ])
   return (
     <div className="w-full">
-      <div className="flex-row w-1/2 mx-auto items-center justify-between">
-        <h2 className={`text-2xl`}>{parcelName}</h2>
-        <h1 className={`text-bold text-4xl`}>{actCode} - {actName}</h1>
+      <div className="flex">
+        <Link href="/options">
+          <ArrowLeftIcon className="size-6 ml-auto"/>
+        </Link>
+        <div className="flex-row w-1/2 mx-auto items-center justify-between">
+          <h2 className={`text-2xl`}>{parcelName}</h2>
+          <h1 className={`text-bold text-4xl`}>{actCode} - {actName}</h1>
+        </div>
       </div>
-      <h2 className="text-xl font-semibold">Evidence</h2>
+      
       <div className="my-5 mx-auto max-w-4xl relative overflow-x-auto">
+        <h2 className="text-xl font-semibold">Evidence</h2>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
