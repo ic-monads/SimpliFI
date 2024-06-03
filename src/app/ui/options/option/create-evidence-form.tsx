@@ -11,7 +11,6 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
-    console.log(formData);
     let fileUrl = "";
     if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
       console.log("Attempting file upload");

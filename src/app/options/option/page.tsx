@@ -1,28 +1,35 @@
-"use client";
-
-import type { Evidence } from '@prisma/client';
-import { Button } from 'flowbite-react';
+import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import useSWR from "swr";
+import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: {
-    action: string;
-    parcel: string;
+    actCode: string;
+    parcelId: string;
   };
 }) {
-  const { data } = useSWR("/api/evidence", (url) => fetch(url).then((res) => res.json()).then((data) => data as Evidence[]));
-  
+  const { actCode, parcelId } = searchParams;
+  const data = await fetchOptionEvidence(actCode, parcelId);
+  const [parcelName, actName] = await Promise.all([
+    fetchParcelName(parcelId),
+    fetchActionName(actCode)
+  ])
   return (
     <div className="w-full">
-      <div className="flex-row w-1/2 mx-auto items-center justify-between">
-        <h2 className={`text-2xl`}>Parcel Name</h2>
-        <h1 className={`text-bold text-4xl`}>Action Id & Description</h1>
+      <div className="flex">
+        <Link href="/options">
+          <ArrowLeftIcon className="size-6 ml-auto"/>
+        </Link>
+        <div className="flex-row w-1/2 mx-auto items-center justify-between">
+          <h2 className={`text-2xl`}>{parcelName}</h2>
+          <h1 className={`text-bold text-4xl`}>{actCode} - {actName}</h1>
+        </div>
       </div>
-      <h2 className="text-xl font-semibold">Evidence</h2>
+      
       <div className="my-5 mx-auto max-w-4xl relative overflow-x-auto">
+        <h2 className="text-xl font-semibold">Evidence</h2>
         <table className="table">
           <thead>
             <tr>
