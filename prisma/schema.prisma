@@ -13,8 +13,9 @@ model Evidence {
   id        String   @default(cuid()) @id
   date      DateTime @default(now())
   title     String
+  notes     String   @default("")
   fileUrl   String   @default("")
-  option    Option  @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
   actCode   String
   parcelId  String
 }

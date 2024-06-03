@@ -30,15 +30,17 @@ export async function createOption(formData: FormData) {
 const EvidenceFormSchema = z.object({
   title: z.string(),
   inputDate: z.string(),
+  notes: z.string(),
   fileUrl: z.string(),
   actCode: z.string(),
   parcelId: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, fileUrl, actCode, parcelId } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelId } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
+    notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
     parcelId: formData.get('parcelId')
@@ -47,7 +49,7 @@ export async function createEvidence(formData: FormData) {
 
   await prisma.evidence.create({
     data: {
-      title, date, fileUrl, actCode, parcelId
+      title, date, notes, fileUrl, actCode, parcelId
     }
   });
   revalidatePath('/options/option');
