@@ -20,13 +20,10 @@ export default function Form({ actions, parcels }: { actions: Action[], parcels:
           {parcels.map((p) => <option key={p.id}>{`${p.name}(${p.id})`}</option>)}
         </Select>
         <div className="mt-6 flex justify-end gap-4">
-          <Link
-            href="/options"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-          >
-            Cancel
+          <Link href="/options">
+            <Button color={"light"}>Cancel</Button>
           </Link>
-          <Button type="submit">Create Option</Button>
+          <Button color={"success"} type="submit">Create Option</Button>
         </div>
       </div>
     </form>

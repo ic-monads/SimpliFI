@@ -4,6 +4,8 @@ import Link from "next/link";
 import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
+import { Button } from "flowbite-react";
+
   
 export default function Form({ actCode, parcelId }: { actCode: string, parcelId: string}) {
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +57,15 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
                   <label htmlFor="parcelId" className="block mb-2 text-sm font-medium text-gray-900">Parcel Id</label>
                   <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="parcelId" name="parcelId"type="text" value={parcelId} readOnly/>
               </div>
-              <button className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none" type="submit">Submit</button>
+              <div className="mt-6 flex justify-end gap-4">
+                <Link href={{
+                  pathname: "/options/option",
+                  query: { action: actCode, parcel: parcelId }
+                }}>
+                  <Button color={"light"}>Cancel</Button>
+                </Link>
+                <Button color={"success"} type="submit">Submit Evidence</Button>
+              </div>
             </form>
         </div>
   )
