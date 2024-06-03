@@ -22,13 +22,14 @@ export default async function Page({
         <Link href="/options">
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link>
-        <div className="flex-row w-1/2 mx-auto items-center justify-between">
-          <h2 className={`text-2xl`}>{parcelName}</h2>
-          <h1 className={`text-bold text-4xl`}>{actCode} - {actName}</h1>
+        <div className="ml-5 flex-row w-1/2 items-center justify-between">
+          <h1 className={`font-semibold text-2xl`}>{actCode} - {actName}</h1>
+          <h2 className={`text-xl`}>Showing evidencing for {parcelName}</h2>
+          
         </div>
       </div>
       
-      <div className="my-5 mx-auto max-w-4xl relative overflow-x-auto">
+      <div className="my-5 max-w-4xl relative overflow-x-auto">
         <h2 className="text-xl font-semibold">Evidence</h2>
         <table className="table">
           <thead>

@@ -12,7 +12,7 @@ export default async function Page() {
           <button className="btn btn-primary">Add Option</button>
         </Link>
       </div>
-      <div className="pt-2 grid gap-4 grid-cols-4 sm:grid-cols-2">
+      <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {options.map((o) => <Card key={`${o.actionCode}${o.parcelId}`} action={o.action} parcel={o.parcel} />)}
       </div>
     </div>

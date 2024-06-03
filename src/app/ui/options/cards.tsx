@@ -10,7 +10,7 @@ export function Card({action, parcel}: {action: {code: string, name: string}, pa
       >
         <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
           <div className="flex p-4">
-            <h3 className="text-sm font-medium">{action.name}</h3>
+            <h3 className="text-sm font-medium">{action.code} - {action.name}</h3>
           </div>
           <p
             className={`

@@ -58,7 +58,7 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
         <div className="mt-6 flex justify-end gap-4">
           <Link href={{
             pathname: "/options/option",
-            query: { action: actCode, parcel: parcelId }
+            query: { actCode, parcelId }
           }}>
             <button className="btn btn-neutral-content">Cancel</button>
           </Link>
