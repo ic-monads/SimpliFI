@@ -51,6 +51,9 @@ export async function createEvidence(formData: FormData) {
     }
   });
   revalidatePath('/options/option');
-  redirect('/options/option');
+  const params = new URLSearchParams();
+  params.set('actCode', actCode);
+  params.set('parcelId', parcelId);
+  redirect(`/options/option?${params.toString()}`);
 }
 

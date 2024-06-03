@@ -1,20 +1,17 @@
-"use client";
-
 import type { Evidence } from '@prisma/client';
 import { Button } from 'flowbite-react';
 import Link from "next/link";
-import useSWR from "swr";
+import { fetchOptionEvidence } from '@/app/lib/data';
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: {
-    action: string;
-    parcel: string;
+    actCode: string;
+    parcelId: string;
   };
 }) {
-  const { data } = useSWR("/api/evidence", (url) => fetch(url).then((res) => res.json()).then((data) => data as Evidence[]));
-  
+  const data = await fetchOptionEvidence(searchParams.actCode, searchParams.parcelId);
   return (
     <div className="w-full">
       <div className="flex-row w-1/2 mx-auto items-center justify-between">

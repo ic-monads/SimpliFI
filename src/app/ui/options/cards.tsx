@@ -5,7 +5,7 @@ export function Card({action, parcel}: {action: {code: string, name: string}, pa
     <Link 
       href={{
         pathname: `/options/option`,
-        query: {actionCode: action.code, parcelId: parcel.id}}
+        query: {actCode: action.code, parcelId: parcel.id}}
       }
       >
         <div className="rounded-xl bg-gray-50 p-2 shadow-sm">

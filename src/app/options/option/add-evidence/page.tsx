@@ -11,13 +11,13 @@ export default function Page({
     searchParams,
   }: {
     searchParams: {
-      actionCode: string;
+      actCode: string;
       parcelId: string;
     };
   }) {
     return (
         <main>
-            <Form actCode={searchParams.actionCode} parcelId={searchParams.parcelId} />
+            <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} />
         </main>
     )
   }
