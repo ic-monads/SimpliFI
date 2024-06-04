@@ -61,10 +61,10 @@ export async function GET() {
       headless: true,
     });
   } 
-  const page = await browser!.newPage();
+  const page = await browser?.newPage();
   const optionTexts = await Promise.all(options.map(option => htmlForOption(option)));
 
-  await page.setContent(`
+  await page?.setContent(`
     <html>
       <head>
         <style>
@@ -80,7 +80,7 @@ export async function GET() {
     </html>
   `, { waitUntil: "networkidle0" });
 
-  const buffer = await page.pdf({ format: "a4" });
+  const buffer = await page?.pdf({ format: "a4" });
 
   // for (var option of options) {
   //   let optionPdf = await pdfForOption(option);
