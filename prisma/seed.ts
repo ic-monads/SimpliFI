@@ -1,6 +1,12 @@
 import prisma from "../src/app/lib/prisma";
 
 async function main() {
+  await prisma.task.deleteMany({});
+  await prisma.evidence.deleteMany({});
+  await prisma.option.deleteMany({});
+  await prisma.landParcel.deleteMany({});
+  await prisma.action.deleteMany({});
+
   const actions = await prisma.action.createMany({
     data: [
       {
