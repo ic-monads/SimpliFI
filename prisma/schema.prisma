@@ -18,6 +18,8 @@ model Evidence {
   option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
   actCode   String
   parcelId  String
+  task      Task?    @relation(fields: [taskId], references: [id])
+  taskId    String?
 }
 
 model Action {
@@ -42,6 +44,7 @@ model Task {
   option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
   actCode     String
   parcelId    String
+  evidences   Evidence[] 
 }
 
 model Option {

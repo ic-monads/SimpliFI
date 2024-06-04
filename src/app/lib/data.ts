@@ -67,6 +67,9 @@ export async function fetchTask(id: string) {
       where: {
         id: id
       },
+      include: {
+        evidences: true
+      }
     });
     return task;
   } catch (e) {
