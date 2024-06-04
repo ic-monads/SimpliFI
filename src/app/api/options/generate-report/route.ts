@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import prisma from "@/app/lib/prisma";
 import { Option } from "@prisma/client";
+import Chromium from "@sparticuz/chromium";
 
 async function htmlForContents(options: Option[]) {
   return (`
@@ -43,7 +44,13 @@ async function htmlForOption(option: Option) {
 export async function GET() {
   const options = await prisma.option.findMany();
 
-  const browser = await puppeteer.launch();
+  Chromium.setGraphicsMode = false;
+  const browser = await puppeteer.launch({
+    args: Chromium.args,
+    defaultViewport: Chromium.defaultViewport,
+    executablePath: await Chromium.executablePath(),
+    headless: Chromium.headless
+  });
   const page = await browser.newPage();
   const optionTexts = await Promise.all(options.map(option => htmlForOption(option)));
 
