@@ -7,11 +7,11 @@ export default async function Page({
   searchParams,
 }: {
   searchParams: {
-    taskId: string;
+    id: string;
   };
 }) {
-  const { taskId } = searchParams;
-  const taskDetails = await fetchTaskDetails(taskId);
+  const { id } = searchParams;
+  const taskDetails = await fetchTaskDetails(id);
   const [parcelName, actName] = await Promise.all([
     fetchParcelName(taskDetails.parcelId),
     fetchActionName(taskDetails.actCode)
