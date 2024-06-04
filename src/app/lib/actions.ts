@@ -86,3 +86,35 @@ export async function updateTaskCompleted(id: string, completed: boolean) {
   revalidatePath('/tasks/task');
   return updatedTask;
 }
+
+const TaskFormSchema = z.object({
+  title: z.string(),
+  deadline: z.string(),
+  description: z.string(),
+  actCode: z.string(),
+  parcelId: z.string(),
+});
+
+export async function createTask(formData: FormData) {
+  const { title, deadline, description, actCode, parcelId } = 
+    TaskFormSchema.parse({
+      title: formData.get('title'),
+      deadline: formData.get('deadline'),
+      description: formData.get('description'),
+      actCode: formData.get('actCode'),
+      parcelId: formData.get('parcelId'),
+    });
+
+  await prisma.task.create({
+    data: {
+      title: title,
+      deadline: new Date(deadline),
+      description: description,
+      actCode: actCode,
+      parcelId: parcelId,
+    }
+  });
+
+  revalidatePath('/tasks');
+  redirect('/tasks');
+}
