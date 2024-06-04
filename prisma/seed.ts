@@ -82,7 +82,22 @@ async function main() {
                       remove the cut vegetation, where possible, to help reduce the risk of it smothering the flower species and limit weeds - if it's impractical to do this, you can finely chop them and spread them as thinly as possible`,
         actCode: "AHW1",
         parcelId: "AB123456"
-      }
+      },
+      {
+        deadline: new Date("2024-12-01"),
+        title: "Second Cut",
+        description: `Cutting emerging flowers and weeds regularly during the first 12 months after sowing will help to control weeds, so the sown plants can establish. Cut at a height which removes the top growth of any weeds, avoids dislodging the roots of the seedlings and prevents harm to wildlife. If you're cutting the margin, block or strip:`,
+        actCode: "AHW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(),
+        title: "Important Soil Stuff",
+        description: `The soil must be good. If the soil is not good, that is very bad. You must make the soil good. Do not make the soil bad. Make the soil good.`,
+        actCode: "CSAM1",
+        parcelId: "PG987654"
+      },
+
     ]
   })
 }
