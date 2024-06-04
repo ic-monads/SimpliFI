@@ -1,8 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
-import { deleteEvidence } from '@/app/lib/actions';
-import Submit from '@/app/ui/options/option/submit-error';
+import Evidences from '@/app/ui/evidences';
 
 export default async function Page({
   searchParams,
@@ -34,52 +33,7 @@ export default async function Page({
       
       <div className="my-5 max-w-4xl relative overflow-x-auto">
         <h2 className="text-xl font-semibold">Evidence</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                Title
-              </th>
-              <th scope="col">
-                Date
-              </th>
-              <th scope="col">
-                Notes
-              </th>
-              <th scope="col">
-                File
-              </th>
-              <th scope="col">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data && data.map((ev) => (
-              <tr key={ev.id}>
-                <th scope="row">
-                  {ev.title}
-                </th>
-                <td>
-                  {new Date(ev.date).toLocaleDateString()}
-                </td>
-                <td>
-                  {ev.notes}
-                </td>
-                <td>
-                  <a className="btn btn-sm btn-content-neutral" href={ev.fileUrl} target="_blank" rel="noreferrer">
-                    View File
-                  </a>
-                </td>
-                <td>
-                  <form action={deleteEvidence.bind(null, ev.id)}>
-                    <Submit />
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Evidences evidences={data} />
       </div>
       <Link href={{
         pathname: "/options/option/add-evidence", 
