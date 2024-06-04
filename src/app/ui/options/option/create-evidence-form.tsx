@@ -5,6 +5,8 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
+import { fromBuffer } from "pdf2pic"; 
+import { buffer } from "stream/consumers";
   
 export default function Form({ actCode, parcelId, taskId }: { actCode: string, parcelId: string, taskId?: string}) {
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +29,7 @@ export default function Form({ actCode, parcelId, taskId }: { actCode: string, p
         access: "public",
         handleUploadUrl: "/api/evidence/handle-upload",
       });
+      
       fileUrl = blob.url;
       formData.append('fileUrl', fileUrl)
     }
