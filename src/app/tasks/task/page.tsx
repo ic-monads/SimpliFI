@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTaskDetails, fetchParcelName, fetchActionName } from '@/app/lib/data';
+import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
 import Submit from '@/app/ui/options/option/submit-error';
 
 export default async function Page({
@@ -11,10 +11,10 @@ export default async function Page({
   };
 }) {
   const { id } = searchParams;
-  const taskDetails = await fetchTaskDetails(id);
+  const task = await fetchTask(id);
   const [parcelName, actName] = await Promise.all([
-    fetchParcelName(taskDetails.parcelId),
-    fetchActionName(taskDetails.actCode)
+    fetchParcelName(task.parcelId),
+    fetchActionName(task.actCode)
   ])
 
   return (
@@ -24,12 +24,12 @@ export default async function Page({
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link>
         <div className="ml-5 flex-row w-1/2 items-center justify-between">
-          <h1 className={`font-semibold text-2xl`}>{taskDetails.title}</h1>
+          <h1 className={`font-semibold text-2xl`}>{task.title}</h1>
           <h2 className={`text-xl`}>{actName} - {parcelName}</h2>
         </div>
       </div>
       <p>
-        {taskDetails.description}
+        {task.description}
       </p>
       
       {/* <div className="my-5 max-w-4xl relative overflow-x-auto">
