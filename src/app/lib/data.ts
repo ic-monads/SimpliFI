@@ -61,6 +61,20 @@ export async function fetchAllTasks() {
   }
 }
 
+export async function fetchTaskDetails(id: string) {
+  try {
+    const details = await prisma.task.findUniqueOrThrow({
+      where: {
+        id: id
+      },
+    });
+    return details;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch task details');
+  }
+}
+
 export async function fetchOptionEvidence(actCode: string, parcelId: string) {
   try {
     const evidence = await prisma.evidence.findMany(({
