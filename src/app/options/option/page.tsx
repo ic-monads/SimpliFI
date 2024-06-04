@@ -44,6 +44,9 @@ export default async function Page({
                 Date
               </th>
               <th scope="col">
+                Notes
+              </th>
+              <th scope="col">
                 File
               </th>
               <th scope="col">
@@ -59,6 +62,9 @@ export default async function Page({
                 </th>
                 <td>
                   {new Date(ev.date).toLocaleDateString()}
+                </td>
+                <td>
+                  {ev.notes}
                 </td>
                 <td>
                   <a className="btn btn-sm btn-content-neutral" href={ev.fileUrl} target="_blank" rel="noreferrer">

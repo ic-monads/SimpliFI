@@ -4,7 +4,7 @@ import { z } from 'zod';
 import prisma from './prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { upload } from '@vercel/blob/client';
+import { del } from '@vercel/blob';
 
 const OptionFormSchema = z.object({
   actionCode: z.string(),
@@ -30,15 +30,17 @@ export async function createOption(formData: FormData) {
 const EvidenceFormSchema = z.object({
   title: z.string(),
   inputDate: z.string(),
+  notes: z.string(),
   fileUrl: z.string(),
   actCode: z.string(),
   parcelId: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, fileUrl, actCode, parcelId } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelId } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
+    notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
     parcelId: formData.get('parcelId')
@@ -47,7 +49,7 @@ export async function createEvidence(formData: FormData) {
 
   await prisma.evidence.create({
     data: {
-      title, date, fileUrl, actCode, parcelId
+      title, date, notes, fileUrl, actCode, parcelId
     }
   });
   revalidatePath('/options/option');
@@ -58,6 +60,17 @@ export async function createEvidence(formData: FormData) {
 }
 
 export async function deleteEvidence(id: string) {
+  const url = await prisma.evidence.findUnique({
+    where: {
+      id: id
+    },
+    select: {
+      fileUrl: true,
+    }
+  });
+  if (url != null) {
+    await del(url.fileUrl);
+  }
   await prisma.evidence.delete({
     where: {
       id

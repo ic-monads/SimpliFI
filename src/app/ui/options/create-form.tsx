@@ -1,6 +1,5 @@
 import type { Action, LandParcel } from '@prisma/client';
 import Link from 'next/link';
-import { Button, Label, Select } from "flowbite-react";
 import { createOption } from '@/app/lib/actions';
 import Submit from '@/app/ui/submit';
 
