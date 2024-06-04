@@ -1,10 +1,10 @@
-'use client';
+"use server";
 
 import type { Evidence } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
 
-export default function Evidences(props: { evidences: Evidence[] }) {
+export default async function Evidences(props: { evidences: Evidence[] }) {
   const evidences = props.evidences;
 
   return(
@@ -34,7 +34,7 @@ export default function Evidences(props: { evidences: Evidence[] }) {
             <th scope="row">
               {evidence.title}
             </th>
-            <td>
+            <td >
               {new Date(evidence.date).toLocaleDateString()}
             </td>
             <td>
