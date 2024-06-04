@@ -3,6 +3,7 @@ import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
+import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 
 export default async function Page({
   searchParams,
@@ -25,7 +26,10 @@ export default async function Page({
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
         <div>
-          <h1 className="font-bold text-3xl mr-3">{task.title}</h1>
+          <div className="flex items-center">
+            <h1 className="font-bold text-3xl mr-3">{task.title}</h1>
+            <StatusBadge task={task} />
+          </div>
           <h2 className="">{actName} · {parcelName}</h2>
         </div>
         <CompleteButton task={task} />
@@ -36,7 +40,7 @@ export default async function Page({
       </p>
       
       <div className="my-5">
-        <h2 className="text-xl font-semibold">Task Evidence</h2>
+        <h2 className="text-xl font-semibold">Evidence</h2>
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
