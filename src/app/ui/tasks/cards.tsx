@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-export function Card({ title, id, action, parcel }: { 
+export function Card({ title, id, actCode, parcelId }: { 
     title: string,
     id: string
-    action: { code: string, name: string }, 
-    parcel: { name: string, id: string } 
+    actCode: string, 
+    parcelId: string
 }) {
     return (
         <Link
@@ -20,10 +20,7 @@ export function Card({ title, id, action, parcel }: {
                 </div>
                 <p
                     className={`truncate rounded-xl bg-white px-4 py-2 text-md`}>
-                    {parcel.name}, {action.name}
-                </p>
-                <p>
-                    {action.code}
+                    {parcelId}, {actCode}
                 </p>
             </div>
         </Link>
