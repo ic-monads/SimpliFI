@@ -20,16 +20,17 @@ export default async function Page({
 
   return (
     <div className="w-full">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3">
         {/* <Link href="/tasks">
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
         <div>
-          <h1 className={`font-semibold text-2xl`}>{task.title}</h1>
-          <h2 className={`text-xl`}>{actName} - {parcelName}</h2>
+          <h1 className="font-bold text-3xl mr-3">{task.title}</h1>
+          <h2 className="">{actName} · {parcelName}</h2>
         </div>
         <CompleteButton task={task} />
       </div>
+      <h2 className="text-xl font-semibold">Description</h2>
       <p>
         {task.description}
       </p>
