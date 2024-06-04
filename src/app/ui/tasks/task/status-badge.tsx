@@ -6,7 +6,7 @@ export async function StatusBadge({ task }: { task: Task }) {
   var status, badgeClass;
   if (task.completed) {
     status = "Completed";
-    badgeClass = "badge-success";
+    badgeClass = "badge-success text-white";
   } else {
     status = "Pending";
     badgeClass = "badge-warning";
