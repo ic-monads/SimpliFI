@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer-core";
 import prisma from "@/app/lib/prisma";
 import { Option } from "@prisma/client";
+import { Browser } from "puppeteer-core";
 const chromium = require("@sparticuz/chromium");
 
 async function htmlForContents(options: Option[]) {
@@ -44,15 +44,24 @@ async function htmlForOption(option: Option) {
 export async function GET() {
   const options = await prisma.option.findMany();
 
+
+
   chromium.setGraphicsMode = false;
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-  });
-  const page = await browser.newPage();
+  let browser: Browser | undefined | null;
+  if (process.env.NODE_ENV !== "development") {
+    const browser = await require("puppeteer-core").launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    });
+  } else {
+    browser = await require("puppeteer").launch({
+      headless: true,
+    });
+  } 
+  const page = await browser!.newPage();
   const optionTexts = await Promise.all(options.map(option => htmlForOption(option)));
 
   await page.setContent(`
