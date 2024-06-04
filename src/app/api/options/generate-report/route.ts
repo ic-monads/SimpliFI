@@ -47,21 +47,17 @@ export async function GET() {
 
 
   chromium.setGraphicsMode = false;
-  let browser: Browser | undefined | null;
-  if (process.env.NODE_ENV !== "development") {
-    const browser = await require("puppeteer-core").launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
-  } else {
-    browser = await require("puppeteer").launch({
-      headless: true,
-    });
-  } 
-  const page = await browser?.newPage();
+  const browser: Browser = process.env.NODE_ENV !== "development" ? await require("puppeteer-core").launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  }) : await require("puppeteer").launch({
+    headless: true,
+  });
+  
+  const page = await browser.newPage();
   const optionTexts = await Promise.all(options.map(option => htmlForOption(option)));
 
   await page?.setContent(`
@@ -80,7 +76,7 @@ export async function GET() {
     </html>
   `, { waitUntil: "networkidle0" });
 
-  const buffer = await page?.pdf({ format: "a4" });
+  const buffer = await page.pdf({ format: "a4" });
 
   // for (var option of options) {
   //   let optionPdf = await pdfForOption(option);
