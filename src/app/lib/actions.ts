@@ -33,23 +33,25 @@ const EvidenceFormSchema = z.object({
   notes: z.string(),
   fileUrl: z.string(),
   actCode: z.string(),
-  parcelId: z.string()
+  parcelId: z.string(),
+  taskId: z.string().nullable()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, notes, fileUrl, actCode, parcelId } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
     notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
-    parcelId: formData.get('parcelId')
+    parcelId: formData.get('parcelId'),
+    taskId: formData.get('taskId')
   });
   let date = new Date(inputDate);
 
   await prisma.evidence.create({
     data: {
-      title, date, notes, fileUrl, actCode, parcelId
+      title, date, notes, fileUrl, actCode, parcelId, taskId
     }
   });
   revalidatePath('/options/option');
@@ -77,4 +79,10 @@ export async function deleteEvidence(id: string) {
     }
   });
   revalidatePath('/options/option');
+}
+
+export async function updateTaskCompleted(id: string, completed: boolean) {
+  const updatedTask = await prisma.task.update({ where: { id : id }, data: { completed: completed }});
+  revalidatePath('/tasks/task');
+  return updatedTask;
 }

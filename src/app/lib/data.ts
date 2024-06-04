@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import type { Action, LandParcel, Option, Evidence } from "@prisma/client";
+import type { Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
 
 export async function fetchAllActions() {
   try {
@@ -48,6 +48,33 @@ export async function fetchAllOptions() {
   } catch (e) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch options');
+  }
+}
+
+export async function fetchAllTasks() {
+  try {
+    const tasks = await prisma.task.findMany();
+    return tasks;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch tasks');
+  }
+}
+
+export async function fetchTask(id: string) {
+  try {
+    const task = await prisma.task.findUniqueOrThrow({
+      where: {
+        id: id
+      },
+      include: {
+        evidences: true
+      }
+    });
+    return task;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch task');
   }
 }
 

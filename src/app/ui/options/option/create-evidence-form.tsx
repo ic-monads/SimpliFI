@@ -6,7 +6,7 @@ import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
   
-export default function Form({ actCode, parcelId }: { actCode: string, parcelId: string}) {
+export default function Form({ actCode, parcelId, taskId }: { actCode: string, parcelId: string, taskId?: string}) {
   const [error, setError] = useState<string | null>(null);
   // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -14,6 +14,9 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
   const handleSubmit = async (formData: FormData) => {
     formData.append('actCode', actCode);
     formData.append('parcelId', parcelId);
+    if (taskId) {
+      formData.append('taskId', taskId)
+    }
     // setLoading(true);
     // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
