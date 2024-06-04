@@ -14,7 +14,7 @@ export function CompleteButton({ task }: { task: Task }) {
 
   return(
     <form action={handleClick}>
-      <button className={`btn btn-primary`} type="submit">
+      <button className={`btn ${completed ? "" : "btn-primary"}`} type="submit">
         Mark as {completed ? "incomplete" : "complete"}
       </button>
     </form>
