@@ -44,7 +44,7 @@ export default async function Page({
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
-        pathname: "/options/option/add-evidence", 
+        pathname: "/evidence/add", 
         query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id }
       }}>
           <button className="btn btn-primary">Add Evidence</button>

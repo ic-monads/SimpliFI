@@ -36,7 +36,7 @@ export default async function Page({
         <Evidences evidences={data} />
       </div>
       <Link href={{
-        pathname: "/options/option/add-evidence", 
+        pathname: "/evidence/add", 
         query: searchParams
       }}>
           <button className="btn btn-primary">Add Evidence</button>
