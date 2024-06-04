@@ -9,11 +9,12 @@ export default function Page({
     searchParams: {
       actCode: string;
       parcelId: string;
+      taskId?: string;
     };
   }) {
     return (
         <main>
-            <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} />
+            <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} taskId={searchParams.taskId} />
         </main>
     )
   }
