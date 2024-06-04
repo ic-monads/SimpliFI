@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
-import Submit from '@/app/ui/options/option/submit-error';
+import Evidences from '@/app/ui/evidences';
 
 export default async function Page({
   searchParams,
@@ -32,49 +32,10 @@ export default async function Page({
         {task.description}
       </p>
       
-      {/* <div className="my-5 max-w-4xl relative overflow-x-auto">
+      <div className="my-5 max-w-4xl relative overflow-x-auto">
         <h2 className="text-xl font-semibold">Task Evidence</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                Title
-              </th>
-              <th scope="col">
-                Date
-              </th>
-              <th scope="col">
-                File
-              </th>
-              <th scope="col">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data && data.map((ev) => (
-              <tr key={ev.id}>
-                <th scope="row">
-                  {ev.title}
-                </th>
-                <td>
-                  {new Date(ev.date).toLocaleDateString()}
-                </td>
-                <td>
-                  <a className="btn btn-sm btn-content-neutral" href={ev.fileUrl} target="_blank" rel="noreferrer">
-                    View File
-                  </a>
-                </td>
-                <td>
-                  <form action={deleteEvidence.bind(null, ev.id)}>
-                    <Submit />
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
+        <Evidences evidences={task.evidences} />
+      </div>
       <Link href={{
         pathname: "/options/option/add-evidence", 
         query: searchParams
