@@ -20,7 +20,7 @@ export default async function Page({
   return (
     <div className="w-full">
       <div className="flex">
-        <Link href="/options">
+        <Link href="/tasks">
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link>
         <div className="ml-5 flex-row w-1/2 items-center justify-between">
