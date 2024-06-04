@@ -4,7 +4,7 @@ import { z } from 'zod';
 import prisma from './prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { upload } from '@vercel/blob/client';
+import { del } from '@vercel/blob';
 
 const OptionFormSchema = z.object({
   actionCode: z.string(),
@@ -60,6 +60,17 @@ export async function createEvidence(formData: FormData) {
 }
 
 export async function deleteEvidence(id: string) {
+  const url = await prisma.evidence.findUnique({
+    where: {
+      id: id
+    },
+    select: {
+      fileUrl: true,
+    }
+  });
+  if (url != null) {
+    await del(url.fileUrl);
+  }
   await prisma.evidence.delete({
     where: {
       id

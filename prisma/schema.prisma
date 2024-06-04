@@ -14,7 +14,7 @@ model Evidence {
   date      DateTime @default(now())
   title     String
   notes     String   @default("")
-  fileUrl   String   @default("")
+  fileUrl   String
   option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
   actCode   String
   parcelId  String
@@ -33,11 +33,23 @@ model LandParcel {
   options   Option[]
 }
 
+model Task {
+  id          String    @default(cuid()) @id
+  deadline    DateTime
+  title       String
+  description String
+  completed   Boolean   @default(false)
+  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  actCode     String
+  parcelId    String
+}
+
 model Option {
   action      Action      @relation(fields: [actionCode], references: [code])
   actionCode  String      
   parcel      LandParcel  @relation(fields: [parcelId], references: [id])
   parcelId    String      
   evidences   Evidence[]
+  tasks       Task[]
   @@id([actionCode, parcelId])
 }
