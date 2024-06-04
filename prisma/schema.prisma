@@ -33,14 +33,14 @@ model LandParcel {
 }
 
 model Task {
-  id        String   @default(cuid()) @id
-  deadline  DateTime @default(now())
-  title     String
+  id          String    @default(cuid()) @id
+  deadline    DateTime
+  title       String
   description String
-  status    String
-  option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
-  actCode   String
-  parcelId  String
+  completed   Boolean   @default(false)
+  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  actCode     String
+  parcelId    String
 }
 
 model Option {
