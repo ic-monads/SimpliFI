@@ -12,6 +12,8 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
+    formData.append('actCode', actCode);
+    formData.append('parcelId', parcelId);
     // setLoading(true);
     // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
@@ -39,6 +41,7 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
   return (
     <div className="mx-auto">
             <h1 className="font-semibold text-xl mb-2">Add Evidence</h1>
+            <p className="font-semibold mb-2">For Option: {actCode} on {parcelId}</p>
             { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
             <form className="max-w-sm" action={handleSubmit}>
               <div className="mb-5">
@@ -56,14 +59,6 @@ export default function Form({ actCode, parcelId }: { actCode: string, parcelId:
               <div className="mb-5">
                   <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900">File</label>
                   <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" ref={fileInputRef} id="file" name="file" required />
-              </div>
-              <div className="mb-5">
-                  <label htmlFor="actCode" className="block mb-2 text-sm font-medium text-gray-900">Action Code</label>
-                  <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="actCode" name="actCode" type="text" value={actCode} readOnly/>
-              </div>
-              <div className="mb-5">
-                  <label htmlFor="parcelId" className="block mb-2 text-sm font-medium text-gray-900">Parcel Id</label>
-                  <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="parcelId" name="parcelId"type="text" value={parcelId} readOnly/>
               </div>
               <div className="mt-6 flex justify-end gap-4">
                 <Link href={{
