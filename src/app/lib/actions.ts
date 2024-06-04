@@ -80,3 +80,8 @@ export async function deleteEvidence(id: string) {
   });
   revalidatePath('/options/option');
 }
+
+export async function updateTaskCompleted(id: string, completed: boolean) {
+  const updatedTask = await prisma.task.update({ where: { id : id }, data: { completed: completed }});
+  return updatedTask;
+}

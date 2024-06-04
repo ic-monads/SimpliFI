@@ -2,6 +2,7 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidences';
+import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 
 export default async function Page({
   searchParams,
@@ -19,20 +20,21 @@ export default async function Page({
 
   return (
     <div className="w-full">
-      <div className="flex">
-        <Link href="/tasks">
+      <div className="flex justify-between">
+        {/* <Link href="/tasks">
           <ArrowLeftIcon className="size-6 ml-auto"/>
-        </Link>
-        <div className="ml-5 flex-row w-1/2 items-center justify-between">
+        </Link> */}
+        <div>
           <h1 className={`font-semibold text-2xl`}>{task.title}</h1>
           <h2 className={`text-xl`}>{actName} - {parcelName}</h2>
         </div>
+        <CompleteButton task={task} />
       </div>
       <p>
         {task.description}
       </p>
       
-      <div className="my-5 max-w-4xl relative overflow-x-auto">
+      <div className="my-5">
         <h2 className="text-xl font-semibold">Task Evidence</h2>
         <Evidences evidences={task.evidences} />
       </div>
