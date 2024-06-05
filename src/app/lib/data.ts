@@ -68,7 +68,8 @@ export async function fetchTask(id: string) {
         id: id
       },
       include: {
-        evidences: true
+        evidences: true,
+        requiredEvidences: true
       }
     });
     return task;
@@ -128,5 +129,19 @@ export async function fetchActionName(actCode: string) {
   } catch (e) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch action name');
+  }
+}
+
+export async function fetchSingleRequiredEvidence(reqEvId: string) {
+  try {
+    const req = await prisma.requiredEvidence.findUniqueOrThrow({
+      where: {
+        id: reqEvId
+      }
+    });
+    return req;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch required evidence');
   }
 }

@@ -10,11 +10,13 @@ export default function Page({
       actCode: string;
       parcelId: string;
       taskId?: string;
+      reqEvId?: string
+      evTitle?: string;
     };
   }) {
     return (
         <main>
-            <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} taskId={searchParams.taskId} />
+            <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} taskId={searchParams.taskId} reqEvId={searchParams.reqEvId} evTitle={searchParams.evTitle} />
         </main>
     )
   }

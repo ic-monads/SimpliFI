@@ -5,19 +5,21 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
-import { fromBuffer } from "pdf2pic"; 
-import { buffer } from "stream/consumers";
+import { fetchSingleRequiredEvidence } from "@/app/lib/data";
   
-export default function Form({ actCode, parcelId, taskId }: { actCode: string, parcelId: string, taskId?: string}) {
+export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string }) {
   const [error, setError] = useState<string | null>(null);
   // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  
   const handleSubmit = async (formData: FormData) => {
     formData.append('actCode', actCode);
     formData.append('parcelId', parcelId);
     if (taskId) {
       formData.append('taskId', taskId)
+    }
+    if (reqEvId) {
+      formData.append('reqEvId', reqEvId)
     }
     // setLoading(true);
     // console.log(`Loading set to ${loading}`);
@@ -53,7 +55,7 @@ export default function Form({ actCode, parcelId, taskId }: { actCode: string, p
               <div className="label">
                 <label htmlFor="title" className="label-text">Title</label>
               </div>
-              <input type="text" id="title" name="title" className="input input-bordered w-full" required />
+              <input type="text" id="title" name="title" defaultValue={evTitle} className="input input-bordered w-full" required />
               <div className="label">
                 <label htmlFor="date" className="label-text">Date</label>
               </div>
