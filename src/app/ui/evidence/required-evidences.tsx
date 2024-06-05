@@ -39,7 +39,7 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
                 {req.evId == null ? 
                 <Link href={{
                   pathname: "/evidence/add", 
-                  query: { actCode: task.actCode, parcelId: task.parcelId, taskId: task.id, reqEvId: req.id, evTitle: req.title }
+                  query: { actCode: task.actCode, parcelId: task.parcelId, taskId: task.id, reqEvId: req.id, evTitle: req.title, fromTask: true }
                 }}>
                     <button className="btn btn-primary">Add Evidence</button>
                 </Link>

@@ -6,8 +6,9 @@ import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
   
-export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string }) {
+export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle, fromTask }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string, fromTask: string }) {
   const [error, setError] = useState<string | null>(null);
+
   // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -15,11 +16,12 @@ export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle }: { 
     formData.append('actCode', actCode);
     formData.append('parcelId', parcelId);
     if (taskId) {
-      formData.append('taskId', taskId)
+      formData.append('taskId', taskId);
     }
     if (reqEvId) {
-      formData.append('reqEvId', reqEvId)
+      formData.append('reqEvId', reqEvId);
     }
+    formData.append('fromTask', fromTask);
     // setLoading(true);
     // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
@@ -68,7 +70,9 @@ export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle }: { 
               </div>
               <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
               <div className="mt-6 flex justify-end gap-4">
-                <Link href={{
+                <Link href={(fromTask == 'true') ? {
+                  pathname: `/tasks/${taskId}`
+                } : {
                   pathname: "/options/option",
                   query: { actCode, parcelId }
                 }}>

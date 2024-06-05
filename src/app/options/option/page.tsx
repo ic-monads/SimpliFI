@@ -37,7 +37,7 @@ export default async function Page({
       </div>
       <Link href={{
         pathname: "/evidence/add", 
-        query: searchParams
+        query: { actCode: searchParams.actCode, parcelId: searchParams.parcelId, fromTask: 'false' }
       }}>
           <button className="btn btn-primary">Add Evidence</button>
       </Link>

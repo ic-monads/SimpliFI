@@ -35,11 +35,12 @@ const EvidenceFormSchema = z.object({
   actCode: z.string(),
   parcelId: z.string(),
   taskId: z.string().nullable(),
-  reqEvId: z.string().nullable()
+  reqEvId: z.string().nullable(),
+  fromTask: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId, reqEvId } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
     notes: formData.get('notes'),
@@ -47,7 +48,8 @@ export async function createEvidence(formData: FormData) {
     actCode: formData.get('actCode'),
     parcelId: formData.get('parcelId'),
     taskId: formData.get('taskId'),
-    reqEvId: formData.get('reqEvId')
+    reqEvId: formData.get('reqEvId'),
+    fromTask: formData.get('fromTask')
   });
   let date = new Date(inputDate);
 
@@ -67,11 +69,17 @@ export async function createEvidence(formData: FormData) {
       },
     })
   }
-  revalidatePath('/options/option');
-  const params = new URLSearchParams();
-  params.set('actCode', actCode);
-  params.set('parcelId', parcelId);
-  redirect(`/options/option?${params.toString()}`);
+  if (fromTask == 'true') {
+    const path = `/tasks/${taskId}`;
+    revalidatePath(path);
+    redirect(path);
+  } else {
+    revalidatePath('/options/option');
+    const params = new URLSearchParams();
+    params.set('actCode', actCode);
+    params.set('parcelId', parcelId);
+    redirect(`/options/option?${params.toString()}`);
+  }
 }
 
 export async function deleteEvidence(id: string) {
