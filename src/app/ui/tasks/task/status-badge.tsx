@@ -14,5 +14,5 @@ export async function StatusBadge({ task, empty }: { task: Task, empty?: boolean
 
   if (empty) badgeClass += " badge-xs";
 
-  return(<div className={`badge ${badgeClass}`}>{empty ? "" : status}</div>);
+  return(<div className={`text-xs badge ${badgeClass}`}>{empty ? "" : status}</div>);
 }
