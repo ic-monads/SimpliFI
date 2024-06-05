@@ -14,6 +14,10 @@ export function Card({ task }: { task: Task }) {
         <p className="text-sm">
           {task.parcelId} · {task.actCode}
         </p>
+        <hr />
+        <p className='text-sm'>
+          Due: {task.deadline.toLocaleDateString()}
+        </p>
       </div>
     </Link>
   )
