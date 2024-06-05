@@ -1,9 +1,8 @@
 "use client";
 
-export default function ShowModalButton({ fileUrl }: { fileUrl: string }) {
+export default function ShowModalButton({ evidenceId }: { evidenceId: string }) {
     const clickAction = () => {
-        document.getElementById("evidence-modal-content")!.setAttribute("data", fileUrl);
-        (document.getElementById("evidence-modal")! as HTMLFormElement).showModal();
+        (document.getElementById(`${evidenceId}-modal`)! as HTMLFormElement).showModal();
     }
 
     return (
