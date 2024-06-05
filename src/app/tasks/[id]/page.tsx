@@ -6,13 +6,13 @@ import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 
 export default async function Page({
-  searchParams,
+  params,
 }: {
-  searchParams: {
+  params: {
     id: string;
   };
 }) {
-  const { id } = searchParams;
+  const { id } = params;
   const task = await fetchTask(id);
   const [parcelName, actName] = await Promise.all([
     fetchParcelName(task.parcelId),
@@ -46,7 +46,7 @@ export default async function Page({
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
-        pathname: "/options/option/add-evidence", 
+        pathname: "/evidence/add", 
         query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id }
       }}>
           <button className="btn btn-primary">Add Evidence</button>

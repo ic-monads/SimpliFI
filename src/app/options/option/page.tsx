@@ -36,10 +36,17 @@ export default async function Page({
         <Evidences evidences={data} />
       </div>
       <Link href={{
-        pathname: "/options/option/add-evidence", 
+        pathname: "/evidence/add", 
         query: searchParams
       }}>
           <button className="btn btn-primary">Add Evidence</button>
+      </Link>
+
+      <Link href={{
+        pathname: "/tasks/new", 
+        query: searchParams
+      }}>
+          <button className="ml-3 btn btn-primary">Add Task</button>
       </Link>
     </div>
   );
