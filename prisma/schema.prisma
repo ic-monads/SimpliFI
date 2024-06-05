@@ -20,6 +20,18 @@ model Evidence {
   parcelId  String
   task      Task?    @relation(fields: [taskId], references: [id])
   taskId    String?
+  required  RequiredEvidence?
+}
+
+
+model RequiredEvidence {
+  id        String   @default(cuid()) @id
+  title     String
+  desc      String
+  evidence  Evidence? @relation(fields: [evId], references: [id])
+  evId      String? @unique
+  task      Task @relation(fields: [taskId], references: [id])
+  taskId    String
 }
 
 model Action {
@@ -45,6 +57,7 @@ model Task {
   actCode     String
   parcelId    String
   evidences   Evidence[] 
+  requiredEvidences RequiredEvidence[]
 }
 
 model Option {
