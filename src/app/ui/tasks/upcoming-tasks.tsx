@@ -7,7 +7,7 @@ function UpcomingTasks({ tasks }: { tasks: Task[] }) {
             <p className="pb-4">
                 Due within the next 28 days
             </p>
-            <div className="pt-2 pb-4 mb-4 flex overflow-x-scroll whitespace-nowrap gap-6">
+            <div className="flex overflow-x-scroll gap-6">
                 {tasks
                     .filter((task) => task.completed === false && task.deadline < new Date(Date.now() + 28 * 24 * 60 * 60 * 1000))
                     .sort((a, b) => a.deadline.valueOf() - b.deadline.valueOf())
