@@ -75,16 +75,148 @@ async function main() {
   const tasks = await prisma.task.createMany({
     data: [
       {
-        deadline: new Date(),
-        title: "First Cut",
-        description: `Cutting emerging flowers and weeds regularly during the first 12 months after sowing will help to control weeds, so the sown plants can establish. Cut at a height which removes the top growth of any weeds, avoids dislodging the roots of the seedlings and prevents harm to wildlife. If you're cutting the margin, block or strip: 
-                      check it for signs of nesting birds before you cut it - birds, nests and eggs are protected by law, so if you see signs of nesting birds, delay cutting until the birds fledge
-                      remove the cut vegetation, where possible, to help reduce the risk of it smothering the flower species and limit weeds - if it's impractical to do this, you can finely chop them and spread them as thinly as possible`,
+        deadline: new Date(2024, 6, 10),
+        title: "Soil Preparation",
+        description: "Ensure the soil is well-prepared for planting by removing debris and tilling.",
         actCode: "AHW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 6, 15),
+        title: "Planting Cover Crops",
+        description: "Plant cover crops to improve soil health and prevent erosion.",
+        actCode: "CSAM1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 6, 20),
+        title: "Fertilization",
+        description: "Apply organic fertilizer to enhance soil fertility and promote plant growth.",
+        actCode: "CHRW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 6, 25),
+        title: "Irrigation Setup",
+        description: "Set up an efficient irrigation system to ensure proper water supply to crops.",
+        actCode: "AHW1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 7, 1),
+        title: "Weed Control",
+        description: "Implement measures to control weeds and minimize their impact on crops.",
+        actCode: "CSAM1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 6, 8),
+        title: "Pest Monitoring",
+        description: "Regularly monitor for pests and take necessary actions to control them.",
+        actCode: "AHW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 7, 10),
+        title: "Harvest Planning",
+        description: "Plan the harvest schedule to ensure timely and efficient crop collection.",
+        actCode: "CSAM1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 7, 15),
+        title: "Soil Testing",
+        description: "Conduct soil tests to assess nutrient levels and make informed decisions.",
+        actCode: "CHRW1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 7, 20),
+        title: "Mulching",
+        description: "Apply mulch to retain soil moisture and suppress weed growth.",
+        actCode: "AHW1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 7, 25),
+        title: "Compost Application",
+        description: "Apply compost to enrich the soil with organic matter and nutrients.",
+        actCode: "CHRW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 6, 18),
+        title: "Pruning",
+        description: "Prune plants to promote healthy growth and improve air circulation.",
+        actCode: "CSAM1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 8, 5),
+        title: "Seed Saving",
+        description: "Collect seeds from mature plants for future planting.",
+        actCode: "CSAM1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 7, 3),
+        title: "Disease Management",
+        description: "Monitor for diseases and apply treatments to prevent spread.",
+        actCode: "CHRW1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 8, 15),
+        title: "Crop Rotation Planning",
+        description: "Plan crop rotation to maintain soil health and reduce pest buildup.",
+        actCode: "CHRW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 8, 20),
+        title: "Organic Pest Control",
+        description: "Use organic methods to control pests and minimize chemical use.",
+        actCode: "CSAM1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 7, 8),
+        title: "Water Conservation",
+        description: "Implement techniques to conserve water and reduce waste.",
+        actCode: "AHW1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 9, 1),
+        title: "Green Manure",
+        description: "Incorporate green manure crops to improve soil structure and fertility.",
+        actCode: "CHRW1",
+        parcelId: "ZM13579"
+      },
+      {
+        deadline: new Date(2024, 9, 5),
+        title: "Field Mapping",
+        description: "Create detailed maps of fields to optimize planting and management.",
+        actCode: "AHW1",
+        parcelId: "AB123456"
+      },
+      {
+        deadline: new Date(2024, 9, 10),
+        title: "Cover Crop Termination",
+        description: "Terminate cover crops to prepare fields for the next planting season.",
+        actCode: "CSAM1",
+        parcelId: "PG987654"
+      },
+      {
+        deadline: new Date(2024, 9, 15),
+        title: "Soil Erosion Control",
+        description: "Implement measures to prevent soil erosion and maintain field integrity.",
+        actCode: "CHRW1",
         parcelId: "AB123456"
       }
     ]
-  })
+    
+  });
 }
 
 main()
