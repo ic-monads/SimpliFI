@@ -12,6 +12,7 @@ export default function Page({
       taskId?: string;
       reqEvId?: string
       evTitle?: string;
+      taskName?: string;
       fromTask: string
     };
   }) {
@@ -23,6 +24,7 @@ export default function Page({
               taskId={searchParams.taskId} 
               reqEvId={searchParams.reqEvId} 
               evTitle={searchParams.evTitle} 
+              taskName={searchParams.taskName}
               fromTask={searchParams.fromTask}
             />
         </main>

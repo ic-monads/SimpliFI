@@ -62,7 +62,7 @@ export default async function Page({
       </div>
       <Link href={{
         pathname: "/evidence/add", 
-        query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id, fromTask: 'true' }
+        query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id, taskName: task.title, fromTask: 'true' }
       }}>
           <button className="btn btn-primary">Add Evidence</button>
       </Link>
