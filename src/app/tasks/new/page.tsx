@@ -12,6 +12,6 @@ export default async function Page({
   const [actions, parcels] = await Promise.all([fetchAllActions(), fetchLandParcels()]);
 
   return(
-    <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} actions={actions} parcels={parcels} />
+    <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} actions={actions} />
   )
 }

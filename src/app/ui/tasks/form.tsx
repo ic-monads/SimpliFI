@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { createTask } from "@/app/lib/actions";
-import { useState } from "react";
+import { createTask, getActionParcels } from "@/app/lib/actions";
+import { ChangeEvent, useState } from "react";
 import Submit from "@/app/ui/submit";
 import { Action, LandParcel } from "@prisma/client";
 
-export default function Form({ actCode, parcelId, actions, parcels }: { actCode?: string, parcelId?: string, actions: Action[], parcels: LandParcel[] }) {
+export default function Form({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
+  const [parcels, setParcels] = useState<LandParcel[]>([]);
 
   const handleSubmit = async (formData: FormData) => {
     if (actCode) {
@@ -21,6 +22,11 @@ export default function Form({ actCode, parcelId, actions, parcels }: { actCode?
     } catch (error) {
       setError('Failed to submit form');
     }
+  };
+
+  const handleActionChange = async (e: ChangeEvent<HTMLSelectElement>) => {
+    const actionParcels = await getActionParcels(e.target.value);
+    setParcels(actionParcels);
   };
 
   return (
@@ -45,9 +51,9 @@ export default function Form({ actCode, parcelId, actions, parcels }: { actCode?
               <div className="label">
                 <label htmlFor="actCode" className="label-text">Select an action</label>
               </div>
-              <select id="actCode" name="actCode" className="select select-bordered w-full">
-                <option disabled>Choose action</option>
-                { actions.map((action) => <option value={action.code}>{action.code}</option>) }
+              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} >
+                <option selected disabled>Choose action</option>
+                { actions.map((action) => <option key={action.code} value={action.code}>{action.code}</option>) }
               </select>
             </div>
             <div>
@@ -55,8 +61,8 @@ export default function Form({ actCode, parcelId, actions, parcels }: { actCode?
                 <label htmlFor="parcelId" className="label-text">Select a land parcel</label>
               </div>
               <select id="parcelId" name="parcelId" className="select select-bordered w-full">
-                <option disabled>Choose land parcel</option>
-                { parcels.map((parcel) => <option value={parcel.id}>{`${parcel.name} (${parcel.id})`}</option>) }
+                <option selected disabled>Choose land parcel</option>
+                { parcels.map((parcel) => <option key={parcel.id} value={parcel.id}>{`${parcel.name} (${parcel.id})`}</option>) }
               </select>
             </div>
           </div>

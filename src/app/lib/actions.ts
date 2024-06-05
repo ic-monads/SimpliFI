@@ -118,3 +118,17 @@ export async function createTask(formData: FormData) {
   revalidatePath('/tasks');
   redirect('/tasks');
 }
+
+export async function getActionParcels(actionCode: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          actionCode: actionCode
+        }
+      }
+    }
+  });
+
+  return parcels;
+}
