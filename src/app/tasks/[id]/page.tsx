@@ -4,6 +4,7 @@ import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
+import Moment from "moment";
 
 export default async function Page({
   params,
@@ -35,7 +36,7 @@ export default async function Page({
         <CompleteButton task={task} />
       </div>
 
-      <p className="mb-3">Due on {task.deadline.toLocaleDateString()}</p>
+      <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
 
       <div className="badge badge-outline">{task.parcelId}: {parcelName}</div>
 
