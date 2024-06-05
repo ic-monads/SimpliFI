@@ -22,7 +22,7 @@ export default async function Page({
 
   return (
     <div className="w-full">
-      <div className="flex flex justify-between mb-3">
+      <div className="flex justify-between mb-3">
         {/* <Link href="/options">
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}

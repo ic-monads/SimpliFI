@@ -99,15 +99,6 @@ export async function deleteEvidence(id: string) {
       id
     }
   });
-
-  await prisma.requiredEvidence.updateMany({
-    where: {
-      evId: deleteEv.id
-    },
-    data: {
-      evId: null
-    }
-  })
   revalidatePath('/options/option');
 }
 
