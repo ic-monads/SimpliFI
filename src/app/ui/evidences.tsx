@@ -36,7 +36,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
               {evidence.title}
             </th>
             <td >
-              {Moment(new Date(evidence.date)).format("DD/MM/YYYY")}
+              {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
               {evidence.notes}
