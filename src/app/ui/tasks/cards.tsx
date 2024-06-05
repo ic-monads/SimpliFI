@@ -7,7 +7,7 @@ export function Card({ task }: { task: Task }) {
     <Link href={{ pathname: `/tasks/task`,
                   query: { id : task.id} }} >
       <div className="rounded-xl bg-gray-50 px-4 py-2 shadow-sm hover:bg-gray-100 transition-all">
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between mb-2 gap-4">
           <h3 className="text-md font-bold">{task.title}</h3>
           <StatusBadge task={task} />
         </div>
