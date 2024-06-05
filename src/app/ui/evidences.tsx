@@ -3,6 +3,7 @@
 import type { Evidence } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
+import Moment from "moment";
 
 export default async function Evidences(props: { evidences: Evidence[] }) {
   const evidences = props.evidences;
@@ -35,7 +36,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
               {evidence.title}
             </th>
             <td >
-              {new Date(evidence.date).toLocaleDateString()}
+              {Moment(new Date(evidence.date)).format("DD/MM/YYYY")}
             </td>
             <td>
               {evidence.notes}
