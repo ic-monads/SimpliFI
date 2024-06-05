@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 import type { Task } from "@prisma/client";
+import Moment from "moment";
 
 export function Card({ task }: { task: Task }) {
   return (
@@ -15,7 +16,7 @@ export function Card({ task }: { task: Task }) {
         </p>
         <hr />
         <p className='text-sm'>
-          Due: {task.deadline.toLocaleDateString()}
+          Due: {Moment(task.deadline).format("DD/MM/YYYY")}
         </p>
       </div>
     </Link>
