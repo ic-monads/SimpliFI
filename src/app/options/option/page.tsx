@@ -27,13 +27,13 @@ export default async function Page({
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
         <div className="flex-row items-center justify-between">
-          <h1 className={`font-semibold text-2xl`}>{actCode} - {actName}</h1>
-          <h2 className={`text-xl`}>Showing evidencing for {parcelName}</h2>
-          
+          <h2 className="">{actCode}</h2>
+          <h1 className={`font-semibold text-2xl`}>{actName}</h1>
         </div>
       </div>
+      <div className="badge badge-outline">{parcelId}: {parcelName}</div>
 
-      <div role="tablist" className="tabs tabs-lifted">
+      <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <Evidences evidences={option.evidences} />
@@ -54,7 +54,7 @@ export default async function Page({
             pathname: "/tasks/add", 
             query: searchParams
           }}>
-              <button className="ml-3 btn btn-primary">Add Task</button>
+              <button className="mt-3 btn btn-primary">Add Task</button>
           </Link>
         </div>
 
