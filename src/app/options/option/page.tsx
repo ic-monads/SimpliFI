@@ -43,7 +43,7 @@ export default async function Page({
       </Link>
 
       <Link href={{
-        pathname: "/tasks/new", 
+        pathname: "/tasks/add", 
         query: searchParams
       }}>
           <button className="ml-3 btn btn-primary">Add Task</button>

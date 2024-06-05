@@ -9,7 +9,7 @@ export default async function Page() {
     <div className="w-full">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">All Tasks</h1>
-        <Link href="/tasks/new">
+        <Link href="/tasks/add">
           <button className="btn btn-primary">Add Task</button>
         </Link>
       </div>
