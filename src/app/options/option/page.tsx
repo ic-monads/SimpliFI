@@ -1,7 +1,8 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
+import { fetchActionName, fetchOption, fetchParcelName } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidences';
+import AllTasks from '@/app/ui/tasks/all-tasks';
 
 export default async function Page({
   searchParams,
@@ -12,8 +13,9 @@ export default async function Page({
   };
 }) {
   const { actCode, parcelId } = searchParams;
-  const data = await fetchOptionEvidence(actCode, parcelId);
-  const [parcelName, actName] = await Promise.all([
+  
+  const [option, parcelName, actName] = await Promise.all([
+    fetchOption(actCode, parcelId),
     fetchParcelName(parcelId),
     fetchActionName(actCode)
   ])
@@ -34,7 +36,7 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={data} />
+          <Evidences evidences={option.evidences} />
         
           <Link href={{
             pathname: "/evidence/add", 
@@ -46,6 +48,8 @@ export default async function Page({
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <AllTasks tasks={option.tasks} />
+
           <Link href={{
             pathname: "/tasks/add", 
             query: searchParams

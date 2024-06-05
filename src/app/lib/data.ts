@@ -78,23 +78,20 @@ export async function fetchTask(id: string) {
   }
 }
 
-export async function fetchOptionEvidence(actCode: string, parcelId: string) {
-  try {
-    const evidence = await prisma.evidence.findMany(({
-      where: {
-        actCode: {
-          equals: actCode
-        },
-        parcelId: {
-          equals: parcelId
-        }
+export async function fetchOption(actionCode: string, parcelId: string) {
+  const evidence = await prisma.option.findUniqueOrThrow({
+    where: {
+      actionCode_parcelId: {
+        actionCode,
+        parcelId
       }
-    }));
-    return evidence;
-  } catch (e) {
-    console.error('Database Error:', e);
-    throw new Error('failed to fetch evidence');
-  }
+    },
+    include: {
+      evidences: true,
+      tasks: true
+    }
+  });
+  return evidence;
 }
 
 export async function fetchParcelName(parcelId: string) {
