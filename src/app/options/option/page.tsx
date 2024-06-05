@@ -41,6 +41,13 @@ export default async function Page({
       }}>
           <button className="btn btn-primary">Add Evidence</button>
       </Link>
+
+      <Link href={{
+        pathname: "/tasks/new", 
+        query: searchParams
+      }}>
+          <button className="ml-3 btn btn-primary">Add Task</button>
+      </Link>
     </div>
   );
 }
