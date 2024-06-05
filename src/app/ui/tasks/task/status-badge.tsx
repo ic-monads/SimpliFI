@@ -2,7 +2,7 @@
 
 import type { Task } from "@prisma/client";
 
-export async function StatusBadge({ task }: { task: Task }) {
+export async function StatusBadge({ task, empty }: { task: Task, empty?: boolean }) {
   var status, badgeClass;
   if (task.completed) {
     status = "Completed";
@@ -12,5 +12,7 @@ export async function StatusBadge({ task }: { task: Task }) {
     badgeClass = "badge-warning";
   }
 
-  return(<div className={`badge ${badgeClass}`}>{status}</div>);
+  if (empty) badgeClass += " badge-xs";
+
+  return(<div className={`badge ${badgeClass}`}>{empty ? "" : status}</div>);
 }
