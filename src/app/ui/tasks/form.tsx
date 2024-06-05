@@ -31,7 +31,7 @@ export default function Form({ actCode, parcelId, actions }: { actCode?: string,
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-bold text-xl mb-3">New Task</h1>
+      <h1 className="font-semibold text-2xl mb-3">New Task</h1>
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
       <form className="w-1/2" action={handleSubmit}>
 

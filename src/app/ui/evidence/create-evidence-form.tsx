@@ -48,40 +48,41 @@ export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle, from
   };
 
   return (
-    <div className="mx-auto">
-            <h1 className="font-semibold text-xl mb-2">Add Evidence</h1>
-            <p className="font-semibold mb-2">For Option: {actCode} on {parcelId}</p>
-            { taskId && <p className="font-semibold mb-2">For Task: {taskId}</p>}
-            { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
-            <form className="max-w-sm" action={handleSubmit}>
-              <div className="label">
-                <label htmlFor="title" className="label-text">Title</label>
-              </div>
-              <input type="text" id="title" name="title" defaultValue={evTitle} className="input input-bordered w-full" required />
-              <div className="label">
-                <label htmlFor="date" className="label-text">Date</label>
-              </div>
-              <input type="date" id="date" name="date" className="input input-bordered w-full" required/>
-              <div className="label">
-                <label htmlFor="notes" className="label-text">Notes</label>
-              </div>
-              <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
-              <div className="label">
-                <label htmlFor="file" className="label-text">File</label>
-              </div>
-              <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
-              <div className="mt-6 flex justify-end gap-4">
-                <Link href={(fromTask == 'true') ? {
-                  pathname: `/tasks/${taskId}`
-                } : {
-                  pathname: "/options/option",
-                  query: { actCode, parcelId }
-                }}>
-                  <button className="btn btn-content-neutral">Cancel</button>
-                </Link>
-                <Submit text="Submit Evidence" />
-              </div>
-            </form>
+    <div className="flex flex-col items-center">
+      <h1 className="font-semibold text-2xl mb-3">Add Evidence</h1>
+      { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
+      <form className="max-w-md" action={handleSubmit}>
+        <p className="text-sm mb-2">SFI option: {actCode}</p>
+        <p className="text-sm mb-2">Land parcel: {parcelId}</p>
+        { taskId && <p className="font-semibold mb-2">For Task: {taskId}</p>}
+        <div className="label">
+          <label htmlFor="title" className="label-text">Title</label>
         </div>
+        <input type="text" id="title" name="title" defaultValue={evTitle}  className="input input-bordered w-full" required />
+        <div className="label">
+          <label htmlFor="date" className="label-text">Date</label>
+        </div>
+        <input type="date" id="date" name="date" className="input input-bordered w-full" required/>
+        <div className="label">
+          <label htmlFor="notes" className="label-text">Notes</label>
+        </div>
+        <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
+        <div className="label">
+          <label htmlFor="file" className="label-text">File</label>
+        </div>
+        <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
+        <div className="mt-6 flex justify-end gap-4">
+          <Link href={(fromTask == 'true') ? {
+            pathname: `/tasks/${taskId}`
+          } : {
+            pathname: "/options/option",
+            query: { actCode, parcelId }
+          }}>
+            <button className="btn btn-content-neutral">Cancel</button>
+          </Link>
+          <Submit text="Submit Evidence" />
+        </div>
+      </form>
+    </div>
   )
 }
