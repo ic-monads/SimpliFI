@@ -1,7 +1,8 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidences';
+import Evidences from '@/app/ui/evidence/evidences';
+import RequiredEvidences from '@/app/ui/evidence/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 import Moment from "moment";
@@ -45,13 +46,23 @@ export default async function Page({
         {task.description}
       </p>
       
+      <div className="my-5">
+        <h2 className="text-xl font-semibold">Required Evidence</h2>
+        <RequiredEvidences task={task} required={task.requiredEvidences} />
+      </div>
+      <Link href={{
+        pathname: "/evidence/add-required", 
+        query: { taskId: id, taskName: task.title }
+      }}>
+          <button className="btn btn-primary">Add Required Evidence</button>
+      </Link>
       <div className="my-6">
         <h2 className="text-lg font-semibold">Evidence</h2>
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
         pathname: "/evidence/add", 
-        query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id }
+        query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id, fromTask: 'true' }
       }}>
           <button className="btn btn-primary">Add Evidence</button>
       </Link>

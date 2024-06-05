@@ -5,20 +5,23 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
-import { fromBuffer } from "pdf2pic"; 
-import { buffer } from "stream/consumers";
   
-export default function Form({ actCode, parcelId, taskId }: { actCode: string, parcelId: string, taskId?: string}) {
+export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle, fromTask }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string, fromTask: string }) {
   const [error, setError] = useState<string | null>(null);
+
   // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  
   const handleSubmit = async (formData: FormData) => {
     formData.append('actCode', actCode);
     formData.append('parcelId', parcelId);
     if (taskId) {
-      formData.append('taskId', taskId)
+      formData.append('taskId', taskId);
     }
+    if (reqEvId) {
+      formData.append('reqEvId', reqEvId);
+    }
+    formData.append('fromTask', fromTask);
     // setLoading(true);
     // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
@@ -51,10 +54,11 @@ export default function Form({ actCode, parcelId, taskId }: { actCode: string, p
       <form className="max-w-md" action={handleSubmit}>
         <p className="text-sm mb-2">SFI option: {actCode}</p>
         <p className="text-sm mb-2">Land parcel: {parcelId}</p>
+        { taskId && <p className="font-semibold mb-2">For Task: {taskId}</p>}
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>
         </div>
-        <input type="text" id="title" name="title" className="input input-bordered w-full" required />
+        <input type="text" id="title" name="title" defaultValue={evTitle}  className="input input-bordered w-full" required />
         <div className="label">
           <label htmlFor="date" className="label-text">Date</label>
         </div>
@@ -68,7 +72,9 @@ export default function Form({ actCode, parcelId, taskId }: { actCode: string, p
         </div>
         <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
         <div className="mt-6 flex justify-end gap-4">
-          <Link href={{
+          <Link href={(fromTask == 'true') ? {
+            pathname: `/tasks/${taskId}`
+          } : {
             pathname: "/options/option",
             query: { actCode, parcelId }
           }}>

@@ -15,11 +15,23 @@ model Evidence {
   title     String
   notes     String   @default("")
   fileUrl   String
-  option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
   actCode   String
   parcelId  String
-  task      Task?    @relation(fields: [taskId], references: [id])
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
   taskId    String?
+  required  RequiredEvidence?
+}
+
+
+model RequiredEvidence {
+  id        String   @default(cuid()) @id
+  title     String
+  desc      String
+  evidence  Evidence? @relation(fields: [evId], references: [id], onDelete: SetNull)
+  evId      String? @unique
+  task      Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    String
 }
 
 model Action {
@@ -41,16 +53,17 @@ model Task {
   title       String
   description String
   completed   Boolean   @default(false)
-  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId])
+  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
   actCode     String
   parcelId    String
   evidences   Evidence[] 
+  requiredEvidences RequiredEvidence[]
 }
 
 model Option {
-  action      Action      @relation(fields: [actionCode], references: [code])
+  action      Action      @relation(fields: [actionCode], references: [code], onDelete: Cascade)
   actionCode  String      
-  parcel      LandParcel  @relation(fields: [parcelId], references: [id])
+  parcel      LandParcel  @relation(fields: [parcelId], references: [id], onDelete: Cascade)
   parcelId    String      
   evidences   Evidence[]
   tasks       Task[]

@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOption, fetchParcelName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidences';
+import Evidences from '@/app/ui/evidence/evidences';
 import AllTasks from '@/app/ui/tasks/all-tasks';
 
 export default async function Page({
@@ -22,7 +22,7 @@ export default async function Page({
 
   return (
     <div className="w-full">
-      <div className="flex flex justify-between mb-3">
+      <div className="flex justify-between mb-3">
         {/* <Link href="/options">
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
@@ -40,7 +40,7 @@ export default async function Page({
         
           <Link href={{
             pathname: "/evidence/add", 
-            query: searchParams
+            query: { actCode: searchParams.actCode, parcelId: searchParams.parcelId, fromTask: 'false' }
           }}>
               <button className="btn btn-primary">Add Evidence</button>
           </Link>

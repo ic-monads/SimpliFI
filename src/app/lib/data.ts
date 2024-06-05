@@ -68,7 +68,8 @@ export async function fetchTask(id: string) {
         id: id
       },
       include: {
-        evidences: true
+        evidences: true,
+        requiredEvidences: true
       }
     });
     return task;

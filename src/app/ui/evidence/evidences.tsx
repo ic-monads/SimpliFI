@@ -4,7 +4,7 @@ import type { Evidence } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
-import ShowModalButton from "./evidence-modal-button";
+import ShowModalButton from "@/app/ui/evidence-modal-button";
 
 export default async function Evidences(props: { evidences: Evidence[] }) {
   const evidences = props.evidences;
