@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidence/evidences';
-import RequiredEvidences from '@/app/ui/tasks/task/required-evidences';
+import RequiredEvidences from '@/app/ui/evidence/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 

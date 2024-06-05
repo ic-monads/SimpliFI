@@ -2,6 +2,8 @@
 
 import type { RequiredEvidence, Task } from "@prisma/client";
 import Link from "next/link";
+import Submit from '@/app/ui/options/option/submit-error';
+import { deleteRequiredEvidence } from "@/app/lib/actions";
 
 export default async function RequiredEvidences(props: {task: Task, required: RequiredEvidence[]}) {
   const required = props.required;
@@ -16,6 +18,8 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
           </th>
           <th scope="col">
             Description
+          </th>
+          <th scope="col">
           </th>
           <th scope="col">
           </th>
@@ -40,6 +44,11 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
                     <button className="btn btn-primary">Add Evidence</button>
                 </Link>
                 : 'Complete'}
+              </td>
+              <td>
+                <form action={deleteRequiredEvidence.bind(null, req.id, task.id)}>
+                  <Submit />
+                </form>
               </td>
             </tr>
           ))
