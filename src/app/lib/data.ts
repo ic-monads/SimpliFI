@@ -131,17 +131,3 @@ export async function fetchActionName(actCode: string) {
     throw new Error('failed to fetch action name');
   }
 }
-
-export async function fetchSingleRequiredEvidence(reqEvId: string) {
-  try {
-    const req = await prisma.requiredEvidence.findUniqueOrThrow({
-      where: {
-        id: reqEvId
-      }
-    });
-    return req;
-  } catch (e) {
-    console.error('Database Error:', e);
-    throw new Error('failed to fetch required evidence');
-  }
-}

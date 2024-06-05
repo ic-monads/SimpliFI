@@ -5,7 +5,6 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
-import { fetchSingleRequiredEvidence } from "@/app/lib/data";
   
 export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string }) {
   const [error, setError] = useState<string | null>(null);

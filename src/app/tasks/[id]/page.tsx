@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidences';
+import Evidences from '@/app/ui/evidence/evidences';
 import RequiredEvidences from '@/app/ui/tasks/task/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
@@ -44,6 +44,12 @@ export default async function Page({
         <h2 className="text-xl font-semibold">Required Evidence</h2>
         <RequiredEvidences task={task} required={task.requiredEvidences} />
       </div>
+      <Link href={{
+        pathname: "/evidence/add-required", 
+        query: { taskId: id, taskName: task.title }
+      }}>
+          <button className="btn btn-primary">Add Required Evidence</button>
+      </Link>
       <div className="my-5">
         <h2 className="text-xl font-semibold">Evidence</h2>
         <Evidences evidences={task.evidences} />

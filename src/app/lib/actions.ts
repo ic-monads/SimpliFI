@@ -141,6 +141,27 @@ export async function createTask(formData: FormData) {
   redirect('/tasks');
 }
 
+const RequiredEvidenceFormSchema = z.object({
+  title: z.string(),
+  desc: z.string(),
+  taskId: z.string()
+});
+
+export async function createRequiredEvidence(formData: FormData) {
+  const { title, desc, taskId } = 
+    RequiredEvidenceFormSchema.parse({
+      title: formData.get('title'),
+      desc: formData.get('desc'),
+      taskId: formData.get('taskId')
+    });
+  await prisma.requiredEvidence.create({
+    data: { title, desc, taskId }
+  })
+  revalidatePath(`/tasks/${taskId}`)
+  redirect(`/tasks/${taskId}`)
+}
+
+// Should be in data.ts
 export async function getActionParcels(actionCode: string) {
   const parcels = await prisma.landParcel.findMany({
     where: {

@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOptionEvidence, fetchParcelName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidences';
+import Evidences from '@/app/ui/evidence/evidences';
 
 export default async function Page({
   searchParams,

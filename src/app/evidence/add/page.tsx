@@ -1,7 +1,7 @@
 "use client"; // This is a client-side component
 
 import Form
- from "@/app/ui/options/option/create-evidence-form";
+ from "@/app/ui/evidence/create-evidence-form";
 
 export default function Page({
     searchParams,
