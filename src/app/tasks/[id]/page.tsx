@@ -35,7 +35,9 @@ export default async function Page({
         <CompleteButton task={task} />
       </div>
 
-      <p className="">Due on {task.deadline.toLocaleDateString()}</p>
+      <p className="mb-3">Due on {task.deadline.toLocaleDateString()}</p>
+
+      <div className="badge badge-outline">{task.parcelId}: {parcelName}</div>
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
