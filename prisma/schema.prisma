@@ -23,7 +23,6 @@ model Evidence {
   required  RequiredEvidence?
 }
 
-
 model RequiredEvidence {
   id        String   @default(cuid()) @id
   title     String
@@ -39,6 +38,7 @@ model Action {
   name      String
   govUrl    String
   options   Option[]
+  tasks     Task[]
 }
 
 model LandParcel {
@@ -53,11 +53,20 @@ model Task {
   title       String
   description String
   completed   Boolean   @default(false)
-  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
-  actCode     String
-  parcelId    String
-  evidences   Evidence[] 
+  options     OptionTask[]
+  evidences   Evidence[]
+  actionCode  String
+  action      Action  @relation(fields: [actionCode], references: [code], onDelete: Cascade)
   requiredEvidences RequiredEvidence[]
+}
+
+model OptionTask {
+  actionCode  String 
+  parcelId    String
+  option      Option    @relation(fields: [actionCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
+  taskId      String   
+  task        Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  @@id([actionCode, parcelId, taskId])
 }
 
 model Option {
@@ -66,6 +75,6 @@ model Option {
   parcel      LandParcel  @relation(fields: [parcelId], references: [id], onDelete: Cascade)
   parcelId    String      
   evidences   Evidence[]
-  tasks       Task[]
+  tasks       OptionTask[]
   @@id([actionCode, parcelId])
 }
