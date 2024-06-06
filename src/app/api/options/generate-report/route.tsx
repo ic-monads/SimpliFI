@@ -77,7 +77,7 @@ export async function GET(request: Request) {
 
   const mergedPdfBuffer = await merger.saveAsBuffer();
 
-  del(blob.url);
+  await del(blob.url);
   // unlinkSync(path.join(process.cwd(), "report.pdf"));
 
   return new NextResponse(mergedPdfBuffer, {
