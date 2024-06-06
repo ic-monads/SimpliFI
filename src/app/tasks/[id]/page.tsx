@@ -58,7 +58,7 @@ export default async function Page({
       </Link>
       <div className="my-6">
         <h2 className="text-lg font-semibold">Evidence</h2>
-        <Evidences evidences={task.evidences} />
+        <Evidences evidences={task.evidences} showTask={false} />
       </div>
       <Link href={{
         pathname: "/evidence/add", 

@@ -1,4 +1,4 @@
-import { fetchEvidenceForAction, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
+import { fetchEvidenceForActionWithParcelAndTaskName, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
 import Link from 'next/link';
 import AllTasks from '@/app/ui/tasks/all-tasks';
 import Evidences from '@/app/ui/evidence/evidences';
@@ -12,7 +12,7 @@ export default async function Page({
   }
 }) {
   const [evidence, tasks, parcels, actionName] = await Promise.all([
-    await fetchEvidenceForAction(params.actionId),
+    await fetchEvidenceForActionWithParcelAndTaskName(params.actionId),
     await fetchTasksForAction(params.actionId),
     await fetchParcelsForAction(params.actionId),
     await fetchActionName(params.actionId)
@@ -41,7 +41,7 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={evidence} tasks={tasks}/>
+          <Evidences evidences={evidence} showTask={true}/>
         
           <Link href={{
             pathname: "/evidence/add", 

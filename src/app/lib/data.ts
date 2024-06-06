@@ -66,6 +66,36 @@ export async function fetchEvidenceForAction(actionCode: string) {
   }
 }
 
+export async function fetchEvidenceForActionWithParcelAndTaskName(actionCode: string) {
+  try {
+    const ev = await prisma.evidence.findMany({
+      where: {
+        actCode: actionCode
+      },
+      include: {
+        option: {
+          include: {
+            parcel: {
+              select: {
+                name: true
+              }
+            },
+          }
+        },
+        task: {
+          select: {
+            title: true,
+          }
+        }
+      }
+    });
+    return ev;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch evidence for action');
+  }
+}
+
 export async function fetchTasksForAction(actionCode: string) {
   try {
     const tasks = await prisma.task.findMany({

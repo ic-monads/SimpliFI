@@ -7,16 +7,29 @@ import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
 
-export default async function Evidences(props: { evidences: Evidence[], tasks?: Task[] }) {
-  const { evidences, tasks } = props;
+interface EvidenceWithNames {
+  task: {
+    title: string;
+  } | null;
+  option: {
+    parcel: {
+        name: string;
+    };
+    actionCode: string;
+    parcelId: string;
+  };
+  id: string;
+  date: Date;
+  title: string;
+  notes: string;
+  fileUrl: string;
+  actCode: string;
+  parcelId: string;
+  taskId: string | null;
+}
 
-  function taskName(taskId: string) {
-    console.log(taskId);
-    console.log(tasks);
-    const t = tasks!.find((t) => t.id == taskId);
-    console.log(t);
-    return t!.title;
-  }
+export default async function Evidences(props: { evidences: Evidence[] | EvidenceWithNames[], showTask: boolean }) {
+  const { evidences, showTask } = props;
 
   return(
     <>
@@ -32,7 +45,7 @@ export default async function Evidences(props: { evidences: Evidence[], tasks?: 
           <th scope="col">
             Land Parcel
           </th>
-          { tasks && <th scope="col">
+          { showTask && <th scope="col">
             Task
           </th> }
           <th scope="col">
@@ -41,26 +54,26 @@ export default async function Evidences(props: { evidences: Evidence[], tasks?: 
         </tr>
       </thead>
       <tbody>
-        {evidences.map((evidence: Evidence) => (
-          <tr key={evidence.id}>
+        {evidences.map((ev: Evidence | EvidenceWithNames) => (
+          <tr key={ev.id}>
             <th scope="row">
-              {evidence.title}
+              {ev.title}
             </th>
             <td >
-              {Moment(evidence.date).format("DD/MM/YYYY")}
+              {Moment(ev.date).format("DD/MM/YYYY")}
             </td>
             <td>
-              {evidence.parcelId}
+              {ev.parcelId /* TODO: Use option.parcel.name */ } 
             </td>
-            {tasks && <td>
-              {evidence.taskId ? taskName(evidence.taskId) : "-"}
+            {showTask && <td>
+              {ev.taskId ? (ev as EvidenceWithNames).task!.title : "-"}
             </td> }
             <td>
-              {evidence.notes}
+              {ev.notes}
             </td>
             <td className="flex space-x-2">
-              <ShowModalButton evidenceId={evidence.id} />
-              <form action={deleteEvidence.bind(null, evidence.id)}>
+              <ShowModalButton evidenceId={ev.id} />
+              <form action={deleteEvidence.bind(null, ev.id)}>
                 <Submit />
               </form>
             </td>
