@@ -20,7 +20,6 @@ export default function Form({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleSubmit = async (formData: FormData) => {
-    console.log(formData);
     formData.append('actCode', actCode);
     if (taskId) {
       formData.append('taskId', taskId);

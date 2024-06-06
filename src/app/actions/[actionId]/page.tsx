@@ -22,9 +22,12 @@ export default async function Page({
       <div className="flex w-full items-center justify-between">
         <h1 className="text-2xl font-semibold">{actionId} - {actionName}</h1>
         <div className='flex space-x-3'>
-          {/* <Link href="/options/add">
-            <button className="btn btn-primary">Add Option</button>
-          </Link> */}
+          <Link href={{
+            pathname: `/actions/add`,
+            query: { actCode: actionId }
+          }}>
+            <button className="btn btn-primary">Add Parcel</button>
+          </Link>
           <GenerateReport />
         </div>
       </div>
@@ -51,12 +54,12 @@ export default async function Page({
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <AllTasks tasks={tasks} />
 
-          {/* <Link href={{
+          <Link href={{
             pathname: "/tasks/add", 
-            query: searchParams
+            query: { actCode: actionId, parcelId: parcels[0].id }
           }}>
               <button className="mt-3 btn btn-primary">Add Task</button>
-          </Link> */}
+          </Link>
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
