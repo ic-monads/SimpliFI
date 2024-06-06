@@ -6,6 +6,7 @@ import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
 import { LandParcel } from "@prisma/client";
+import { MultiSelect } from "@mantine/core";
   
 export default function Form({ 
   actCode, parcels, taskId, reqEvId,
@@ -73,16 +74,14 @@ export default function Form({
           <label htmlFor="notes" className="label-text">Notes</label>
         </div>
         <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
-        {/* TODO: Change to a multi-select of parcels */}
-        <div className="label">
-          <label htmlFor="parcelId" className="label-text">Select Parcel</label>
-        </div>
-        <select className="select select-bordered w-full max-w-xs" id="parcelId" name="parcelId" multiple>
-          <option disabled selected>For Parcel</option>
-          {parcels.map((p) => (
-            <option key={p.id} value={p.id}>{p.name} - {p.id}</option>
-          ))}
-        </select>
+        <MultiSelect
+          label="Select relevant land parcels"
+          placeholder="Select parcels"
+          name="parcelIds"
+          data={parcels.map((parcel) => { return { value: parcel.id, label: `${parcel.name} (${parcel.id})` }})}
+          classNames={{ label: "label-text p-2" }}
+          styles={{ label: { fontWeight: 400 }}}
+        />
         <div className="label">
           <label htmlFor="file" className="label-text">File</label>
         </div>
