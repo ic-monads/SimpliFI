@@ -1,11 +1,12 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
+import { fetchTask } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidence/evidences';
 import RequiredEvidences from '@/app/ui/evidence/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
 import Moment from "moment";
+import TaskParcels from '@/app/ui/tasks/task-parcels';
 
 export default async function Page({
   params,
@@ -16,10 +17,6 @@ export default async function Page({
 }) {
   const { id } = params;
   const task = await fetchTask(id);
-  const [parcelName, actName] = await Promise.all([
-    fetchParcelName(task.parcelId),
-    fetchActionName(task.actCode)
-  ])
 
   return (
     <div className="w-full">
@@ -28,7 +25,7 @@ export default async function Page({
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
         <div>
-          <h2>{task.actCode}: {actName}</h2>
+          <h2>{task.actionCode}: {task.action.name}</h2>
           <div className="flex items-center">
             <h1 className="font-semibold text-2xl mr-3">{task.title}</h1>
             <StatusBadge task={task} />
@@ -38,8 +35,8 @@ export default async function Page({
       </div>
 
       <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-
-      <div className="badge badge-outline">{task.parcelId}: {parcelName}</div>
+      
+      <TaskParcels taskId={task.id} />
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
@@ -60,12 +57,12 @@ export default async function Page({
         <h2 className="text-lg font-semibold">Evidence</h2>
         <Evidences evidences={task.evidences} />
       </div>
-      <Link href={{
+      {/* <Link href={{
         pathname: "/evidence/add", 
-        query: { actCode: task.actCode, parcelId: task.parcelId, taskId: id, taskName: task.title, fromTask: 'true' }
-      }}>
-          <button className="btn btn-primary">Add Evidence</button>
-      </Link>
+        query: { task.: task.actCode, parcelId: task.parcelId, taskId: id, taskName: task.title, fromTask: 'true' }
+      }}> */}
+          {/* <button className="btn btn-primary">Add Evidence</button>
+      </Link> */}
     </div>
   );
 }

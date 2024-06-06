@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
-import type { Task } from "@prisma/client";
-import { fetchActionName } from '@/app/lib/data';
 import Moment from "moment";
+import TaskParcels from './task-parcels';
+import { TaskWithAction } from '@/app/lib/data';
 
-export async function Card({ task }: { task: Task }) {
-  const actionName = await fetchActionName(task.actCode);
-
+export async function Card({ task }: { task: TaskWithAction }) {
   return (
     <Link href={`/tasks/${task.id}`} >
       <div className="card min-w-64 border shadow-sm p-3 shadow-sm hover:bg-gray-100 transition-all">
@@ -14,14 +12,11 @@ export async function Card({ task }: { task: Task }) {
           <h3 className="text-md font-bold text-nowrap truncate">{task.title}</h3>
           <StatusBadge task={task} empty={true} />
         </div>
-        <p className="text-xs mb-3">
-          {task.actCode}: {actionName}
+        <p className="text-xs mb-2">
+          {task.actionCode}: {task.action.name}
         </p>
-        <div className="flex justify-between items-center">
-          <div className="badge badge-outline text-xs">{task.parcelId}</div>
-          <div className="badge badge-outline text-xs">{Moment(task.deadline).format("DD/MM/YYYY")}</div>
-        </div>
-        
+        <p className="text-xs">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
+        <TaskParcels taskId={task.id} />
       </div>
     </Link>
   )
