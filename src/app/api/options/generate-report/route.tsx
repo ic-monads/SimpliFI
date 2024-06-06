@@ -15,6 +15,15 @@ const ff = new FileforgeClient({
 
 export const maxDuration = 60;
 
+async function copyPagesAtUrl(from: string, to: PDFDocument) {
+  const reportPdfBytes = await fetch(from).then((res) => res.arrayBuffer());
+  const reportPdf = await PDFDocument.load(reportPdfBytes);
+  const copied = await to.copyPages(reportPdf, reportPdf.getPageIndices());
+  for (let page of copied) {
+    to.addPage(page);
+  }
+}
+
 export async function GET() {
   const options = await prisma.option.findMany();
   let reportOptions: ReportOption[] = [];
@@ -71,28 +80,19 @@ export async function GET() {
 
   const pdfDoc = await PDFDocument.create();
   const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  const reportPdfBytes = await fetch(blob.url).then((res) => res.arrayBuffer());
-  const reportPdf = await PDFDocument.load(reportPdfBytes);
-  const copied = await pdfDoc.copyPages(reportPdf, reportPdf.getPageIndices());
-  for (let page of copied) {
-    pdfDoc.addPage(page);
-  }
+  
+  await copyPagesAtUrl(blob.url, pdfDoc);
 
-  for (let pdf of pdfEvidence) {
+  for (let i = 0; i < pdfEvidence.length; i++) {
     const appendixPage = pdfDoc.addPage();
     const { width, height } = appendixPage.getSize();
-    appendixPage.drawText(`Appendix ${pdfEvidence.indexOf(pdf) + 1}`, {
+    appendixPage.drawText(`Appendix ${i + 1}`, {
       x: 50,
       y: height - (50 + 24),
       size: 24,
       font: helveticaBoldFont
     });
-    const evidencePdfBytes = await fetch(pdf).then((res) => res.arrayBuffer());
-    const evidencePdf = await PDFDocument.load(evidencePdfBytes);
-    const copied = await pdfDoc.copyPages(evidencePdf, evidencePdf.getPageIndices());
-    for (let page of copied) {
-      pdfDoc.addPage(page);
-    }
+    await copyPagesAtUrl(pdfEvidence[i], pdfDoc);
   }
 
   del(blob.url);
