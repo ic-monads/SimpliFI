@@ -4,68 +4,77 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-
 model Evidence {
-  id        String   @default(cuid()) @id
-  date      DateTime @default(now())
-  title     String
-  notes     String   @default("")
-  fileUrl   String
-  option    Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
-  actCode   String
-  parcelId  String
-  task      Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
-  taskId    String?
-  required  RequiredEvidence?
+  id              String            @id @default(cuid())
+  date            DateTime          @default(now())
+  title           String
+  notes           String            @default("")
+  fileUrl         String
+  task            Task?             @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  taskId          String?
+  optionEvidences OptionEvidence[]
+  required        RequiredEvidence?
 }
 
-
 model RequiredEvidence {
-  id        String   @default(cuid()) @id
-  title     String
-  desc      String
-  evidence  Evidence? @relation(fields: [evId], references: [id], onDelete: SetNull)
-  evId      String? @unique
-  task      Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  taskId    String
+  id       String    @id @default(cuid())
+  title    String
+  desc     String
+  evidence Evidence? @relation(fields: [evId], references: [id], onDelete: SetNull)
+  evId     String?   @unique
+  task     Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId   String
 }
 
 model Action {
-  code      String   @id
-  name      String
-  govUrl    String
-  options   Option[]
+  code    String   @id
+  name    String
+  govUrl  String
+  options Option[]
 }
 
 model LandParcel {
-  id        String   @id
-  name      String   
-  options   Option[]
+  id      String   @id
+  name    String
+  options Option[]
 }
 
 model Task {
-  id          String    @default(cuid()) @id
-  deadline    DateTime
-  title       String
-  description String
-  completed   Boolean   @default(false)
-  option      Option    @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
-  actCode     String
-  parcelId    String
-  evidences   Evidence[] 
+  id                String             @id @default(cuid())
+  deadline          DateTime
+  title             String
+  description       String
+  completed         Boolean            @default(false)
+  option            Option             @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
+  actCode           String
+  parcelId          String
+  evidences         Evidence[]
   requiredEvidences RequiredEvidence[]
 }
 
 model Option {
-  action      Action      @relation(fields: [actionCode], references: [code], onDelete: Cascade)
-  actionCode  String      
-  parcel      LandParcel  @relation(fields: [parcelId], references: [id], onDelete: Cascade)
-  parcelId    String      
-  evidences   Evidence[]
-  tasks       Task[]
+  action          Action           @relation(fields: [actionCode], references: [code], onDelete: Cascade)
+  actionCode      String
+  parcel          LandParcel       @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+  parcelId        String
+  tasks           Task[]
+  optionEvidences OptionEvidence[]
+
   @@id([actionCode, parcelId])
+}
+
+// One piece of evidence may be for many options
+// These options need not have the same action
+model OptionEvidence {
+  evidence Evidence @relation(fields: [evId], references: [id])
+  evId     String
+  option   Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
+  actCode  String
+  parcelId String
+
+  @@id([evId, actCode, parcelId])
 }
