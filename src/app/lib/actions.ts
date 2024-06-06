@@ -34,31 +34,52 @@ const EvidenceFormSchema = z.object({
   fileUrl: z.string(),
   actCode: z.string(),
   parcelId: z.string(),
-  taskId: z.string().nullable()
+  taskId: z.string().nullable(),
+  reqEvId: z.string().nullable(),
+  fromTask: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
     notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
     parcelId: formData.get('parcelId'),
-    taskId: formData.get('taskId')
+    taskId: formData.get('taskId'),
+    reqEvId: formData.get('reqEvId'),
+    fromTask: formData.get('fromTask')
   });
   let date = new Date(inputDate);
 
-  await prisma.evidence.create({
+  const ev = await prisma.evidence.create({
     data: {
       title, date, notes, fileUrl, actCode, parcelId, taskId
     }
   });
-  revalidatePath('/options/option');
-  const params = new URLSearchParams();
-  params.set('actCode', actCode);
-  params.set('parcelId', parcelId);
-  redirect(`/options/option?${params.toString()}`);
+  if (reqEvId) {
+    console.log("Updating required evidence");
+    await prisma.requiredEvidence.update({
+      where: {
+        id: reqEvId
+      },
+      data: {
+        evId: ev.id,
+      },
+    })
+  }
+  if (fromTask == 'true') {
+    const path = `/tasks/${taskId}`;
+    revalidatePath(path);
+    redirect(path);
+  } else {
+    revalidatePath('/options/option');
+    const params = new URLSearchParams();
+    params.set('actCode', actCode);
+    params.set('parcelId', parcelId);
+    redirect(`/options/option?${params.toString()}`);
+  }
 }
 
 export async function deleteEvidence(id: string) {
@@ -73,12 +94,21 @@ export async function deleteEvidence(id: string) {
   if (url != null) {
     await del(url.fileUrl);
   }
-  await prisma.evidence.delete({
+  const deleteEv = await prisma.evidence.delete({
     where: {
       id
     }
   });
   revalidatePath('/options/option');
+}
+
+export async function deleteRequiredEvidence(id: string, taskId: string) {
+  await prisma.requiredEvidence.delete({
+    where:{
+      id
+    }
+  });
+  revalidatePath(`/tasks/${taskId}`)
 }
 
 export async function updateTaskCompleted(id: string, completed: boolean) {
@@ -119,6 +149,27 @@ export async function createTask(formData: FormData) {
   redirect('/tasks');
 }
 
+const RequiredEvidenceFormSchema = z.object({
+  title: z.string(),
+  desc: z.string(),
+  taskId: z.string()
+});
+
+export async function createRequiredEvidence(formData: FormData) {
+  const { title, desc, taskId } = 
+    RequiredEvidenceFormSchema.parse({
+      title: formData.get('title'),
+      desc: formData.get('desc'),
+      taskId: formData.get('taskId')
+    });
+  await prisma.requiredEvidence.create({
+    data: { title, desc, taskId }
+  })
+  revalidatePath(`/tasks/${taskId}`)
+  redirect(`/tasks/${taskId}`)
+}
+
+// Should be in data.ts
 export async function getActionParcels(actionCode: string) {
   const parcels = await prisma.landParcel.findMany({
     where: {
