@@ -49,24 +49,13 @@ export async function GET() {
       actionCode: option.actionCode,
       parcelId: option.parcelId,
       evidences: evidences.map((evidence) => {
-        if (evidence.fileUrl.endsWith(".pdf")) {
-          return {
-            id: evidence.id,
-            title: evidence.title,
-            date: evidence.date,
-            notes: evidence.notes,
-            fileUrl: evidence.fileUrl,
-            appendixPos: pdfEvidence.indexOf(evidence.fileUrl) + 1,
-          }
-        } else {
-          return {
-            id: evidence.id,
-            title: evidence.title,
-            date: evidence.date,
-            notes: evidence.notes,
-            fileUrl: evidence.fileUrl,
-            appendixPos: undefined,
-          }
+        return {
+          id: evidence.id,
+          title: evidence.title,
+          date: evidence.date,
+          notes: evidence.notes,
+          fileUrl: evidence.fileUrl,
+          appendixPos: evidence.fileUrl.endsWith(".pdf") ? pdfEvidence.indexOf(evidence.fileUrl) + 1 : undefined,
         }
       })
     });
