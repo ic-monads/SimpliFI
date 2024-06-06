@@ -1,35 +1,19 @@
 "use server";
 
 import type { Evidence, Task } from "@prisma/client";
-import Link from "next/link";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
+import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
+import { EvidenceParcels } from "./evidence-parcels";
 
-interface EvidenceWithNames {
-  evidence: {
-    task: {
-      title: string;
-    } | null;
-    id: string;
-    date: Date;
-    title: string;
-    notes: string;
-    fileUrl: string;
-    taskId: string | null;
-  };
-  option: {
-    parcel: {
-      name: string;
-    };
-    actionCode: string;
-    parcelId: string;
-  };
-}
-
-export default async function Evidences(props: { evidences: EvidenceWithNames[] }) {
+export default async function Evidences(props: { evidences: EvidenceWithTaskAndParcels[] }) {
   const { evidences } = props;
+
+  function getParcels(evidence: EvidenceWithTaskAndParcels) {
+    return evidence.optionEvidences.map((optionEvidence) => optionEvidence.option.parcel);
+  }
 
   return(
     <>
@@ -43,7 +27,7 @@ export default async function Evidences(props: { evidences: EvidenceWithNames[] 
             Date
           </th>
           <th scope="col">
-            Land Parcel
+            Land Parcels
           </th>
           <th scope="col">
             Task
@@ -54,26 +38,26 @@ export default async function Evidences(props: { evidences: EvidenceWithNames[] 
         </tr>
       </thead>
       <tbody>
-        {evidences.map((ev: EvidenceWithNames) => (
-          <tr key={ev.evidence.id}>
+        {evidences.map((evidence: EvidenceWithTaskAndParcels) => (
+          <tr key={evidence.id}>
             <th scope="row">
-              {ev.evidence.title}
+              {evidence.title}
             </th>
             <td >
-              {Moment(ev.evidence.date).format("DD/MM/YYYY")}
+              {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
-              {ev.option.parcel.name}
+              <EvidenceParcels parcels={getParcels(evidence)} />
             </td>
             <td>
-              {ev.evidence.taskId ? ev.evidence.task!.title : "-"}
+              {evidence.task ? evidence.task.title : "-"}
             </td>
             <td>
-              {ev.evidence.notes}
+              {evidence.notes}
             </td>
             <td className="flex space-x-2">
-              <ShowModalButton evidenceId={ev.evidence.id} />
-              <form action={deleteEvidence.bind(null, ev.evidence.id)}>
+              <ShowModalButton evidenceId={evidence.id} />
+              <form action={deleteEvidence.bind(null, evidence.id)}>
                 <Submit />
               </form>
             </td>
@@ -81,21 +65,22 @@ export default async function Evidences(props: { evidences: EvidenceWithNames[] 
         ))}
       </tbody>
     </table>
-    {evidences.map((ev: EvidenceWithNames) => (
-      <dialog key={ev.evidence.id} id={`${ev.evidence.id}-modal`} className="modal">
-      { ev.evidence.fileUrl.endsWith(".pdf") ? 
+
+    {evidences.map((evidence: Evidence) => (
+      <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">
+      { evidence.fileUrl.endsWith(".pdf") ? 
         <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <object id="evidence-modal-content" data={ev.evidence.fileUrl} className="w-full h-full" /> :
+          <object id="evidence-modal-content" data={evidence.fileUrl} className="w-full h-full" /> :
         </div>
         :
         <div className="modal-box max-w-fit pt-12 w-max-content h-max-content">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <img alt="evidence-file" id="evidence-modal-content" src={ev.evidence.fileUrl} className="max-w-[80vw] max-h-[80vh]" />
+          <img alt="evidence-file" id="evidence-modal-content" src={evidence.fileUrl} className="max-w-[80vw] max-h-[80vh]" />
         </div>
       }
       </dialog>

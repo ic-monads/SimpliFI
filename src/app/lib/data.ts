@@ -8,6 +8,21 @@ export type TaskWithAction = Prisma.TaskGetPayload<{
   include: { action: true }
 }>
 
+export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
+  include: { 
+    task: true,
+    optionEvidences: {
+      include: {
+        option: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    } 
+  }
+}>
+
 export async function fetchAllActions() {
   try {
     const actions = await prisma.action.findMany();
@@ -76,51 +91,42 @@ export async function fetchEvidenceForAction(actionCode: string) {
   }
 }
 
-export async function fetchEvidenceForActionWithParcelAndTaskName(actionCode: string) {
-  try {
-    const ev = await prisma.optionEvidence.findMany({
-      where: {
-        actCode: actionCode
-      },
-      include: {
-        evidence: {
-          include: {
-            task: {
-              select: {
-                title: true
-              }
-            }
-          }
-        },
-        option: {
-          include: {
-            parcel: {
-              select: {
-                name: true
-              }
+export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: string) {
+  const evidences = await prisma.evidence.findMany({
+    where: {
+      optionEvidences: {
+        every: {
+          actCode: actionCode
+        }
+      }
+    },
+    include: { 
+      task: true,
+      optionEvidences: {
+        include: {
+          option: {
+            include: {
+              parcel: true
             }
           }
         }
-      }
-    });
-    return ev;
-  } catch (e) {
-    console.error('Database Error:', e);
-    throw new Error('failed to fetch evidence for action');
-  }
+      } 
+    }
+  })
+
+  return evidences;
 }
 
 export async function fetchTasksForAction(actionCode: string) {
-  try {
-    const tasks = await prisma.task.findMany({
-      where: {
-        actCode: actionCode
-      },
-    });
-    return tasks;
-  } catch (e) {
-    throw new Error('failed to fetch tasks for action')
-  }
+  const tasks = await prisma.task.findMany({
+    where: {
+      actionCode
+    },
+    include: {
+      action: true
+    }
+  });
+  return tasks;
 }
 
 export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
