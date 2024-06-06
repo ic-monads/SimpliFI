@@ -28,8 +28,8 @@ interface EvidenceWithNames {
   taskId: string | null;
 }
 
-export default async function Evidences(props: { evidences: Evidence[] | EvidenceWithNames[], showTask: boolean }) {
-  const { evidences, showTask } = props;
+export default async function Evidences(props: { evidences: EvidenceWithNames[] }) {
+  const { evidences } = props;
 
   return(
     <>
@@ -45,16 +45,16 @@ export default async function Evidences(props: { evidences: Evidence[] | Evidenc
           <th scope="col">
             Land Parcel
           </th>
-          { showTask && <th scope="col">
+          <th scope="col">
             Task
-          </th> }
+          </th>
           <th scope="col">
             Notes
           </th>
         </tr>
       </thead>
       <tbody>
-        {evidences.map((ev: Evidence | EvidenceWithNames) => (
+        {evidences.map((ev: EvidenceWithNames) => (
           <tr key={ev.id}>
             <th scope="row">
               {ev.title}
@@ -63,11 +63,11 @@ export default async function Evidences(props: { evidences: Evidence[] | Evidenc
               {Moment(ev.date).format("DD/MM/YYYY")}
             </td>
             <td>
-              {ev.parcelId /* TODO: Use option.parcel.name */ } 
+              {ev.option.parcel.name}
             </td>
-            {showTask && <td>
-              {ev.taskId ? (ev as EvidenceWithNames).task!.title : "-"}
-            </td> }
+            <td>
+              {ev.taskId ? ev.task!.title : "-"}
+            </td>
             <td>
               {ev.notes}
             </td>

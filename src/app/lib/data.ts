@@ -140,7 +140,7 @@ export async function fetchAllTasks() {
   }
 }
 
-export async function fetchTask(id: string) {
+export async function fetchTaskEvidenceInfo(id: string) {
   try {
     const task = await prisma.task.findUniqueOrThrow({
       where: {
@@ -148,7 +148,21 @@ export async function fetchTask(id: string) {
       },
       include: {
         evidences: true,
-        requiredEvidences: true
+        requiredEvidences: true,
+        option: {
+          include: {
+            parcel: {
+              select: {
+                name: true
+              }
+            },
+            action: {
+              select: {
+                name: true
+              }
+            }
+          }
+        },
       }
     });
     return task;

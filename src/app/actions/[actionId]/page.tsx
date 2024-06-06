@@ -1,7 +1,7 @@
 import { fetchEvidenceForActionWithParcelAndTaskName, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
 import Link from 'next/link';
 import AllTasks from '@/app/ui/tasks/all-tasks';
-import Evidences from '@/app/ui/evidence/evidences';
+import Evidences from '@/app/ui/actions/action-evidences';
 import GenerateReport from '@/app/ui/options/generate-report';
 
 export default async function Page({ 
@@ -41,7 +41,7 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={evidence} showTask={true}/>
+          <Evidences evidences={evidence} />
         
           <Link href={{
             pathname: "/evidence/add", 

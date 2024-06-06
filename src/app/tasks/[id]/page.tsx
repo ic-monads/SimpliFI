@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTask, fetchParcelName, fetchActionName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidence/evidences';
+import { fetchTaskEvidenceInfo, fetchParcelName, fetchActionName } from '@/app/lib/data';
+import Evidences from '@/app/ui/tasks/task/task-evidences';
 import RequiredEvidences from '@/app/ui/evidence/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
 import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
@@ -15,11 +15,7 @@ export default async function Page({
   };
 }) {
   const { id } = params;
-  const task = await fetchTask(id);
-  const [parcelName, actName] = await Promise.all([
-    fetchParcelName(task.parcelId),
-    fetchActionName(task.actCode)
-  ])
+  const task = await fetchTaskEvidenceInfo(id);
 
   return (
     <div className="w-full">
@@ -28,7 +24,7 @@ export default async function Page({
           <ArrowLeftIcon className="size-6 ml-auto"/>
         </Link> */}
         <div>
-          <h2>{task.actCode}: {actName}</h2>
+          <h2>{task.actCode}: {task.option.action.name}</h2>
           <div className="flex items-center">
             <h1 className="font-semibold text-2xl mr-3">{task.title}</h1>
             <StatusBadge task={task} />
@@ -39,7 +35,7 @@ export default async function Page({
 
       <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
 
-      <div className="badge badge-outline">{task.parcelId}: {parcelName}</div>
+      <div className="badge badge-outline">{task.parcelId}: {task.option.parcel.name}</div>
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
@@ -58,7 +54,7 @@ export default async function Page({
       </Link>
       <div className="my-6">
         <h2 className="text-lg font-semibold">Evidence</h2>
-        <Evidences evidences={task.evidences} showTask={false} />
+        <Evidences evidences={task.evidences} parcelName={task.option.parcel.name} />
       </div>
       <Link href={{
         pathname: "/evidence/add", 

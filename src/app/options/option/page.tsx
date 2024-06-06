@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchActionName, fetchOption, fetchParcelName } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidence/evidences';
+import Evidences from '@/app/ui/tasks/task/task-evidences';
 import AllTasks from '@/app/ui/tasks/all-tasks';
 
 export default async function Page({
