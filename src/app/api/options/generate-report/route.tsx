@@ -6,10 +6,8 @@ import { compile } from "@fileforge/react-print";
 import { FileforgeClient } from "@fileforge/client"
 import { MyDocument } from "./document";
 import type { ReportOption } from "./document";
-import { createWriteStream, unlinkSync } from "fs";
-import path from "path";
-import PDFMerger from "pdf-merger-js";
 import { put, del } from "@vercel/blob";
+import { PDFDocument, StandardFonts }  from "pdf-lib";
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
@@ -17,8 +15,7 @@ const ff = new FileforgeClient({
 
 export const maxDuration = 60;
 
-export async function GET(request: Request) {
-  console.log(request.body);
+export async function GET() {
   const options = await prisma.option.findMany();
   let reportOptions: ReportOption[] = [];
   let pdfEvidence: string[] = [];
@@ -35,8 +32,6 @@ export async function GET(request: Request) {
 
     for (let evidence of evidences) {
       if (evidence.fileUrl.endsWith(".pdf")) {
-        // got(evidence.fileUrl, {isStream: true}).pipe(createWriteStream(path.join(process.cwd(), `${evidence.id}.pdf`)));
-        // pdfEvidence.push(path.join(process.cwd(), `${evidence.id}.pdf`));
         pdfEvidence.push(evidence.fileUrl);
       }
     }
@@ -44,45 +39,65 @@ export async function GET(request: Request) {
     reportOptions.push({
       actionCode: option.actionCode,
       parcelId: option.parcelId,
-      evidences: evidences.map(evidence => ({
-        id: evidence.id,
-        title: evidence.title,
-        notes: evidence.notes,
-        fileUrl: evidence.fileUrl,
-      }))
+      evidences: evidences.map((evidence) => {
+        if (evidence.fileUrl.endsWith(".pdf")) {
+          return {
+            id: evidence.id,
+            title: evidence.title,
+            date: evidence.date,
+            notes: evidence.notes,
+            fileUrl: evidence.fileUrl,
+            appendixPos: pdfEvidence.indexOf(evidence.fileUrl) + 1,
+          }
+        } else {
+          return {
+            id: evidence.id,
+            title: evidence.title,
+            date: evidence.date,
+            notes: evidence.notes,
+            fileUrl: evidence.fileUrl,
+            appendixPos: undefined,
+          }
+        }
+      })
     });
   }
 
   const html = await compile(<MyDocument options={reportOptions} />);
-
   const pdf = await ff.pdf.generate(html, {});
-
   const blob = await put("report.pdf", pdf, {
     access: "public"
   });
 
-  // pdf.pipe(createWriteStream(path.join(process.cwd(), "report.pdf")));
-
-  // // wait for the pdf to be written to disk
-  // await new Promise((resolve) => {
-  //   pdf.on("finish", resolve);
-  // });
-
-  var merger = new PDFMerger();
-
-  await merger.add(blob.url);
-  // await merger.add(path.join(process.cwd(), "report.pdf"));
-
-  for (let pdf of pdfEvidence) {
-    await merger.add(pdf);
+  const pdfDoc = await PDFDocument.create();
+  const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const reportPdfBytes = await fetch(blob.url).then((res) => res.arrayBuffer());
+  const reportPdf = await PDFDocument.load(reportPdfBytes);
+  const copied = await pdfDoc.copyPages(reportPdf, reportPdf.getPageIndices());
+  for (let page of copied) {
+    pdfDoc.addPage(page);
   }
 
-  const mergedPdfBuffer = await merger.saveAsBuffer();
+  for (let pdf of pdfEvidence) {
+    const appendixPage = pdfDoc.addPage();
+    const { width, height } = appendixPage.getSize();
+    appendixPage.drawText(`Appendix ${pdfEvidence.indexOf(pdf) + 1}`, {
+      x: 50,
+      y: height - (50 + 24),
+      size: 24,
+      font: helveticaBoldFont
+    });
+    const evidencePdfBytes = await fetch(pdf).then((res) => res.arrayBuffer());
+    const evidencePdf = await PDFDocument.load(evidencePdfBytes);
+    const copied = await pdfDoc.copyPages(evidencePdf, evidencePdf.getPageIndices());
+    for (let page of copied) {
+      pdfDoc.addPage(page);
+    }
+  }
 
   del(blob.url);
-  // unlinkSync(path.join(process.cwd(), "report.pdf"));
 
-  return new NextResponse(mergedPdfBuffer, {
+  return new NextResponse(Buffer.from(await pdfDoc.save()), {
     headers: {
       "Content-Type": "application/pdf",
       "Cache-Control": "no-store, max-age=0, no-cache, must-revalidate",
