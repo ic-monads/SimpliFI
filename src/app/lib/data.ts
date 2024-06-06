@@ -156,3 +156,17 @@ export async function fetchTaskParcels(taskId: string) {
 
   return parcels;
 }
+
+export async function getActionParcels(actionCode: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          actionCode: actionCode
+        }
+      }
+    }
+  });
+
+  return parcels;
+}

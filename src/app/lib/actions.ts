@@ -175,18 +175,3 @@ export async function createRequiredEvidence(formData: FormData) {
   revalidatePath(`/tasks/${taskId}`)
   redirect(`/tasks/${taskId}`)
 }
-
-// Should be in data.ts
-export async function getActionParcels(actionCode: string) {
-  const parcels = await prisma.landParcel.findMany({
-    where: {
-      options: {
-        some: {
-          actionCode: actionCode
-        }
-      }
-    }
-  });
-
-  return parcels;
-}
