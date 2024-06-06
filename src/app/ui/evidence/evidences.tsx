@@ -24,10 +24,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
             Notes
           </th>
           <th scope="col">
-            File
-          </th>
-          <th scope="col">
-            Actions
+            
           </th>
         </tr>
       </thead>
@@ -43,13 +40,11 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
             <td>
               {evidence.notes}
             </td>
-            <td>
+            <td className="flex space-x-2">
               {/* <a className="btn btn-sm btn-content-neutral" href={evidence.fileUrl} target="_blank" rel="noreferrer">
                 View File
               </a> */}
-              <ShowModalButton fileUrl={evidence.fileUrl} />
-            </td>
-            <td>
+              <ShowModalButton evidenceId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
                 <Submit />
               </form>
@@ -58,14 +53,26 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
         ))}
       </tbody>
     </table>
-    <dialog id="evidence-modal" className="modal">
-      <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
-        <form method="dialog">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
-        <object id="evidence-modal-content" data="" className="w-full h-full" />
-      </div>
-    </dialog>
+    {evidences.map((evidence: Evidence) => (
+      <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">
+      { evidence.fileUrl.endsWith(".pdf") ? 
+        <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <object id="evidence-modal-content" data={evidence.fileUrl} className="w-full h-full" /> :
+        </div>
+        :
+        <div className="modal-box max-w-fit pt-12 w-max-content h-max-content">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <img alt="evidence-file" id="evidence-modal-content" src={evidence.fileUrl} className="max-w-[80vw] max-h-[80vh]" />
+        </div>
+      }
+      </dialog>
+    ))}
+    
     </>
   );
 }
