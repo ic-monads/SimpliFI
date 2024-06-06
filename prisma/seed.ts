@@ -60,46 +60,49 @@ async function main() {
       }
     ],
   });
+
+  const ahw1_green_field = {
+    actionCode: 'AHW1',
+    parcelId: 'AB123456'
+  }
+
+  const chrw1_green_field = {
+    actionCode: 'CHRW1',
+    parcelId: 'AB123456'
+  }
+
+  const csam1_flag_fen = {
+    actionCode: 'CSAM1',
+    parcelId: 'PG987654'
+  }
+
+  const ahw1_flag_fen = {
+    actionCode: 'AHW1',
+    parcelId: 'PG987654'
+  }
+
+  const chrw1_box_moor = {
+    actionCode: 'CHRW1',
+    parcelId: 'ZM13579'
+  }
+
+  const csam1_box_moor = {
+    actionCode: 'CSAM1',
+    parcelId: 'ZM13579'
+  }
+
   const options = await prisma.option.createMany({
-    data: [
-      {
-        actionCode: 'AHW1',
-        parcelId: 'AB123456'
-      },
-      {
-        actionCode: 'CHRW1',
-        parcelId: 'AB123456'
-      },
-      {
-        actionCode: 'CSAM1',
-        parcelId: 'PG987654'
-      },
-      {
-        actionCode: 'AHW1',
-        parcelId: 'PG987654'
-      },
-      {
-        actionCode: 'CHRW1',
-        parcelId: 'ZM13579'
-      },
-      {
-        actionCode: 'CSAM1',
-        parcelId: 'ZM13579'
-      },
-    ]
+    data: [ ahw1_green_field, chrw1_green_field, csam1_flag_fen, ahw1_flag_fen, chrw1_box_moor, csam1_box_moor ]
   });
 
-  const task1 = await prisma.task.create({
+  const task = await prisma.task.create({
     data: {
       deadline: new Date(2024, 5, 15),
       title: "Planting Cover Crops",
       description: "Plant cover crops to improve soil health and prevent erosion.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "PG987654"
-        }
+        create: [csam1_flag_fen, csam1_box_moor]
       }
     }
   });
@@ -111,10 +114,7 @@ async function main() {
       description: "Apply organic fertilizer to enhance soil fertility and promote plant growth.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "AB123456"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -126,10 +126,7 @@ async function main() {
       description: "Set up an efficient irrigation system to ensure proper water supply to crops.",
       actionCode: "AHW1",
       options: {
-        create: {
-          actionCode: "AHW1",
-          parcelId: "PG987654"
-        }
+        create: ahw1_flag_fen
       }
     }
   });
@@ -141,10 +138,7 @@ async function main() {
       description: "Implement measures to control weeds and minimize their impact on crops.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "ZM13579"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -156,10 +150,7 @@ async function main() {
       description: "Regularly monitor for pests and take necessary actions to control them.",
       actionCode: "AHW1",
       options: {
-        create: {
-          actionCode: "AHW1",
-          parcelId: "AB123456"
-        }
+        create: [ahw1_green_field, ahw1_flag_fen]
       }
     }
   });
@@ -171,10 +162,7 @@ async function main() {
       description: "Plan the harvest schedule to ensure timely and efficient crop collection.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "PG987654"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -186,10 +174,7 @@ async function main() {
       description: "Conduct soil tests to assess nutrient levels and make informed decisions.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "ZM13579"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -201,10 +186,7 @@ async function main() {
       description: "Apply mulch to retain soil moisture and suppress weed growth.",
       actionCode: "AHW1",
       options: {
-        create: {
-          actionCode: "AHW1",
-          parcelId: "PG987654"
-        }
+        create: [ahw1_flag_fen, ahw1_green_field]
       }
     }
   });
@@ -216,10 +198,7 @@ async function main() {
       description: "Apply compost to enrich the soil with organic matter and nutrients.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "AB123456"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -231,10 +210,7 @@ async function main() {
       description: "Prune plants to promote healthy growth and improve air circulation.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "ZM13579"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -246,10 +222,7 @@ async function main() {
       description: "Collect seeds from mature plants for future planting.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "PG987654"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -261,10 +234,7 @@ async function main() {
       description: "Monitor for diseases and apply treatments to prevent spread.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "ZM13579"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -276,10 +246,7 @@ async function main() {
       description: "Plan crop rotation to maintain soil health and reduce pest buildup.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "AB123456"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -291,10 +258,7 @@ async function main() {
       description: "Use organic methods to control pests and minimize chemical use.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "ZM13579"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -306,10 +270,7 @@ async function main() {
       description: "Implement techniques to conserve water and reduce waste.",
       actionCode: "AHW1",
       options: {
-        create: {
-          actionCode: "AHW1",
-          parcelId: "PG987654"
-        }
+        create: ahw1_flag_fen
       }
     }
   });
@@ -321,10 +282,7 @@ async function main() {
       description: "Incorporate green manure crops to improve soil structure and fertility.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "ZM13579"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -336,10 +294,7 @@ async function main() {
       description: "Create detailed maps of fields to optimize planting and management.",
       actionCode: "AHW1",
       options: {
-        create: {
-          actionCode: "AHW1",
-          parcelId: "AB123456"
-        }
+        create: ahw1_green_field
       }
     }
   });
@@ -351,10 +306,7 @@ async function main() {
       description: "Generate a map showing what soil type we have in each field section",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "PG987654"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -366,10 +318,7 @@ async function main() {
       description: "Terminate cover crops to prepare fields for the next planting season.",
       actionCode: "CSAM1",
       options: {
-        create: {
-          actionCode: "CSAM1",
-          parcelId: "PG987654"
-        }
+        create: csam1_flag_fen
       }
     }
   });
@@ -381,10 +330,7 @@ async function main() {
       description: "Implement measures to prevent soil erosion and maintain field integrity.",
       actionCode: "CHRW1",
       options: {
-        create: {
-          actionCode: "CHRW1",
-          parcelId: "AB123456"
-        }
+        create: chrw1_green_field
       }
     }
   });
@@ -404,14 +350,14 @@ async function main() {
           fileUrl: 'https://ars.els-cdn.com/content/image/3-s2.0-B9780123869418000022-f02-08-9780123869418.jpg',
           actCode: 'CSAM1',
           parcelId: 'PG987654',
-          taskId:   task1.id
+          taskId:   task.id
         },
         {
           title: 'Field Map',
           fileUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6bO6HF46cmtaj27ZUpa-arz84OeX6i7KtYg&s',
           actCode: 'CSAM1',
           parcelId: 'PG987654',
-          taskId: task1.id
+          taskId: task.id
         },
         {
           title: 'Soil Profile',
@@ -429,12 +375,12 @@ async function main() {
         title: 'Produce Soil Report',
         desc: 'Compile all evidence into report',
         evId: dev ? 'cjld2cyuq0000t3rmniod1foy' : null,
-        taskId: task1.id
+        taskId: task.id
       },
       {
         title: 'Store Purchase Orders',
         desc: 'Download and store all soil receipts',
-        taskId: task1.id
+        taskId: task.id
       }
     ]
     
