@@ -113,7 +113,9 @@ export async function deleteRequiredEvidence(id: string, taskId: string) {
 
 export async function updateTaskCompleted(id: string, completed: boolean) {
   const updatedTask = await prisma.task.update({ where: { id : id }, data: { completed: completed }});
-  revalidatePath('/tasks/task');
+  revalidatePath(`/tasks/${id}`);
+  revalidatePath("/tasks");
+  revalidatePath("/options/option");
   return updatedTask;
 }
 
