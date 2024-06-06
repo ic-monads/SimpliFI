@@ -15,6 +15,8 @@ const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 })
 
+export const maxDuration = 60;
+
 export async function GET(request: Request) {
   console.log(request.body);
   const options = await prisma.option.findMany();
