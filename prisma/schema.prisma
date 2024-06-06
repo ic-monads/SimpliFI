@@ -80,7 +80,7 @@ model Option {
 // One piece of evidence may be for many options
 // These options need not have the same action
 model OptionEvidence {
-  evidence Evidence @relation(fields: [evId], references: [id])
+  evidence Evidence @relation(fields: [evId], references: [id], onDelete: Cascade)
   evId     String
   option   Option   @relation(fields: [actCode, parcelId], references: [actionCode, parcelId], onDelete: Cascade)
   actCode  String
