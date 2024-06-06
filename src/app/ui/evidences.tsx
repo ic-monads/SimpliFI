@@ -67,7 +67,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <img id="evidence-modal-content" src={evidence.fileUrl} className="max-w-{80vw} max-h-{80vh}" />
+          <img alt="evidence-file" id="evidence-modal-content" src={evidence.fileUrl} className="max-w-[80vw] max-h-[80vh]" />
         </div>
       }
       </dialog>
