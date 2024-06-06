@@ -34,38 +34,50 @@ const EvidenceFormSchema = z.object({
   notes: z.string(),
   fileUrl: z.string(),
   actCode: z.string(),
-  parcelId: z.string(),
+  parcelIds: z.string(),
   taskId: z.string().nullable(),
   reqEvId: z.string().nullable(),
   fromTask: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelIds, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
     notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
-    parcelId: formData.get('parcelId'),
+    parcelIds: formData.get('parcelIds'),
     taskId: formData.get('taskId'),
     reqEvId: formData.get('reqEvId'),
     fromTask: formData.get('fromTask')
   });
   let date = new Date(inputDate);
 
-  const ev = await prisma.evidence.create({
+  const optionEvidences = parcelIds.split(",").map((parcelId) => {
+    return { actCode, parcelId };
+  });
+
+  const evidence = await prisma.evidence.create({
     data: {
-      title, date, notes, fileUrl, actCode, parcelId, taskId
+      title,
+      date,
+      notes,
+      fileUrl,
+      taskId,
+      optionEvidences: {
+        create: optionEvidences
+      }
     }
   });
+
   if (reqEvId) {
     await prisma.requiredEvidence.update({
       where: {
         id: reqEvId
       },
       data: {
-        evId: ev.id,
+        evId: evidence.id,
       },
     })
   }
@@ -91,7 +103,7 @@ export async function deleteEvidence(id: string) {
       id
     }
   });
-  revalidatePath(`/actions/${deleteEv.actCode}`);
+  // revalidatePath(`/actions/${deleteEv.actionCode}`);
 }
 
 export async function deleteRequiredEvidence(id: string, taskId: string) {
