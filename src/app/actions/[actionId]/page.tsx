@@ -1,5 +1,4 @@
-import { Card } from '@/app/ui/options/cards';
-import { fetchEvidenceForAction, fetchTasksForAction, fetchParcelsForAction } from '@/app/lib/data';
+import { fetchEvidenceForAction, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
 import Link from 'next/link';
 import AllTasks from '@/app/ui/tasks/all-tasks';
 import Evidences from '@/app/ui/evidence/evidences';
@@ -12,10 +11,12 @@ export default async function Page({
     actionId: string
   }
 }) {
-  const evidence = await fetchEvidenceForAction(params.actionId);
-  const tasks = await fetchTasksForAction(params.actionId);
-  const parcels = await fetchParcelsForAction(params.actionId);
-  const actionName = 'TODO: Action Name';
+  const [evidence, tasks, parcels, actionName] = await Promise.all([
+    await fetchEvidenceForAction(params.actionId),
+    await fetchTasksForAction(params.actionId),
+    await fetchParcelsForAction(params.actionId),
+    await fetchActionName(params.actionId)
+  ])
   const { actionId } = params;
   return (
     <div className="w-full">
@@ -40,7 +41,7 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={evidence} />
+          <Evidences evidences={evidence} tasks={tasks}/>
         
           <Link href={{
             pathname: "/evidence/add", 
@@ -63,7 +64,9 @@ export default async function Page({
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
-        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6"></div>
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          {/* Government link */}
+        </div>
       </div>
     </div>
   );

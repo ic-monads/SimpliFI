@@ -1,13 +1,22 @@
 "use server";
 
-import type { Evidence } from "@prisma/client";
+import type { Evidence, Task } from "@prisma/client";
+import Link from "next/link";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
 
-export default async function Evidences(props: { evidences: Evidence[] }) {
-  const evidences = props.evidences;
+export default async function Evidences(props: { evidences: Evidence[], tasks?: Task[] }) {
+  const { evidences, tasks } = props;
+
+  function taskName(taskId: string) {
+    console.log(taskId);
+    console.log(tasks);
+    const t = tasks!.find((t) => t.id == taskId);
+    console.log(t);
+    return t!.title;
+  }
 
   return(
     <>
@@ -23,9 +32,9 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
           <th scope="col">
             Land Parcel
           </th>
-          <th scope="col">
+          { tasks && <th scope="col">
             Task
-          </th>
+          </th> }
           <th scope="col">
             Notes
           </th>
@@ -43,9 +52,9 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
             <td>
               {evidence.parcelId}
             </td>
-            <td>
-              {evidence.taskId ? evidence.taskId : "-"}
-            </td>
+            {tasks && <td>
+              {evidence.taskId ? taskName(evidence.taskId) : "-"}
+            </td> }
             <td>
               {evidence.notes}
             </td>

@@ -10,9 +10,6 @@ export default async function Page() {
       <div className="flex w-full items-center justify-between">
         <h1 className="text-2xl font-semibold">My Actions</h1>
         <div className='flex space-x-3'>
-          {/* <Link href="/options/add">
-            <button className="btn btn-primary">Add Option</button>
-          </Link> */}
           <GenerateReport />
         </div>
       </div>

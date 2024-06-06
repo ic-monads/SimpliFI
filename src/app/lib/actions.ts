@@ -22,8 +22,9 @@ export async function createOption(formData: FormData) {
       parcelId: parcelId,
     }
   });
-  revalidatePath('/options');
-  redirect('/options');
+  const path = `/actions/${actionCode}`;
+  revalidatePath(path);
+  redirect(path);
 }
 
 // https://strapi.io/blog/epic-next-js-14-tutorial-part-5-file-upload-using-server-actions
@@ -51,7 +52,6 @@ export async function createEvidence(formData: FormData) {
     reqEvId: formData.get('reqEvId'),
     fromTask: formData.get('fromTask')
   });
-  console.log(parcelId);
   let date = new Date(inputDate);
 
   const ev = await prisma.evidence.create({
@@ -91,7 +91,7 @@ export async function deleteEvidence(id: string) {
       id
     }
   });
-  revalidatePath('/options/option');
+  revalidatePath(`/actions/${deleteEv.actCode}`);
 }
 
 export async function deleteRequiredEvidence(id: string, taskId: string) {
