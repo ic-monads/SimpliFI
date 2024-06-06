@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { createTask, getActionParcels } from "@/app/lib/actions";
+import { createTask } from "@/app/lib/actions";
 import { ChangeEvent, useState } from "react";
 import Submit from "@/app/ui/submit";
 import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
+import { getActionParcels } from "@/app/lib/data";
 
 export default function Form({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);

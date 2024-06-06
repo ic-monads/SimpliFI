@@ -1,6 +1,7 @@
-import { revalidatePath } from "next/cache";
+"use server";
+
 import prisma from "./prisma";
-import type { Prisma, Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export type TaskWithAction = Prisma.TaskGetPayload<{
   include: { action: true }
