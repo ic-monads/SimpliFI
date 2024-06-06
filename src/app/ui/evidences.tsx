@@ -54,7 +54,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
       </tbody>
     </table>
     {evidences.map((evidence: Evidence) => (
-      <dialog id={`${evidence.id}-modal`} className="modal">
+      <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">
       { evidence.fileUrl.endsWith(".pdf") ? 
         <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
           <form method="dialog">
