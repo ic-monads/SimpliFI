@@ -20,6 +20,7 @@ export default function Form({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleSubmit = async (formData: FormData) => {
+    console.log(formData);
     formData.append('actCode', actCode);
     if (taskId) {
       formData.append('taskId', taskId);
@@ -72,10 +73,11 @@ export default function Form({
           <label htmlFor="notes" className="label-text">Notes</label>
         </div>
         <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
+        {/* TODO: Change to a multi-select of parcels */}
         <div className="label">
           <label htmlFor="parcelId" className="label-text">Select Parcel</label>
         </div>
-        <select className="select select-bordered w-full max-w-xs" id="parcelId" name="parcelId">
+        <select className="select select-bordered w-full max-w-xs" id="parcelId" name="parcelId" multiple>
           <option disabled selected>For Parcel</option>
           {parcels.map((p) => (
             <option key={p.id} value={p.id}>{p.name} - {p.id}</option>

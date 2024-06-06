@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import type { Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
+import type { LandParcel } from "@prisma/client";
 
 export async function fetchAllActions() {
   try {
@@ -56,9 +56,13 @@ export async function fetchEvidenceForAction(actionCode: string) {
   try {
     const evidence = await prisma.evidence.findMany({
       where: {
-        actCode: actionCode
-      },
-    });
+        optionEvidences: {
+          some: { // or every? depends if evidence can be for different actions
+            actCode: actionCode,
+          }
+        }
+      }
+    })
     return evidence;
   } catch (e) {
     console.error('Database Error:', e);
@@ -68,23 +72,27 @@ export async function fetchEvidenceForAction(actionCode: string) {
 
 export async function fetchEvidenceForActionWithParcelAndTaskName(actionCode: string) {
   try {
-    const ev = await prisma.evidence.findMany({
+    const ev = await prisma.optionEvidence.findMany({
       where: {
         actCode: actionCode
       },
       include: {
+        evidence: {
+          include: {
+            task: {
+              select: {
+                title: true
+              }
+            }
+          }
+        },
         option: {
           include: {
             parcel: {
               select: {
                 name: true
               }
-            },
-          }
-        },
-        task: {
-          select: {
-            title: true,
+            }
           }
         }
       }
@@ -170,22 +178,6 @@ export async function fetchTaskEvidenceInfo(id: string) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch task');
   }
-}
-
-export async function fetchOption(actionCode: string, parcelId: string) {
-  const evidence = await prisma.option.findUniqueOrThrow({
-    where: {
-      actionCode_parcelId: {
-        actionCode,
-        parcelId
-      }
-    },
-    include: {
-      evidences: true,
-      tasks: true
-    }
-  });
-  return evidence;
 }
 
 export async function fetchParcelName(parcelId: string) {

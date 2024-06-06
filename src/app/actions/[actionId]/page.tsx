@@ -16,7 +16,8 @@ export default async function Page({
     await fetchTasksForAction(params.actionId),
     await fetchParcelsForAction(params.actionId),
     await fetchActionName(params.actionId)
-  ])
+  ]);
+  console.log(evidence);
   const { actionId } = params;
   return (
     <div className="w-full">
