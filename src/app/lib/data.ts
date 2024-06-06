@@ -23,6 +23,34 @@ export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
   }
 }>
 
+export type ActionWithParcels = Prisma.ActionGetPayload<{
+  include: { 
+    options: {
+      include: {
+        parcel: true
+      }
+    }
+  }
+}>
+
+export async function fetchAllActionsWithParcels() {
+  try {
+    const actions = await prisma.action.findMany({
+      include: {
+        options: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    });
+    return actions;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch actions');
+  }
+}
+
 export async function fetchAllActions() {
   try {
     const actions = await prisma.action.findMany();

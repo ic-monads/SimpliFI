@@ -6,7 +6,7 @@ import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
-import { EvidenceParcels } from "../actions/evidence-parcels";
+import { ParcelBadges } from "../parcel-badges";
 
 export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
 
@@ -50,7 +50,7 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
               {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
-              <EvidenceParcels parcels={getParcels(evidence)} />
+              <ParcelBadges parcels={getParcels(evidence)} />
             </td>
             { showTasks &&
               <td>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import AllTasks from '@/app/ui/tasks/all-tasks';
 import Evidences from '@/app/ui/evidence/evidences';
 import GenerateReport from '@/app/ui/options/generate-report';
+import { ParcelBadges } from '@/app/ui/parcel-badges';
 
 export default async function Page({
   params
@@ -37,7 +38,7 @@ export default async function Page({
       </div>
 
       <div className="flex w-full items-center justify-start gap-x-5">
-        { parcels.map((p) => <p key={p.id}>{p.name}</p>) }
+        <ParcelBadges parcels={parcels} />
       </div>
 
       <div role="tablist" className="tabs tabs-lifted mt-3">

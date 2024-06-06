@@ -1,10 +1,10 @@
 import { Card } from '@/app/ui/actions/cards';
-import { fetchAllActions } from '@/app/lib/data';
+import { fetchAllActionsWithParcels } from '@/app/lib/data';
 import Link from 'next/link';
 import GenerateReport from '../ui/options/generate-report';
 
 export default async function Page() {
-  const actions = await fetchAllActions();
+  const actions = await fetchAllActionsWithParcels();
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -14,7 +14,7 @@ export default async function Page() {
         </div>
       </div>
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {actions.map((a) => <Card key={a.code} action={a} />)}
+        {actions.map((action) => <Card key={action.code} action={action} />)}
       </div>
     </div>
   );
