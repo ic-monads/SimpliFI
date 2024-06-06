@@ -19,13 +19,17 @@ export type ReportOption = {
 
 const EvidenceSection = ({ evidence } : { evidence: ReportEvidence }) => {
   return (
-    <NoBreak className="space-y-4">
-      <div className="flex flex-row space-x-6">
-        <h2 className="font-semibold text-xl">{evidence.title}</h2>
-        <p>{moment(evidence.date).format("DD/MM/YYYY")}</p>
+    <NoBreak>
+      <div className="flex">
+        <h2 className="font-semibold text-xl inline-block align-bottom mr-4">{evidence.title}</h2>
+        <p className="inline-block align-bottom">{moment(evidence.date).format("DD/MM/YYYY")}</p>
       </div>
+      
       <p>{evidence.notes}</p>
-      {evidence.fileUrl.endsWith(".pdf") ? <p>This evidence was a document. It can be found at Appendix {evidence.appendixPos!}.</p> : <img className="max-w-2xl max-h-xl" src={evidence.fileUrl} />}
+      {evidence.fileUrl.endsWith(".pdf") ?
+        <p>This evidence was a document. It can be found at Appendix {evidence.appendixPos!}.</p> :
+        <img className="my-3 max-w-xl max-h-xl" src={evidence.fileUrl} />
+      }
     </NoBreak>
   )
 }
@@ -33,7 +37,7 @@ const EvidenceSection = ({ evidence } : { evidence: ReportEvidence }) => {
 const OptionSection = ({ option } : { option: ReportOption }) => {
   return (
     <div>
-      <h1 className="font-semibold text-2xl">{option.actionCode} - {option.parcelId}</h1>
+      <h1 className="font-semibold text-2xl">Evidence for {option.actionCode} Action on Parcel {option.parcelId}</h1>
       { option.evidences.map((evidence) => (
         <EvidenceSection key={evidence.id} evidence={evidence} />
       )) }
@@ -53,7 +57,7 @@ export const MyDocument = ({ options } : { options: ReportOption[] }) => {
       { options.filter((option) => option.evidences.length > 0).map((option) => (
         <OptionSection key={`${option.actionCode}${option.parcelId}`} option={option} />
       )) }
-      <h1 className="text-4xl font-semibold">Appendix</h1>
+      {/* <h1 className="text-4xl font-semibold">Appendix</h1> */}
     </Tailwind>
   )
 }
