@@ -6,10 +6,9 @@ import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
-import { EvidenceParcels } from "./evidence-parcels";
+import { EvidenceParcels } from "../actions/evidence-parcels";
 
-export default async function Evidences(props: { evidences: EvidenceWithTaskAndParcels[] }) {
-  const { evidences } = props;
+export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
 
   function getParcels(evidence: EvidenceWithTaskAndParcels) {
     return evidence.optionEvidences.map((optionEvidence) => optionEvidence.option.parcel);
@@ -29,9 +28,13 @@ export default async function Evidences(props: { evidences: EvidenceWithTaskAndP
           <th scope="col">
             Land Parcels
           </th>
-          <th scope="col">
-            Task
-          </th>
+
+          { showTasks &&
+            <th scope="col">
+              Task
+            </th>
+          }
+
           <th scope="col">
             Notes
           </th>
@@ -49,9 +52,11 @@ export default async function Evidences(props: { evidences: EvidenceWithTaskAndP
             <td>
               <EvidenceParcels parcels={getParcels(evidence)} />
             </td>
-            <td>
-              {evidence.task ? evidence.task.title : "-"}
-            </td>
+            { showTasks &&
+              <td>
+                {evidence.task ? evidence.task.title : "-"}
+              </td>
+            }
             <td>
               {evidence.notes}
             </td>
@@ -68,7 +73,7 @@ export default async function Evidences(props: { evidences: EvidenceWithTaskAndP
 
     {evidences.map((evidence: Evidence) => (
       <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">
-      { evidence.fileUrl.endsWith(".pdf") ? 
+      { evidence.fileUrl.endsWith(".pdf") ?
         <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -85,7 +90,7 @@ export default async function Evidences(props: { evidences: EvidenceWithTaskAndP
       }
       </dialog>
     ))}
-    
+
     </>
   );
 }

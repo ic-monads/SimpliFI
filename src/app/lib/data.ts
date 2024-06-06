@@ -171,7 +171,20 @@ export async function fetchTaskEvidenceInfo(id: string) {
         id: id
       },
       include: {
-        evidences: true,
+        evidences: {
+          include: {
+            task: true,
+            optionEvidences: {
+              include: {
+                option: {
+                  include: {
+                    parcel: true
+                  }
+                }
+              }
+            } 
+          }
+        },
         requiredEvidences: true,
         options: {
           include: {
@@ -194,30 +207,6 @@ export async function fetchTaskEvidenceInfo(id: string) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch task');
   }
-}
-
-export async function fetchOption(actionCode: string, parcelId: string) {
-  const evidence = await prisma.option.findUniqueOrThrow({
-    where: {
-      actionCode_parcelId: {
-        actionCode,
-        parcelId
-      }
-    },
-    include: {
-      evidences: true,
-      tasks: {
-        include: {
-          task: {
-            include: {
-              action: true
-            }
-          }
-        }
-      }
-    }
-  });
-  return evidence;
 }
 
 export async function fetchParcelName(parcelId: string) {
