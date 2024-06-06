@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { createTask, getActionParcels } from "@/app/lib/actions";
+import { createTask } from "@/app/lib/actions";
 import { ChangeEvent, useState } from "react";
 import Submit from "@/app/ui/submit";
 import { Action, LandParcel } from "@prisma/client";
+import { MultiSelect } from '@mantine/core';
+import { getActionParcels } from "@/app/lib/data";
 
 export default function Form({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
@@ -51,20 +53,19 @@ export default function Form({ actCode, parcelId, actions }: { actCode?: string,
               <div className="label">
                 <label htmlFor="actCode" className="label-text">Select an action</label>
               </div>
-              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} >
-                <option selected disabled>Choose action</option>
+              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} defaultValue="DEFAULT" >
+                <option value="DEFAULT" disabled>Choose action</option>
                 { actions.map((action) => <option key={action.code} value={action.code}>{action.code}</option>) }
               </select>
             </div>
-            <div>
-              <div className="label">
-                <label htmlFor="parcelId" className="label-text">Select a land parcel</label>
-              </div>
-              <select id="parcelId" name="parcelId" className="select select-bordered w-full">
-                <option selected disabled>Choose land parcel</option>
-                { parcels.map((parcel) => <option key={parcel.id} value={parcel.id}>{`${parcel.name} (${parcel.id})`}</option>) }
-              </select>
-            </div>
+            <MultiSelect
+              label="Select relevant land parcels"
+              placeholder="Select parcels"
+              name="parcelIds"
+              data={parcels.map((parcel) => { return { value: parcel.id, label: `${parcel.name} (${parcel.id})` }})}
+              classNames={{ label: "label-text p-2" }}
+              styles={{ label: { fontWeight: 400 }}}
+            />
           </div>
         }
 

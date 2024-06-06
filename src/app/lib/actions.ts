@@ -114,26 +114,33 @@ const TaskFormSchema = z.object({
   deadline: z.string(),
   description: z.string(),
   actCode: z.string(),
-  parcelId: z.string(),
+  parcelIds: z.string(),
 });
 
 export async function createTask(formData: FormData) {
-  const { title, deadline, description, actCode, parcelId } = 
+  const { title, deadline, description, actCode, parcelIds } = 
     TaskFormSchema.parse({
       title: formData.get('title'),
       deadline: formData.get('deadline'),
       description: formData.get('description'),
       actCode: formData.get('actCode'),
-      parcelId: formData.get('parcelId'),
+      parcelIds: formData.get('parcelIds'),
     });
+  
+  // Split list of parcelIds and map to optionTask attributes
+  const optionTasks = parcelIds.split(",").map((parcelId) => {
+    return { actionCode: actCode, parcelId };
+  });
 
   await prisma.task.create({
     data: {
       title: title,
       deadline: new Date(deadline),
       description: description,
-      actCode: actCode,
-      parcelId: parcelId,
+      actionCode: actCode,
+      options: {
+        create: optionTasks
+      }
     }
   });
 
@@ -159,19 +166,4 @@ export async function createRequiredEvidence(formData: FormData) {
   })
   revalidatePath(`/tasks/${taskId}`)
   redirect(`/tasks/${taskId}`)
-}
-
-// Should be in data.ts
-export async function getActionParcels(actionCode: string) {
-  const parcels = await prisma.landParcel.findMany({
-    where: {
-      options: {
-        some: {
-          actionCode: actionCode
-        }
-      }
-    }
-  });
-
-  return parcels;
 }
