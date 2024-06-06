@@ -16,6 +16,7 @@ const ff = new FileforgeClient({
 })
 
 export async function GET(request: Request) {
+  console.log(request.body);
   const options = await prisma.option.findMany();
   let reportOptions: ReportOption[] = [];
   let pdfEvidence: string[] = [];
