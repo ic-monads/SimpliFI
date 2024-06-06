@@ -9,7 +9,7 @@ export async function Card({ task }: { task: Task }) {
 
   return (
     <Link href={`/tasks/${task.id}`} >
-      <div className="card min-w-64 border shadow-sm p-3 shadow-sm hover:bg-gray-100 transition-all">
+      <div className="card min-w-64 border p-3 shadow-sm hover:bg-gray-100 transition-all">
         <div className="flex justify-between mb-2 gap-4">
           <h3 className="text-md font-bold text-nowrap truncate">{task.title}</h3>
           <StatusBadge task={task} empty={true} />

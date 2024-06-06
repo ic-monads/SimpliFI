@@ -5,13 +5,14 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
+import { LandParcel } from "@prisma/client";
   
 export default function Form({ 
-  actCode, parcelId, taskId, 
-  reqEvId, evTitle, taskName, fromTask 
+  actCode, parcels, taskId, reqEvId,
+  evTitle, taskName, fromTask 
 }: { 
-  actCode: string, parcelId: string, taskId?: string, 
-  reqEvId?: string, evTitle?: string, taskName?: string, fromTask: string 
+  actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string, 
+  evTitle?: string, taskName?: string, fromTask: string 
 }) {
   const [error, setError] = useState<string | null>(null);
 
@@ -19,8 +20,8 @@ export default function Form({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleSubmit = async (formData: FormData) => {
+    console.log(formData);
     formData.append('actCode', actCode);
-    formData.append('parcelId', parcelId);
     if (taskId) {
       formData.append('taskId', taskId);
     }
@@ -58,8 +59,7 @@ export default function Form({
       <h1 className="font-semibold text-2xl mb-3">Add Evidence</h1>
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
       <form className="max-w-md" action={handleSubmit}>
-        <p className="text-sm mb-2">SFI option: {actCode}</p>
-        <p className="text-sm mb-2">Land parcel: {parcelId}</p>
+        <p className="text-sm mb-2">SFI Action: {actCode}</p>
         { taskId && <p className="font-semibold mb-2">For Task: {taskName}</p>}
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>
@@ -74,6 +74,15 @@ export default function Form({
         </div>
         <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
         <div className="label">
+          <label htmlFor="parcelId" className="label-text">Select Parcel</label>
+        </div>
+        <select className="select select-bordered w-full max-w-xs" id="parcelId" name="parcelId">
+          <option disabled selected>For Parcel</option>
+          {parcels.map((p) => (
+            <option key={p.id} value={p.id}>{p.name} - {p.id}</option>
+          ))}
+        </select>
+        <div className="label">
           <label htmlFor="file" className="label-text">File</label>
         </div>
         <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
@@ -81,8 +90,7 @@ export default function Form({
           <Link href={(fromTask == 'true') ? {
             pathname: `/tasks/${taskId}`
           } : {
-            pathname: "/options/option",
-            query: { actCode, parcelId }
+            pathname: `/actions/${actCode}`
           }}>
             <button className="btn btn-content-neutral">Cancel</button>
           </Link>

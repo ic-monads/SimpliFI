@@ -51,6 +51,7 @@ export async function createEvidence(formData: FormData) {
     reqEvId: formData.get('reqEvId'),
     fromTask: formData.get('fromTask')
   });
+  console.log(parcelId);
   let date = new Date(inputDate);
 
   const ev = await prisma.evidence.create({
@@ -59,7 +60,6 @@ export async function createEvidence(formData: FormData) {
     }
   });
   if (reqEvId) {
-    console.log("Updating required evidence");
     await prisma.requiredEvidence.update({
       where: {
         id: reqEvId
@@ -69,17 +69,9 @@ export async function createEvidence(formData: FormData) {
       },
     })
   }
-  if (fromTask == 'true') {
-    const path = `/tasks/${taskId}`;
-    revalidatePath(path);
-    redirect(path);
-  } else {
-    revalidatePath('/options/option');
-    const params = new URLSearchParams();
-    params.set('actCode', actCode);
-    params.set('parcelId', parcelId);
-    redirect(`/options/option?${params.toString()}`);
-  }
+  let path = fromTask == 'true' ? `/tasks/${taskId}` : `/actions/${actCode}`
+  revalidatePath(path);
+  redirect(path);
 }
 
 export async function deleteEvidence(id: string) {

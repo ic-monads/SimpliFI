@@ -21,10 +21,13 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
             Date
           </th>
           <th scope="col">
-            Notes
+            Land Parcel
           </th>
           <th scope="col">
-            
+            Task
+          </th>
+          <th scope="col">
+            Notes
           </th>
         </tr>
       </thead>
@@ -38,12 +41,15 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
               {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
+              {evidence.parcelId}
+            </td>
+            <td>
+              {evidence.taskId ? evidence.taskId : "-"}
+            </td>
+            <td>
               {evidence.notes}
             </td>
             <td className="flex space-x-2">
-              {/* <a className="btn btn-sm btn-content-neutral" href={evidence.fileUrl} target="_blank" rel="noreferrer">
-                View File
-              </a> */}
               <ShowModalButton evidenceId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
                 <Submit />

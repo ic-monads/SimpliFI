@@ -51,6 +51,55 @@ export async function fetchAllOptions() {
   }
 }
 
+// TODO: Filter by selected parcels
+export async function fetchEvidenceForAction(actionCode: string) {
+  try {
+    const evidence = await prisma.evidence.findMany({
+      where: {
+        actCode: actionCode
+      },
+    });
+    return evidence;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch evidence for action');
+  }
+}
+
+export async function fetchTasksForAction(actionCode: string) {
+  try {
+    const tasks = await prisma.task.findMany({
+      where: {
+        actCode: actionCode
+      },
+    });
+    return tasks;
+  } catch (e) {
+    throw new Error('failed to fetch tasks for action')
+  }
+}
+
+export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
+  try {
+    const parcels = await prisma.option.findMany({
+      where: {
+        actionCode: actionCode
+      },
+      include: {
+        parcel: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      }
+    });
+    return parcels.map((p) => p.parcel);
+  } catch (e) {
+    throw new Error('failed to fetch tasks for action')
+  }
+}
+
 export async function fetchAllTasks() {
   try {
     const tasks = await prisma.task.findMany();

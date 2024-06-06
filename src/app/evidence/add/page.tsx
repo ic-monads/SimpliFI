@@ -1,14 +1,12 @@
-"use client"; // This is a client-side component
-
 import Form
  from "@/app/ui/evidence/create-evidence-form";
+import { fetchParcelsForAction } from "@/app/lib/data";
 
-export default function Page({
+export default async function Page({
     searchParams,
   }: {
     searchParams: {
       actCode: string;
-      parcelId: string;
       taskId?: string;
       reqEvId?: string
       evTitle?: string;
@@ -16,11 +14,12 @@ export default function Page({
       fromTask: string
     };
   }) {
+    const parcels = await fetchParcelsForAction(searchParams.actCode);
     return (
         <main>
             <Form 
               actCode={searchParams.actCode} 
-              parcelId={searchParams.parcelId} 
+              parcels={parcels}
               taskId={searchParams.taskId} 
               reqEvId={searchParams.reqEvId} 
               evTitle={searchParams.evTitle} 
