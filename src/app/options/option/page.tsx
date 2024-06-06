@@ -20,6 +20,8 @@ export default async function Page({
     fetchActionName(actCode)
   ])
 
+  const tasks = option.tasks.map((optionTask) => optionTask.task);
+
   return (
     <div className="w-full">
       <div className="flex justify-between mb-3">
@@ -48,7 +50,7 @@ export default async function Page({
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <AllTasks tasks={option.tasks} />
+          <AllTasks tasks={tasks} />
 
           <Link href={{
             pathname: "/tasks/add", 

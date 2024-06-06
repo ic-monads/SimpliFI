@@ -100,7 +100,15 @@ export async function fetchOption(actionCode: string, parcelId: string) {
     },
     include: {
       evidences: true,
-      tasks: true
+      tasks: {
+        include: {
+          task: {
+            include: {
+              action: true
+            }
+          }
+        }
+      }
     }
   });
   return evidence;
