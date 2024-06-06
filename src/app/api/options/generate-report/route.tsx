@@ -41,6 +41,7 @@ export async function GET() {
       actionCode: option.actionCode,
       parcelId: option.parcelId,
       evidences: evidences.map(evidence => ({
+        id: evidence.id,
         title: evidence.title,
         notes: evidence.notes,
         fileUrl: evidence.fileUrl,

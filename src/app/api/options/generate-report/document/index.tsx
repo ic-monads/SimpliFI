@@ -2,6 +2,7 @@ import { PageTop, PageBreak, NoBreak, Tailwind } from "@fileforge/react-print";
 import * as React from "react";
 
 export type ReportEvidence = {
+  id: string;
   title: string;
   notes: string;
   fileUrl: string;
@@ -28,7 +29,7 @@ const OptionSection = ({ option } : { option: ReportOption }) => {
     <div>
       <h1 className="font-semibold text-xl">{option.actionCode} - {option.parcelId}</h1>
       { option.evidences.map((evidence) => (
-        <EvidenceSection evidence={evidence} />
+        <EvidenceSection key={evidence.id} evidence={evidence} />
       )) }
       <PageBreak />
     </div>
@@ -42,7 +43,7 @@ export const MyDocument = ({ options } : { options: ReportOption[] }) => {
         <span className="font-semibold">SFI Report</span>
       </PageTop>
       { options.filter((option) => option.evidences.length > 0).map((option) => (
-        <OptionSection option={option} />
+        <OptionSection key={`${option.actionCode}${option.parcelId}`} option={option} />
       )) }
     </Tailwind>
   )
