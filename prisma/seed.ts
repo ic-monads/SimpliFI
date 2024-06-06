@@ -91,7 +91,7 @@ async function main() {
 
   const task1 = await prisma.task.create({
     data: {
-      deadline: new Date(2024, 6, 15),
+      deadline: new Date(2024, 5, 15),
       title: "Planting Cover Crops",
       description: "Plant cover crops to improve soil health and prevent erosion.",
       actionCode: "CSAM1",
@@ -106,7 +106,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 6, 20),
+      deadline: new Date(2024, 5, 20),
       title: "Fertilization",
       description: "Apply organic fertilizer to enhance soil fertility and promote plant growth.",
       actionCode: "CHRW1",
@@ -121,7 +121,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 6, 25),
+      deadline: new Date(2024, 5, 25),
       title: "Irrigation Setup",
       description: "Set up an efficient irrigation system to ensure proper water supply to crops.",
       actionCode: "AHW1",
@@ -136,7 +136,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 1),
+      deadline: new Date(2024, 6, 1),
       title: "Weed Control",
       description: "Implement measures to control weeds and minimize their impact on crops.",
       actionCode: "CSAM1",
@@ -151,7 +151,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 6, 8),
+      deadline: new Date(2024, 5, 8),
       title: "Pest Monitoring",
       description: "Regularly monitor for pests and take necessary actions to control them.",
       actionCode: "AHW1",
@@ -166,7 +166,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 10),
+      deadline: new Date(2024, 6, 10),
       title: "Harvest Planning",
       description: "Plan the harvest schedule to ensure timely and efficient crop collection.",
       actionCode: "CSAM1",
@@ -181,7 +181,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 15),
+      deadline: new Date(2024, 6, 15),
       title: "Soil Testing",
       description: "Conduct soil tests to assess nutrient levels and make informed decisions.",
       actionCode: "CHRW1",
@@ -196,7 +196,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 20),
+      deadline: new Date(2024, 6, 20),
       title: "Mulching",
       description: "Apply mulch to retain soil moisture and suppress weed growth.",
       actionCode: "AHW1",
@@ -211,7 +211,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 25),
+      deadline: new Date(2024, 6, 25),
       title: "Compost Application",
       description: "Apply compost to enrich the soil with organic matter and nutrients.",
       actionCode: "CHRW1",
@@ -226,7 +226,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 6, 18),
+      deadline: new Date(2024, 5, 18),
       title: "Pruning",
       description: "Prune plants to promote healthy growth and improve air circulation.",
       actionCode: "CSAM1",
@@ -241,7 +241,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 8, 5),
+      deadline: new Date(2024, 7, 5),
       title: "Seed Saving",
       description: "Collect seeds from mature plants for future planting.",
       actionCode: "CSAM1",
@@ -256,7 +256,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 3),
+      deadline: new Date(2024, 6, 3),
       title: "Disease Management",
       description: "Monitor for diseases and apply treatments to prevent spread.",
       actionCode: "CHRW1",
@@ -271,7 +271,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 8, 15),
+      deadline: new Date(2024, 7, 15),
       title: "Crop Rotation Planning",
       description: "Plan crop rotation to maintain soil health and reduce pest buildup.",
       actionCode: "CHRW1",
@@ -286,7 +286,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 8, 20),
+      deadline: new Date(2024, 7, 20),
       title: "Organic Pest Control",
       description: "Use organic methods to control pests and minimize chemical use.",
       actionCode: "CSAM1",
@@ -301,7 +301,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 7, 8),
+      deadline: new Date(2024, 6, 8),
       title: "Water Conservation",
       description: "Implement techniques to conserve water and reduce waste.",
       actionCode: "AHW1",
@@ -316,7 +316,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 9, 1),
+      deadline: new Date(2024, 8, 1),
       title: "Green Manure",
       description: "Incorporate green manure crops to improve soil structure and fertility.",
       actionCode: "CHRW1",
@@ -331,7 +331,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 9, 5),
+      deadline: new Date(2024, 8, 5),
       title: "Field Mapping",
       description: "Create detailed maps of fields to optimize planting and management.",
       actionCode: "AHW1",
@@ -361,7 +361,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 9, 10),
+      deadline: new Date(2024, 8, 10),
       title: "Cover Crop Termination",
       description: "Terminate cover crops to prepare fields for the next planting season.",
       actionCode: "CSAM1",
@@ -376,7 +376,7 @@ async function main() {
 
   await prisma.task.create({
     data: {
-      deadline: new Date(2024, 9, 15),
+      deadline: new Date(2024, 8, 15),
       title: "Soil Erosion Control",
       description: "Implement measures to prevent soil erosion and maintain field integrity.",
       actionCode: "CHRW1",
