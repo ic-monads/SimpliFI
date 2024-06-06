@@ -1,7 +1,7 @@
+import { TaskWithAction } from "@/app/lib/data";
 import { Card } from "./cards";
-import type { Task } from "@prisma/client";
 
-function UpcomingTasks({ tasks }: { tasks: Task[] }) {
+function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {
     const fourWeeks = 28 * 24 * 60 * 60 * 1000;
     return (
         <>
