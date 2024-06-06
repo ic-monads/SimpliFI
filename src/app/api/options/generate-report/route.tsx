@@ -15,7 +15,7 @@ const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 })
 
-export async function GET() {
+export async function GET(request: Request) {
   const options = await prisma.option.findMany();
   let reportOptions: ReportOption[] = [];
   let pdfEvidence: string[] = [];
