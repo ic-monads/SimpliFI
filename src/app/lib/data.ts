@@ -1,6 +1,10 @@
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import type { Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
+import type { Prisma, Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
+
+export type TaskWithAction = Prisma.TaskGetPayload<{
+  include: { action: true }
+}>
 
 export async function fetchAllActions() {
   try {
@@ -53,7 +57,11 @@ export async function fetchAllOptions() {
 
 export async function fetchAllTasks() {
   try {
-    const tasks = await prisma.task.findMany();
+    const tasks = await prisma.task.findMany({
+      include: {
+        action: true
+      }
+    });
     return tasks;
   } catch (e) {
     console.error('Database Error:', e);
@@ -69,7 +77,9 @@ export async function fetchTask(id: string) {
       },
       include: {
         evidences: true,
-        requiredEvidences: true
+        requiredEvidences: true,
+        options: true,
+        action: true
       }
     });
     return task;
@@ -127,4 +137,22 @@ export async function fetchActionName(actCode: string) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch action name');
   }
+}
+
+export async function fetchTaskParcels(taskId: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          tasks: {
+            some: {
+              taskId
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return parcels;
 }
