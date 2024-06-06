@@ -6,7 +6,7 @@ import { compile } from "@fileforge/react-print";
 import { FileforgeClient } from "@fileforge/client"
 import { MyDocument } from "./document";
 import type { ReportOption } from "./document";
-import { createWriteStream, createReadStream, ReadStream, unlinkSync } from "fs";
+import { createWriteStream, unlinkSync } from "fs";
 import path from "path";
 import got from "got";
 import PDFMerger from "pdf-merger-js";
@@ -93,6 +93,7 @@ export async function GET() {
   return new NextResponse(mergedPdfBuffer, {
     headers: {
       "Content-Type": "application/pdf",
+      "Cache-Control": "no-store, max-age=0, no-cache, must-revalidate",
     },
   });
 }
