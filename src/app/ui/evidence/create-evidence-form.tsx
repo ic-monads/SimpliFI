@@ -61,7 +61,7 @@ export default function Form({
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
       <form className="max-w-md" action={handleSubmit}>
         <p className="text-sm mb-2">SFI Action: {actCode}</p>
-        { taskId && <p className="font-semibold mb-2">For Task: {taskName}</p>}
+        { taskId && <p className="text-sm mb-2">Task: {taskName}</p>}
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>
         </div>
