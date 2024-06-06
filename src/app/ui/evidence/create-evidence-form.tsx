@@ -6,7 +6,13 @@ import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
   
-export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle, fromTask }: { actCode: string, parcelId: string, taskId?: string, reqEvId?: string, evTitle?: string, fromTask: string }) {
+export default function Form({ 
+  actCode, parcelId, taskId, 
+  reqEvId, evTitle, taskName, fromTask 
+}: { 
+  actCode: string, parcelId: string, taskId?: string, 
+  reqEvId?: string, evTitle?: string, taskName?: string, fromTask: string 
+}) {
   const [error, setError] = useState<string | null>(null);
 
   // const status = useFormStatus();
@@ -54,7 +60,7 @@ export default function Form({ actCode, parcelId, taskId, reqEvId, evTitle, from
       <form className="max-w-md" action={handleSubmit}>
         <p className="text-sm mb-2">SFI option: {actCode}</p>
         <p className="text-sm mb-2">Land parcel: {parcelId}</p>
-        { taskId && <p className="font-semibold mb-2">For Task: {taskId}</p>}
+        { taskId && <p className="font-semibold mb-2">For Task: {taskName}</p>}
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>
         </div>

@@ -17,7 +17,11 @@ export async function Card({ task }: { task: Task }) {
         <p className="text-xs mb-3">
           {task.actCode}: {actionName}
         </p>
-        <div className="badge badge-outline text-xs">{task.parcelId}</div>
+        <div className="flex justify-between items-center">
+          <div className="badge badge-outline text-xs">{task.parcelId}</div>
+          <div className="badge badge-outline text-xs">{Moment(task.deadline).format("DD/MM/YYYY")}</div>
+        </div>
+        
       </div>
     </Link>
   )
