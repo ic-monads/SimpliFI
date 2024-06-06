@@ -19,8 +19,11 @@ async function htmlForContents(options: Option[]) {
 async function htmlForOption(option: Option) {
   const evidences = await prisma.evidence.findMany({
     where: {
-      actCode: option.actionCode,
-      parcelId: option.parcelId
+      optionEvidences: {
+        some: {
+          option: option
+        }
+      }
     }
   });
 
