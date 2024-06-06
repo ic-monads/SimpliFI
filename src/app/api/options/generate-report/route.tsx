@@ -68,7 +68,7 @@ export async function GET(request: Request) {
 
   var merger = new PDFMerger();
 
-  merger.add(blob.url);
+  await merger.add(blob.url);
   // await merger.add(path.join(process.cwd(), "report.pdf"));
 
   for (let pdf of pdfEvidence) {
