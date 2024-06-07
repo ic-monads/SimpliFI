@@ -30,8 +30,6 @@ export default function Form({
       formData.append('reqEvId', reqEvId);
     }
     formData.append('fromTask', fromTask);
-    // setLoading(true);
-    // console.log(`Loading set to ${loading}`);
     let fileUrl = "";
     if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
       console.log("Attempting file upload");
@@ -40,7 +38,8 @@ export default function Form({
         access: "public",
         handleUploadUrl: "/api/evidence/handle-upload",
       });
-      
+
+      console.log("File uploaded successfully.");
       fileUrl = blob.url;
       formData.append('fileUrl', fileUrl)
     }
@@ -85,7 +84,7 @@ export default function Form({
         <div className="label">
           <label htmlFor="file" className="label-text">File</label>
         </div>
-        <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" name="file" required />
+        <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" required />
         <div className="mt-6 flex justify-end gap-4">
           <Link href={(fromTask == 'true') ? {
             pathname: `/tasks/${taskId}`
