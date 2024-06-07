@@ -50,7 +50,10 @@ export const MyDocument = ({ options } : { options: ReportOption[] }) => {
   return (
     <Tailwind>
       <PageTop>
-        <span className="font-semibold">SFI Report</span>
+        <div className="mt-4 flex justify-between">
+          <span className="font-semibold">SFI Report For SBI 123456789</span>
+          <span>Generated on {moment().format("DD/MM/YYYY")}</span>
+        </div>
       </PageTop>
       <h1 className="font-semibold text-4xl">SFI Compliance Report</h1>
       <PageBreak />
