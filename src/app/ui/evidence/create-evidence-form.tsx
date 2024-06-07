@@ -5,13 +5,15 @@ import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/ui/submit";
+import { LandParcel } from "@prisma/client";
+import { MultiSelect } from "@mantine/core";
   
 export default function Form({ 
-  actCode, parcelId, taskId, 
-  reqEvId, evTitle, taskName, fromTask 
+  actCode, parcels, taskId, reqEvId,
+  evTitle, taskName, fromTask 
 }: { 
-  actCode: string, parcelId: string, taskId?: string, 
-  reqEvId?: string, evTitle?: string, taskName?: string, fromTask: string 
+  actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string, 
+  evTitle?: string, taskName?: string, fromTask: string 
 }) {
   const [error, setError] = useState<string | null>(null);
 
@@ -19,8 +21,8 @@ export default function Form({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleSubmit = async (formData: FormData) => {
+    console.log(formData);
     formData.append('actCode', actCode);
-    formData.append('parcelId', parcelId);
     if (taskId) {
       formData.append('taskId', taskId);
     }
@@ -57,9 +59,8 @@ export default function Form({
       <h1 className="font-semibold text-2xl mb-3">Add Evidence</h1>
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
       <form className="max-w-md" action={handleSubmit}>
-        <p className="text-sm mb-2">SFI option: {actCode}</p>
-        <p className="text-sm mb-2">Land parcel: {parcelId}</p>
-        { taskId && <p className="font-semibold mb-2">For Task: {taskName}</p>}
+        <p className="text-sm mb-2">SFI Action: {actCode}</p>
+        { taskId && <p className="text-sm mb-2">Task: {taskName}</p>}
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>
         </div>
@@ -72,6 +73,14 @@ export default function Form({
           <label htmlFor="notes" className="label-text">Notes</label>
         </div>
         <textarea id="notes" name="notes" className="textarea textarea-bordered w-full" required/>
+        <MultiSelect
+          label="Select relevant land parcels"
+          placeholder="Select parcels"
+          name="parcelIds"
+          data={parcels.map((parcel) => { return { value: parcel.id, label: `${parcel.name} (${parcel.id})` }})}
+          classNames={{ label: "label-text p-2" }}
+          styles={{ label: { fontWeight: 400 }}}
+        />
         <div className="label">
           <label htmlFor="file" className="label-text">File</label>
         </div>
@@ -80,8 +89,7 @@ export default function Form({
           <Link href={(fromTask == 'true') ? {
             pathname: `/tasks/${taskId}`
           } : {
-            pathname: "/options/option",
-            query: { actCode, parcelId }
+            pathname: `/actions/${actCode}`
           }}>
             <button className="btn btn-content-neutral">Cancel</button>
           </Link>

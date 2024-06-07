@@ -1,9 +1,9 @@
 'use client';
 
-
 import {
   HomeIcon,
-  RectangleStackIcon
+  RectangleStackIcon,
+  WrenchIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,7 +13,8 @@ import clsx from 'clsx';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'My Options', href: '/options', icon: HomeIcon },
+  { name: 'My Actions', href: '/actions', icon: WrenchIcon },
+  // { name: 'My Options', href: '/options', icon: HomeIcon },
   { name: 'Tasks', href: '/tasks', icon: RectangleStackIcon },
   // { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];

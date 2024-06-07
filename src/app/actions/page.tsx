@@ -1,23 +1,20 @@
-import { Card } from '@/app/ui/options/cards';
-import { fetchAllOptions } from '../lib/data';
+import { Card } from '@/app/ui/actions/cards';
+import { fetchAllActionsWithParcels } from '@/app/lib/data';
 import Link from 'next/link';
 import GenerateReport from '../ui/options/generate-report';
 
 export default async function Page() {
-  const options = await fetchAllOptions();
+  const actions = await fetchAllActionsWithParcels();
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className="text-2xl font-semibold">My Options</h1>
+        <h1 className="text-2xl font-semibold">My Actions</h1>
         <div className='flex space-x-3'>
-          <Link href="/options/add">
-            <button className="btn btn-primary">Add Option</button>
-          </Link>
           <GenerateReport />
         </div>
       </div>
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {options.map((o) => <Card key={`${o.actionCode}${o.parcelId}`} action={o.action} parcel={o.parcel} />)}
+        {actions.map((action) => <Card key={action.code} action={action} />)}
       </div>
     </div>
   );

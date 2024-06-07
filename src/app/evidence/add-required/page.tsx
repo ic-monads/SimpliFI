@@ -10,7 +10,6 @@ export default function Page({
     taskName: string 
   };
   }) {
-  console.log('Page', searchParams);
   return (
     <main>
       <Form taskId={searchParams.taskId} taskName={searchParams.taskName} />

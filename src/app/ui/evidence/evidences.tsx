@@ -1,13 +1,18 @@
 "use server";
 
-import type { Evidence } from "@prisma/client";
+import type { Evidence, Task } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
 import Submit from '@/app/ui/options/option/submit-error';
 import Moment from "moment";
 import ShowModalButton from "@/app/ui/evidence-modal-button";
+import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
+import { ParcelBadges } from "../parcel-badges";
 
-export default async function Evidences(props: { evidences: Evidence[] }) {
-  const evidences = props.evidences;
+export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
+
+  function getParcels(evidence: EvidenceWithTaskAndParcels) {
+    return evidence.optionEvidences.map((optionEvidence) => optionEvidence.option.parcel);
+  }
 
   return(
     <>
@@ -21,15 +26,22 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
             Date
           </th>
           <th scope="col">
-            Notes
+            Land Parcels
           </th>
+
+          { showTasks &&
+            <th scope="col">
+              Task
+            </th>
+          }
+
           <th scope="col">
-            
+            Notes
           </th>
         </tr>
       </thead>
       <tbody>
-        {evidences.map((evidence: Evidence) => (
+        {evidences.map((evidence: EvidenceWithTaskAndParcels) => (
           <tr key={evidence.id}>
             <th scope="row">
               {evidence.title}
@@ -38,12 +50,17 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
               {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
+              <ParcelBadges parcels={getParcels(evidence)} />
+            </td>
+            { showTasks &&
+              <td>
+                {evidence.task ? evidence.task.title : "-"}
+              </td>
+            }
+            <td>
               {evidence.notes}
             </td>
             <td className="flex space-x-2">
-              {/* <a className="btn btn-sm btn-content-neutral" href={evidence.fileUrl} target="_blank" rel="noreferrer">
-                View File
-              </a> */}
               <ShowModalButton evidenceId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
                 <Submit />
@@ -53,9 +70,10 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
         ))}
       </tbody>
     </table>
+
     {evidences.map((evidence: Evidence) => (
       <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">
-      { evidence.fileUrl.endsWith(".pdf") ? 
+      { evidence.fileUrl.endsWith(".pdf") ?
         <div className="modal-box w-11/12 max-w-5xl max-h-{64rem} h-5/6 pt-12">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -72,7 +90,7 @@ export default async function Evidences(props: { evidences: Evidence[] }) {
       }
       </dialog>
     ))}
-    
+
     </>
   );
 }

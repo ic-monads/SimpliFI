@@ -9,14 +9,14 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const { title, date, fileUrl, option } = await req.json();
 
-  const result = await prisma.evidence.create({
-    data: {
-      title,
-      date,
-      fileUrl,
-      option
-    },
-  });
+  // const result = await prisma.evidence.create({
+  //   data: {
+  //     title,
+  //     date,
+  //     fileUrl,
+  //     option
+  //   },
+  // });
 
-  return new Response(JSON.stringify(result), { status: 200});
+  // return new Response(JSON.stringify(result), { status: 200});
 }

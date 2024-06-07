@@ -22,8 +22,9 @@ export async function createOption(formData: FormData) {
       parcelId: parcelId,
     }
   });
-  revalidatePath('/options');
-  redirect('/options');
+  const path = `/actions/${actionCode}`;
+  revalidatePath(path);
+  redirect(path);
 }
 
 // https://strapi.io/blog/epic-next-js-14-tutorial-part-5-file-upload-using-server-actions
@@ -33,53 +34,56 @@ const EvidenceFormSchema = z.object({
   notes: z.string(),
   fileUrl: z.string(),
   actCode: z.string(),
-  parcelId: z.string(),
+  parcelIds: z.string(),
   taskId: z.string().nullable(),
   reqEvId: z.string().nullable(),
   fromTask: z.string()
 });
 
 export async function createEvidence(formData: FormData) {
-  const { title, inputDate, notes, fileUrl, actCode, parcelId, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
+  const { title, inputDate, notes, fileUrl, actCode, parcelIds, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
     notes: formData.get('notes'),
     fileUrl: formData.get('fileUrl'),
     actCode: formData.get('actCode'),
-    parcelId: formData.get('parcelId'),
+    parcelIds: formData.get('parcelIds'),
     taskId: formData.get('taskId'),
     reqEvId: formData.get('reqEvId'),
     fromTask: formData.get('fromTask')
   });
   let date = new Date(inputDate);
 
-  const ev = await prisma.evidence.create({
+  const optionEvidences = parcelIds.split(",").map((parcelId) => {
+    return { actCode, parcelId };
+  });
+
+  const evidence = await prisma.evidence.create({
     data: {
-      title, date, notes, fileUrl, actCode, parcelId, taskId
+      title,
+      date,
+      notes,
+      fileUrl,
+      taskId,
+      optionEvidences: {
+        create: optionEvidences
+      }
     }
   });
+
   if (reqEvId) {
-    console.log("Updating required evidence");
     await prisma.requiredEvidence.update({
       where: {
         id: reqEvId
       },
       data: {
-        evId: ev.id,
+        evId: evidence.id,
       },
     })
   }
-  if (fromTask == 'true') {
-    const path = `/tasks/${taskId}`;
-    revalidatePath(path);
-    redirect(path);
-  } else {
-    revalidatePath('/options/option');
-    const params = new URLSearchParams();
-    params.set('actCode', actCode);
-    params.set('parcelId', parcelId);
-    redirect(`/options/option?${params.toString()}`);
-  }
+  let path = fromTask == 'true' ? `/tasks/${taskId}` : `/actions/${actCode}`
+  revalidatePath(path);
+  redirect(path);
 }
 
 export async function deleteEvidence(id: string) {
@@ -99,7 +103,7 @@ export async function deleteEvidence(id: string) {
       id
     }
   });
-  revalidatePath('/options/option');
+  // revalidatePath(`/actions/${deleteEv.actionCode}`);
 }
 
 export async function deleteRequiredEvidence(id: string, taskId: string) {
@@ -124,26 +128,33 @@ const TaskFormSchema = z.object({
   deadline: z.string(),
   description: z.string(),
   actCode: z.string(),
-  parcelId: z.string(),
+  parcelIds: z.string(),
 });
 
 export async function createTask(formData: FormData) {
-  const { title, deadline, description, actCode, parcelId } = 
+  const { title, deadline, description, actCode, parcelIds } = 
     TaskFormSchema.parse({
       title: formData.get('title'),
       deadline: formData.get('deadline'),
       description: formData.get('description'),
       actCode: formData.get('actCode'),
-      parcelId: formData.get('parcelId'),
+      parcelIds: formData.get('parcelIds'),
     });
+  
+  // Split list of parcelIds and map to optionTask attributes
+  const optionTasks = parcelIds.split(",").map((parcelId) => {
+    return { actionCode: actCode, parcelId };
+  });
 
   await prisma.task.create({
     data: {
       title: title,
       deadline: new Date(deadline),
       description: description,
-      actCode: actCode,
-      parcelId: parcelId,
+      actionCode: actCode,
+      options: {
+        create: optionTasks
+      }
     }
   });
 
@@ -169,19 +180,4 @@ export async function createRequiredEvidence(formData: FormData) {
   })
   revalidatePath(`/tasks/${taskId}`)
   redirect(`/tasks/${taskId}`)
-}
-
-// Should be in data.ts
-export async function getActionParcels(actionCode: string) {
-  const parcels = await prisma.landParcel.findMany({
-    where: {
-      options: {
-        some: {
-          actionCode: actionCode
-        }
-      }
-    }
-  });
-
-  return parcels;
 }

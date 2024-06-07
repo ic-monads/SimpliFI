@@ -32,9 +32,10 @@ export async function GET() {
   for (let option of options) {
     const evidences = await prisma.evidence.findMany({
       where: {
-        option: {
-          actionCode: option.actionCode,
-          parcelId: option.parcelId,
+        optionEvidences: {
+          some: {
+            option: option
+          }
         }
       }
     });

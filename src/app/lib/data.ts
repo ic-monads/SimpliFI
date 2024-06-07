@@ -1,6 +1,55 @@
-import { revalidatePath } from "next/cache";
+"use server";
+
 import prisma from "./prisma";
-import type { Action, LandParcel, Option, Evidence, Task } from "@prisma/client";
+import type { LandParcel } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
+
+export type TaskWithAction = Prisma.TaskGetPayload<{
+  include: { action: true }
+}>
+
+export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
+  include: { 
+    task: true,
+    optionEvidences: {
+      include: {
+        option: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    } 
+  }
+}>
+
+export type ActionWithParcels = Prisma.ActionGetPayload<{
+  include: { 
+    options: {
+      include: {
+        parcel: true
+      }
+    }
+  }
+}>
+
+export async function fetchAllActionsWithParcels() {
+  try {
+    const actions = await prisma.action.findMany({
+      include: {
+        options: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    });
+    return actions;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch actions');
+  }
+}
 
 export async function fetchAllActions() {
   try {
@@ -51,9 +100,91 @@ export async function fetchAllOptions() {
   }
 }
 
+// TODO: Filter by selected parcels
+export async function fetchEvidenceForAction(actionCode: string) {
+  try {
+    const evidence = await prisma.evidence.findMany({
+      where: {
+        optionEvidences: {
+          some: { // or every? depends if evidence can be for different actions
+            actCode: actionCode,
+          }
+        }
+      }
+    })
+    return evidence;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch evidence for action');
+  }
+}
+
+export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: string) {
+  const evidences = await prisma.evidence.findMany({
+    where: {
+      optionEvidences: {
+        every: {
+          actCode: actionCode
+        }
+      }
+    },
+    include: { 
+      task: true,
+      optionEvidences: {
+        include: {
+          option: {
+            include: {
+              parcel: true
+            }
+          }
+        }
+      } 
+    }
+  })
+
+  return evidences;
+}
+
+export async function fetchTasksForAction(actionCode: string) {
+  const tasks = await prisma.task.findMany({
+    where: {
+      actionCode
+    },
+    include: {
+      action: true
+    }
+  });
+  return tasks;
+}
+
+export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
+  try {
+    const parcels = await prisma.option.findMany({
+      where: {
+        actionCode: actionCode
+      },
+      include: {
+        parcel: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      }
+    });
+    return parcels.map((p) => p.parcel);
+  } catch (e) {
+    throw new Error('failed to fetch tasks for action')
+  }
+}
+
 export async function fetchAllTasks() {
   try {
-    const tasks = await prisma.task.findMany();
+    const tasks = await prisma.task.findMany({
+      include: {
+        action: true
+      }
+    });
     return tasks;
   } catch (e) {
     console.error('Database Error:', e);
@@ -61,15 +192,42 @@ export async function fetchAllTasks() {
   }
 }
 
-export async function fetchTask(id: string) {
+export async function fetchTaskEvidenceInfo(id: string) {
   try {
     const task = await prisma.task.findUniqueOrThrow({
       where: {
         id: id
       },
       include: {
-        evidences: true,
-        requiredEvidences: true
+        evidences: {
+          include: {
+            task: true,
+            optionEvidences: {
+              include: {
+                option: {
+                  include: {
+                    parcel: true
+                  }
+                }
+              }
+            } 
+          }
+        },
+        requiredEvidences: true,
+        options: {
+          include: {
+            option: {
+              include: {
+                parcel: {
+                  select: {
+                    name: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        action: true
       }
     });
     return task;
@@ -77,22 +235,6 @@ export async function fetchTask(id: string) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch task');
   }
-}
-
-export async function fetchOption(actionCode: string, parcelId: string) {
-  const evidence = await prisma.option.findUniqueOrThrow({
-    where: {
-      actionCode_parcelId: {
-        actionCode,
-        parcelId
-      }
-    },
-    include: {
-      evidences: true,
-      tasks: true
-    }
-  });
-  return evidence;
 }
 
 export async function fetchParcelName(parcelId: string) {
@@ -127,4 +269,36 @@ export async function fetchActionName(actCode: string) {
     console.error('Database Error:', e);
     throw new Error('failed to fetch action name');
   }
+}
+
+export async function fetchTaskParcels(taskId: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          tasks: {
+            some: {
+              taskId
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return parcels;
+}
+
+export async function getActionParcels(actionCode: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          actionCode: actionCode
+        }
+      }
+    }
+  });
+
+  return parcels;
 }
