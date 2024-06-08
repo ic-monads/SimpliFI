@@ -1,6 +1,6 @@
 import { fetchAllTasks } from "../lib/data";
 import Link from "next/link";
-import UpcomingTasks from "../components/tasks/UpcomingTasks";
+import UpcomingTasks from "./UpcomingTasks";
 import AllTasks from "../components/tasks/AllTasks";
 
 export default async function Page() {

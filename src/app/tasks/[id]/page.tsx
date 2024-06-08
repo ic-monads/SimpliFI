@@ -1,10 +1,10 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTaskEvidenceInfo } from '@/app/lib/data';
-import Evidences from '@/app/components/evidences/Evidences';
-import RequiredEvidences from '@/app/components/requiredEvidences/RequiredEvidences';
-import { CompleteButton } from '@/app/components/tasks/task/CompleteButton';
-import { StatusBadge } from '@/app/components/tasks/task/StatusBadge';
+import Evidences from '@/app/components/Evidences';
+import RequiredEvidences from '@/app/tasks/[id]/RequiredEvidences';
+import { CompleteButton } from '@/app/tasks/[id]/CompleteButton';
+import { StatusBadge } from '@/app/components/tasks/StatusBadge';
 import Moment from "moment";
 import TaskParcels from '@/app/components/tasks/TaskParcels';
 

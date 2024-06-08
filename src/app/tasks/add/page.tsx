@@ -1,4 +1,4 @@
-import TaskForm from "@/app/components/tasks/TaskForm";
+import TaskForm from "../TaskForm";
 import { fetchAllActions, fetchLandParcels } from '@/app/lib/data';
 
 export default async function Page({

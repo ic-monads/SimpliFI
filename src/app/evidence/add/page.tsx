@@ -1,4 +1,4 @@
-import EvidenceForm from "@/app/components/evidences/EvidenceForm";
+import EvidenceForm from "@/app/evidence/EvidenceForm";
 import { fetchParcelsForAction } from "@/app/lib/data";
 
 export default async function Page({

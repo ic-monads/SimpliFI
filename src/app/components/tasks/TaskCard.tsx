@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { StatusBadge } from '@/app/components/tasks/task/StatusBadge';
+import { StatusBadge } from '@/app/components/tasks/StatusBadge';
 import Moment from "moment";
 import TaskParcels from './TaskParcels';
 import { TaskWithAction } from '@/app/lib/data';

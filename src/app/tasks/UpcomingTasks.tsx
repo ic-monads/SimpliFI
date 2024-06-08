@@ -1,5 +1,5 @@
 import { TaskWithAction } from "@/app/lib/data";
-import { TaskCard } from "./TaskCard";
+import { TaskCard } from "../components/tasks/TaskCard";
 
 function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {
     const fourWeeks = 28 * 24 * 60 * 60 * 1000;

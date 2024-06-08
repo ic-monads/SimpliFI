@@ -1,8 +1,8 @@
 import { fetchEvidencesForActionWithTaskAndParcels, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
-import Evidences from '@/app/components/evidences/Evidences';
-import GenerateReport from '@/app/components/options/GenerateReport';
+import Evidences from '@/app/components/Evidences';
+import GenerateReport from '../GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
 
 export default async function Page({
