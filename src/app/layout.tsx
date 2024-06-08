@@ -1,6 +1,6 @@
-// import { inter } from "./ui/fonts";
+// import { inter } from "./components/fonts";
 import "./globals.css";
-import SideNav from "./ui/sidenav";
+import SideNav from "./components/sidenav";
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 

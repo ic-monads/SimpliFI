@@ -1,12 +1,12 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTaskEvidenceInfo } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidence/evidences';
-import RequiredEvidences from '@/app/ui/evidence/required-evidences';
-import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
-import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
+import Evidences from '@/app/components/evidence/evidences';
+import RequiredEvidences from '@/app/components/evidence/required-evidences';
+import { CompleteButton } from '@/app/components/tasks/task/complete-button';
+import { StatusBadge } from '@/app/components/tasks/task/status-badge';
 import Moment from "moment";
-import TaskParcels from '@/app/ui/tasks/task-parcels';
+import TaskParcels from '@/app/components/tasks/task-parcels';
 
 export default async function Page({
   params,
@@ -32,20 +32,20 @@ export default async function Page({
       </div>
 
       <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-      
+
       <TaskParcels taskId={task.id} />
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
         {task.description}
       </p>
-      
+
       <div className="my-5">
         <h2 className="text-xl font-semibold">Required Evidence</h2>
         <RequiredEvidences task={task} required={task.requiredEvidences} />
       </div>
       <Link href={{
-        pathname: "/evidence/add-required", 
+        pathname: "/evidence/add-required",
         query: { taskId: id, taskName: task.title }
       }}>
           <button className="btn btn-primary">Add Required Evidence</button>
@@ -55,7 +55,7 @@ export default async function Page({
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
-        pathname: "/evidence/add", 
+        pathname: "/evidence/add",
         query: { actCode: task.actionCode, taskId: id, taskName: task.title, fromTask: 'true' }
       }}>
           <button className="btn btn-primary">Add Evidence</button>
@@ -63,4 +63,3 @@ export default async function Page({
     </div>
   );
 }
-

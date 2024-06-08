@@ -1,4 +1,4 @@
-import Form from "@/app/ui/tasks/form";
+import Form from "@/app/components/tasks/form";
 import { fetchAllActions, fetchLandParcels } from '@/app/lib/data';
 
 export default async function Page({

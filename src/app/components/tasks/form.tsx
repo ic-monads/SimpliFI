@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { createTask } from "@/app/lib/actions";
 import { ChangeEvent, useState } from "react";
-import Submit from "@/app/ui/submit";
+import Submit from "@/app/components/submit";
 import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
 import { getActionParcels } from "@/app/lib/data";

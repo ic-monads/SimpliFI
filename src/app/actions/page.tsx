@@ -1,7 +1,7 @@
-import { Card } from '@/app/ui/actions/cards';
+import { Card } from '@/app/components/actions/cards';
 import { fetchAllActionsWithParcels } from '@/app/lib/data';
 import Link from 'next/link';
-import GenerateReport from '../ui/options/generate-report';
+import GenerateReport from '../components/options/generate-report';
 
 export default async function Page() {
   const actions = await fetchAllActionsWithParcels();

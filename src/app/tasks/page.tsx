@@ -1,7 +1,7 @@
 import { fetchAllTasks } from "../lib/data";
 import Link from "next/link";
-import UpcomingTasks from "../ui/tasks/upcoming-tasks";
-import AllTasks from "../ui/tasks/all-tasks";
+import UpcomingTasks from "../components/tasks/upcoming-tasks";
+import AllTasks from "../components/tasks/all-tasks";
 
 export default async function Page() {
   const tasks = await fetchAllTasks();

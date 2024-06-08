@@ -1,12 +1,12 @@
 import { createOption } from '@/app/lib/actions';
 import { fetchLandParcels } from '@/app/lib/data';
-import Submit from '@/app/ui/submit';
-import CancelButton from "@/app/ui/cancel-button";
+import Submit from '@/app/components/submit';
+import CancelButton from "@/app/components/cancel-button";
 
-export default async function Page({ 
-  searchParams 
-} : { 
-  searchParams: { 
+export default async function Page({
+  searchParams
+} : {
+  searchParams: {
     actCode: string
   }
 }) {

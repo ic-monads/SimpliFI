@@ -2,9 +2,9 @@
 
 import type { Evidence, Task } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
-import Submit from '@/app/ui/options/option/submit-error';
+import Submit from '@/app/components/options/option/submit-error';
 import Moment from "moment";
-import ShowModalButton from "@/app/ui/evidence-modal-button";
+import ShowModalButton from "@/app/components/evidence-modal-button";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
 import { ParcelBadges } from "../parcel-badges";
 

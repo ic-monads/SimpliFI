@@ -2,7 +2,7 @@
 
 import type { RequiredEvidence, Task } from "@prisma/client";
 import Link from "next/link";
-import Submit from '@/app/ui/options/option/submit-error';
+import Submit from '@/app/components/options/option/submit-error';
 import { deleteRequiredEvidence } from "@/app/lib/actions";
 
 export default async function RequiredEvidences(props: {task: Task, required: RequiredEvidence[]}) {
@@ -36,9 +36,9 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
                 {req.desc}
               </td>
               <td>
-                {req.evId == null ? 
+                {req.evId == null ?
                 <Link href={{
-                  pathname: "/evidence/add", 
+                  pathname: "/evidence/add",
                   query: { actCode: task.actionCode, taskId: task.id, reqEvId: req.id, evTitle: req.title, fromTask: true }
                 }}>
                     <button className="btn btn-primary">Add Evidence</button>

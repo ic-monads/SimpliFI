@@ -4,22 +4,22 @@ import Link from "next/link";
 import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
-import Submit from "@/app/ui/submit";
+import Submit from "@/app/components/submit";
 import { LandParcel } from "@prisma/client";
 import { MultiSelect } from "@mantine/core";
-  
-export default function Form({ 
+
+export default function Form({
   actCode, parcels, taskId, reqEvId,
-  evTitle, taskName, fromTask 
-}: { 
-  actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string, 
-  evTitle?: string, taskName?: string, fromTask: string 
+  evTitle, taskName, fromTask
+}: {
+  actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string,
+  evTitle?: string, taskName?: string, fromTask: string
 }) {
   const [error, setError] = useState<string | null>(null);
 
   // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const handleSubmit = async (formData: FormData) => {
     console.log(formData);
     formData.append('actCode', actCode);
