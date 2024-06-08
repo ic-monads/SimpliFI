@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Submit from "@/app/components/submit";
+import Submit from "@/app/components/Submit";
 import { createRequiredEvidence } from "@/app/lib/actions";
 import CancelButton from "@/app/components/CancelButton";
 

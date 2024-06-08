@@ -6,7 +6,7 @@ import DeleteButton from '@/app/components/DeleteButton';
 import Moment from "moment";
 import ShowModalButton from "@/app/components/ShowModalButton";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
-import { ParcelBadges } from "../parcel-badges";
+import { ParcelBadges } from "../ParcelBadges";
 
 export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
 

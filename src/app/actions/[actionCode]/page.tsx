@@ -3,7 +3,7 @@ import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/evidences/Evidences';
 import GenerateReport from '@/app/components/options/GenerateReport';
-import { ParcelBadges } from '@/app/components/parcel-badges';
+import { ParcelBadges } from '@/app/components/ParcelBadges';
 
 export default async function Page({
   params

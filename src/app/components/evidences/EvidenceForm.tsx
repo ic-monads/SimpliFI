@@ -4,7 +4,7 @@ import Link from "next/link";
 import { createEvidence } from "@/app/lib/actions";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
-import Submit from "@/app/components/submit";
+import Submit from "@/app/components/Submit";
 import { LandParcel } from "@prisma/client";
 import { MultiSelect } from "@mantine/core";
 
