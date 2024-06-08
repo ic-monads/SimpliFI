@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTaskEvidenceInfo } from '@/app/lib/data';
+import { fetchTask } from '@/app/server-actions/task';
 import Evidences from '@/app/components/Evidences';
 import RequiredEvidences from '@/app/tasks/[id]/RequiredEvidences';
 import { CompleteButton } from '@/app/tasks/[id]/CompleteButton';
@@ -16,7 +16,7 @@ export default async function Page({
   };
 }) {
   const { id } = params;
-  const task = await fetchTaskEvidenceInfo(id);
+  const task = await fetchTask(id);
 
   return (
     <div className="w-full">

@@ -1,5 +1,5 @@
 import EvidenceForm from "@/app/evidence/EvidenceForm";
-import { fetchParcelsForAction } from "@/app/lib/data";
+import { fetchParcelsForAction } from "@/app/server-actions/action";
 
 export default async function Page({
     searchParams,

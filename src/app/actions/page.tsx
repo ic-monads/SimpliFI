@@ -1,5 +1,5 @@
 import { ActionCard } from './ActionCard';
-import { fetchAllActionsWithParcels } from '@/app/lib/data';
+import { fetchAllActionsWithParcels } from '@/app/server-actions/action';
 import Link from 'next/link';
 import GenerateReport from './GenerateReport';
 

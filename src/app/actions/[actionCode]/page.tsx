@@ -1,4 +1,4 @@
-import { fetchEvidencesForActionWithTaskAndParcels, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
+import { fetchEvidencesForActionWithTaskAndParcels, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/server-actions/action';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';

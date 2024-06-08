@@ -1,5 +1,6 @@
 import TaskForm from "../TaskForm";
-import { fetchAllActions, fetchLandParcels } from '@/app/lib/data';
+import { fetchAllActions } from '@/app/server-actions/action';
+import { fetchLandParcels } from '@/app/server-actions/land-parcel'
 
 export default async function Page({
   searchParams,

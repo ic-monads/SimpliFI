@@ -51,3 +51,80 @@ export async function updateTaskCompleted(id: string, completed: boolean) {
   revalidatePath("/options/option");
   return updatedTask;
 }
+
+export async function fetchAllTasks() {
+  try {
+    const tasks = await prisma.task.findMany({
+      include: {
+        action: true
+      }
+    });
+    return tasks;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch tasks');
+  }
+}
+
+export async function fetchTask(id: string) {
+  try {
+    const task = await prisma.task.findUniqueOrThrow({
+      where: {
+        id: id
+      },
+      include: {
+        evidences: {
+          include: {
+            task: true,
+            optionEvidences: {
+              include: {
+                option: {
+                  include: {
+                    parcel: true
+                  }
+                }
+              }
+            } 
+          }
+        },
+        requiredEvidences: true,
+        options: {
+          include: {
+            option: {
+              include: {
+                parcel: {
+                  select: {
+                    name: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        action: true
+      }
+    });
+    return task;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch task');
+  }
+}
+
+export async function fetchTaskParcels(taskId: string) {
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          tasks: {
+            some: {
+              taskId
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return parcels;
+}

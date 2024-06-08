@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { StatusBadge } from '@/app/components/tasks/StatusBadge';
 import Moment from "moment";
 import TaskParcels from './TaskParcels';
-import { TaskWithAction } from '@/app/lib/data';
+import { TaskWithAction } from '@/app/lib/types';
 
 export async function TaskCard({ task }: { task: TaskWithAction }) {
   return (

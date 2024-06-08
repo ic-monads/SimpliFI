@@ -1,4 +1,4 @@
-import { fetchAllTasks } from "../lib/data";
+import { fetchAllTasks } from "@/app/server-actions/task";
 import Link from "next/link";
 import UpcomingTasks from "./UpcomingTasks";
 import AllTasks from "../components/tasks/AllTasks";

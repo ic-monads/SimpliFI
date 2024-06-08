@@ -1,4 +1,4 @@
-import { TaskWithAction } from "@/app/lib/data";
+import { TaskWithAction } from "@/app/lib/types";
 import { TaskCard } from "../components/tasks/TaskCard";
 
 function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {

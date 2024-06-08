@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from "react";
 import Submit from "@/app/components/Submit";
 import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
-import { getActionParcels } from "@/app/lib/data";
+import { fetchActionParcels } from "@/app/server-actions/action";
 
 export default function TaskForm({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export default function TaskForm({ actCode, parcelId, actions }: { actCode?: str
   };
 
   const handleActionChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    const actionParcels = await getActionParcels(e.target.value);
+    const actionParcels = await fetchActionParcels(e.target.value);
     setParcels(actionParcels);
   };
 

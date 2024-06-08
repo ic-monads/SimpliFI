@@ -1,6 +1,6 @@
 import type { Task } from "@prisma/client"
 import { TaskCard } from "./TaskCard"
-import { TaskWithAction } from "@/app/lib/data"
+import { TaskWithAction } from "@/app/lib/types"
 
 function AllTasks({ tasks }: { tasks: TaskWithAction[] }) {
   return (

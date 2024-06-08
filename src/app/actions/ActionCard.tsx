@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Action } from "@prisma/client";
 import { ParcelBadges } from "@/app/components/ParcelBadges";
-import { ActionWithParcels } from "@/app/lib/data";
+import { ActionWithParcels } from "@/app/lib/types";
 
 export function ActionCard({ action } : { action: ActionWithParcels }) {
     function getParcels(action: ActionWithParcels) {
