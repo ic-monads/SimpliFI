@@ -4,7 +4,7 @@ import type { Evidence, Task } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
 import DeleteButton from '@/app/components/DeleteButton';
 import Moment from "moment";
-import ShowModalButton from "@/app/components/evidence-modal-button";
+import ShowModalButton from "@/app/components/ShowModalButton";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
 import { ParcelBadges } from "../parcel-badges";
 
@@ -61,7 +61,7 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
               {evidence.notes}
             </td>
             <td className="flex space-x-2">
-              <ShowModalButton evidenceId={evidence.id} />
+              <ShowModalButton modalId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
                 <DeleteButton />
               </form>
