@@ -1,6 +1,6 @@
 "use client";
 
-import { updateTaskCompleted } from '@/app/lib/actions';
+import { updateTaskCompleted } from '@/app/server-actions/task';
 import { useState } from "react";
 import type { Task } from "@prisma/client";
 

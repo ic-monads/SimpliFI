@@ -3,7 +3,7 @@
 import type { RequiredEvidence, Task } from "@prisma/client";
 import Link from "next/link";
 import DeleteButton from '@/app/components/DeleteButton';
-import { deleteRequiredEvidence } from "@/app/lib/actions";
+import { deleteRequiredEvidence } from "@/app/server-actions/required-evidence";
 
 export default async function RequiredEvidences(props: {task: Task, required: RequiredEvidence[]}) {
   const required = props.required;

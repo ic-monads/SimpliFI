@@ -1,4 +1,4 @@
-import { createOption } from '@/app/lib/actions';
+import { createOption } from '@/app/server-actions/option';
 import { fetchLandParcels } from '@/app/lib/data';
 import Submit from '@/app/components/Submit';
 import CancelButton from "@/app/components/CancelButton";

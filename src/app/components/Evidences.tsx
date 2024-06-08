@@ -1,7 +1,7 @@
 "use server";
 
 import type { Evidence, Task } from "@prisma/client";
-import { deleteEvidence } from '@/app/lib/actions';
+import { deleteEvidence } from '@/app/server-actions/evidence';
 import DeleteButton from '@/app/components/DeleteButton';
 import Moment from "moment";
 import ShowModalButton from "@/app/components/ShowModalButton";

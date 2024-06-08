@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { createTask } from "@/app/lib/actions";
+import { createTask } from "@/app/server-actions/task";
 import { ChangeEvent, useState } from "react";
 import Submit from "@/app/components/Submit";
 import { Action, LandParcel } from "@prisma/client";

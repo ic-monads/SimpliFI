@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Submit from "@/app/components/Submit";
-import { createRequiredEvidence } from "@/app/lib/actions";
+import { createRequiredEvidence } from "@/app/server-actions/required-evidence";
 import CancelButton from "@/app/components/CancelButton";
 
 export default function Page({

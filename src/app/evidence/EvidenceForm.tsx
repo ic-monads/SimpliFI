@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { createEvidence } from "@/app/lib/actions";
+import { createEvidence } from "@/app/server-actions/evidence";
 import React, { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import Submit from "@/app/components/Submit";
