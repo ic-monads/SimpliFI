@@ -1,5 +1,7 @@
-import Form from '@/app/ui/options/create-form';
+import { createOption } from '@/app/lib/actions';
 import { fetchLandParcels } from '@/app/lib/data';
+import Submit from '@/app/ui/submit';
+import CancelButton from "@/app/ui/cancel-button";
 
 export default async function Page({ 
   searchParams 
@@ -11,8 +13,21 @@ export default async function Page({
   /* TODO: Change to be actions that a farmer is performing */
   const parcels = await fetchLandParcels();
   return (
-    <main>
-      <Form actionId={searchParams.actCode} parcels={parcels} />
-    </main>
+    <div className="flex flex-col items-center">
+      <h1 className="font-semibold text-2xl mb-3">Add Option</h1>
+      <form className="max-w-md" action={createOption.bind(null, searchParams.actCode)}>
+        <div className="label">
+          <label htmlFor="parcels" className="label-text">Select Land Parcel</label>
+        </div>
+        <select id="parcels" name="parcelId" className="select select-bordered w-full" required>
+          <option disabled selected>Choose Parcel</option>
+          {parcels.map((p) => <option key={p.id} value={p.id}>{`${p.name} (${p.id})`}</option>)}
+        </select>
+        <div className="mt-6 flex justify-end gap-4">
+          <CancelButton />
+          <Submit text="Create Option" />
+        </div>
+      </form>
+    </div>
   )
 }

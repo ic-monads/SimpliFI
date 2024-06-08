@@ -11,9 +11,9 @@ const OptionFormSchema = z.object({
   parcelId: z.string(),
 });
 
-export async function createOption(formData: FormData) {
+export async function createOption(actCode: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
-    actionCode: formData.get('actionCode'),
+    actionCode: actCode,
     parcelId: formData.get('parcelId'),
   });
   await prisma.option.create({

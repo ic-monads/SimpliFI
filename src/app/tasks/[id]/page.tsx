@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTaskEvidenceInfo, fetchParcelName, fetchActionName } from '@/app/lib/data';
+import { fetchTaskEvidenceInfo } from '@/app/lib/data';
 import Evidences from '@/app/ui/evidence/evidences';
 import RequiredEvidences from '@/app/ui/evidence/required-evidences';
 import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
@@ -21,9 +21,6 @@ export default async function Page({
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-3">
-        {/* <Link href="/tasks">
-          <ArrowLeftIcon className="size-6 ml-auto"/>
-        </Link> */}
         <div>
           <h2>{task.actionCode}: {task.action.name}</h2>
           <div className="flex items-center">

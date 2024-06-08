@@ -13,7 +13,8 @@ const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 })
 
-export const maxDuration = 60;
+// export const maxDuration = 60;
+export const dynamic = "force-dynamic";
 
 async function copyPagesAtUrl(from: string, to: PDFDocument) {
   const reportPdfBytes = await fetch(from).then((res) => res.arrayBuffer());
@@ -24,7 +25,7 @@ async function copyPagesAtUrl(from: string, to: PDFDocument) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const options = await prisma.option.findMany();
   let reportOptions: ReportOption[] = [];
   let pdfEvidence: string[] = [];
