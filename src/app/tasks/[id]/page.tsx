@@ -45,7 +45,7 @@ export default async function Page({
         <RequiredEvidences task={task} required={task.requiredEvidences} />
       </div>
       <Link href={{
-        pathname: "/evidence/add-required",
+        pathname: "/required-evidence/add",
         query: { taskId: id, taskName: task.title }
       }}>
           <button className="btn btn-primary">Add Required Evidence</button>
