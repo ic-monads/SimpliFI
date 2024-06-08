@@ -3,10 +3,10 @@ import Link from "next/link";
 import { fetchTaskEvidenceInfo } from '@/app/lib/data';
 import Evidences from '@/app/components/evidences/Evidences';
 import RequiredEvidences from '@/app/components/requiredEvidences/RequiredEvidences';
-import { CompleteButton } from '@/app/components/tasks/task/complete-button';
-import { StatusBadge } from '@/app/components/tasks/task/status-badge';
+import { CompleteButton } from '@/app/components/tasks/task/CompleteButton';
+import { StatusBadge } from '@/app/components/tasks/task/StatusBadge';
 import Moment from "moment";
-import TaskParcels from '@/app/components/tasks/task-parcels';
+import TaskParcels from '@/app/components/tasks/TaskParcels';
 
 export default async function Page({
   params,

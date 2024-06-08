@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { StatusBadge } from '@/app/components/tasks/task/status-badge';
+import { StatusBadge } from '@/app/components/tasks/task/StatusBadge';
 import Moment from "moment";
-import TaskParcels from './task-parcels';
+import TaskParcels from './TaskParcels';
 import { TaskWithAction } from '@/app/lib/data';
 
-export async function Card({ task }: { task: TaskWithAction }) {
+export async function TaskCard({ task }: { task: TaskWithAction }) {
   return (
     <Link href={`/tasks/${task.id}`} >
       <div className="card min-w-64 border p-3 shadow-sm hover:bg-gray-100 transition-all">

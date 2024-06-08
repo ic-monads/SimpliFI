@@ -8,7 +8,7 @@ import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
 import { getActionParcels } from "@/app/lib/data";
 
-export default function Form({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
+export default function TaskForm({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
   const [parcels, setParcels] = useState<LandParcel[]>([]);
 
