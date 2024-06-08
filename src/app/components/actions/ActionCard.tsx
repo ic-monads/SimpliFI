@@ -3,7 +3,7 @@ import { Action } from "@prisma/client";
 import { ParcelBadges } from "../parcel-badges";
 import { ActionWithParcels } from "@/app/lib/data";
 
-export function Card({ action } : { action: ActionWithParcels }) {
+export function ActionCard({ action } : { action: ActionWithParcels }) {
     function getParcels(action: ActionWithParcels) {
       return action.options.map((option) => option.parcel);
     }

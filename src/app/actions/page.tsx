@@ -1,4 +1,4 @@
-import { Card } from '@/app/components/actions/cards';
+import { ActionCard } from '@/app/components/actions/ActionCard';
 import { fetchAllActionsWithParcels } from '@/app/lib/data';
 import Link from 'next/link';
 import GenerateReport from '../components/options/generate-report';
@@ -14,7 +14,7 @@ export default async function Page() {
         </div>
       </div>
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {actions.map((action) => <Card key={action.code} action={action} />)}
+        {actions.map((action) => <ActionCard key={action.code} action={action} />)}
       </div>
     </div>
   );
