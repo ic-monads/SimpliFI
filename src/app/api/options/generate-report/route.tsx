@@ -13,7 +13,7 @@ const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 })
 
-// export const maxDuration = 60;
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 async function copyPagesAtUrl(from: string, to: PDFDocument) {
@@ -43,7 +43,9 @@ export async function GET(request: Request) {
 
     for (let evidence of evidences) {
       if (evidence.fileUrl.endsWith(".pdf")) {
-        pdfEvidence.push(evidence.fileUrl);
+        if (!pdfEvidence.includes(evidence.fileUrl)) {
+          pdfEvidence.push(evidence.fileUrl);
+        }
       }
     }
 
