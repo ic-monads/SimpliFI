@@ -2,7 +2,7 @@
 
 import type { Evidence, Task } from "@prisma/client";
 import { deleteEvidence } from '@/app/lib/actions';
-import Submit from '@/app/components/options/option/submit-error';
+import DeleteButton from '@/app/components/DeleteButton';
 import Moment from "moment";
 import ShowModalButton from "@/app/components/evidence-modal-button";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
@@ -63,7 +63,7 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
             <td className="flex space-x-2">
               <ShowModalButton evidenceId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
-                <Submit />
+                <DeleteButton />
               </form>
             </td>
           </tr>

@@ -3,7 +3,7 @@
 import { useFormStatus } from "react-dom";
 import { TrashIcon } from "@heroicons/react/24/outline"
 
-export default function Submit() {
+export default function DeleteButton() {
   const status = useFormStatus();
 
   return(
