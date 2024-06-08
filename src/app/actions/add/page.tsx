@@ -1,7 +1,7 @@
 import { createOption } from '@/app/lib/actions';
 import { fetchLandParcels } from '@/app/lib/data';
 import Submit from '@/app/components/submit';
-import CancelButton from "@/app/components/cancel-button";
+import CancelButton from "@/app/components/CancelButton";
 
 export default async function Page({
   searchParams

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Submit from "@/app/components/submit";
 import { createRequiredEvidence } from "@/app/lib/actions";
-import CancelButton from "@/app/components/cancel-button";
+import CancelButton from "@/app/components/CancelButton";
 
 export default function Page({
   searchParams
