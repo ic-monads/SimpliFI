@@ -1,5 +1,4 @@
-import Form
- from "@/app/components/evidence/create-evidence-form";
+import EvidenceForm from "@/app/components/evidences/EvidenceForm";
 import { fetchParcelsForAction } from "@/app/lib/data";
 
 export default async function Page({
@@ -17,7 +16,7 @@ export default async function Page({
     const parcels = await fetchParcelsForAction(searchParams.actCode);
     return (
         <main>
-            <Form
+            <EvidenceForm
               actCode={searchParams.actCode}
               parcels={parcels}
               taskId={searchParams.taskId}

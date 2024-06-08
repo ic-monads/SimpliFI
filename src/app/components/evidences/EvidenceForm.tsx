@@ -8,7 +8,7 @@ import Submit from "@/app/components/submit";
 import { LandParcel } from "@prisma/client";
 import { MultiSelect } from "@mantine/core";
 
-export default function Form({
+export default function EvidenceForm({
   actCode, parcels, taskId, reqEvId,
   evTitle, taskName, fromTask
 }: {

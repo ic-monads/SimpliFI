@@ -1,8 +1,8 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTaskEvidenceInfo } from '@/app/lib/data';
-import Evidences from '@/app/components/evidence/evidences';
-import RequiredEvidences from '@/app/components/evidence/required-evidences';
+import Evidences from '@/app/components/evidences/Evidences';
+import RequiredEvidences from '@/app/components/requiredEvidences/RequiredEvidences';
 import { CompleteButton } from '@/app/components/tasks/task/complete-button';
 import { StatusBadge } from '@/app/components/tasks/task/status-badge';
 import Moment from "moment";

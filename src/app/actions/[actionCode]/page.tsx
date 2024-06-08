@@ -1,7 +1,7 @@
 import { fetchEvidencesForActionWithTaskAndParcels, fetchTasksForAction, fetchParcelsForAction, fetchActionName } from '@/app/lib/data';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/all-tasks';
-import Evidences from '@/app/components/evidence/evidences';
+import Evidences from '@/app/components/evidences/Evidences';
 import GenerateReport from '@/app/components/options/generate-report';
 import { ParcelBadges } from '@/app/components/parcel-badges';
 
