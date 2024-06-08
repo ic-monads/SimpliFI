@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Submit from "@/app/ui/submit";
-import { createRequiredEvidence } from "@/app/lib/actions";
-import CancelButton from "@/app/ui/cancel-button";
+import Submit from "@/app/components/Submit";
+import { createRequiredEvidence } from "@/app/server-actions/required-evidence";
+import CancelButton from "@/app/components/CancelButton";
 
-export default function Page({ 
+export default function Page({
   searchParams
-}: { 
-  searchParams: { 
-    taskId: string, 
-    taskName: string 
+}: {
+  searchParams: {
+    taskId: string,
+    taskName: string
   }
 }) {
     const [error, setError] = useState<string | null>(null);
-  
+
     const handleSubmit = async (formData: FormData) => {
       formData.append('taskId', searchParams.taskId);
       try {
@@ -22,7 +22,7 @@ export default function Page({
       } catch (error) {
         setError('Failed to submit form');
       }
-      
+
     }
     return (
       <div className="mx-auto">
@@ -44,5 +44,5 @@ export default function Page({
                 </div>
               </form>
           </div>
-    )  
+    )
 }

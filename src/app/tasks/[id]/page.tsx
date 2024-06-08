@@ -1,12 +1,12 @@
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
-import { fetchTaskEvidenceInfo } from '@/app/lib/data';
-import Evidences from '@/app/ui/evidence/evidences';
-import RequiredEvidences from '@/app/ui/evidence/required-evidences';
-import { CompleteButton } from '@/app/ui/tasks/task/complete-button';
-import { StatusBadge } from '@/app/ui/tasks/task/status-badge';
+import { fetchTask } from '@/app/server-actions/task';
+import Evidences from '@/app/components/Evidences';
+import RequiredEvidences from '@/app/tasks/[id]/RequiredEvidences';
+import { CompleteButton } from '@/app/tasks/[id]/CompleteButton';
+import { StatusBadge } from '@/app/components/tasks/StatusBadge';
 import Moment from "moment";
-import TaskParcels from '@/app/ui/tasks/task-parcels';
+import TaskParcels from '@/app/components/tasks/TaskParcels';
 
 export default async function Page({
   params,
@@ -16,7 +16,7 @@ export default async function Page({
   };
 }) {
   const { id } = params;
-  const task = await fetchTaskEvidenceInfo(id);
+  const task = await fetchTask(id);
 
   return (
     <div className="w-full">
@@ -32,20 +32,20 @@ export default async function Page({
       </div>
 
       <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-      
+
       <TaskParcels taskId={task.id} />
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
         {task.description}
       </p>
-      
+
       <div className="my-5">
         <h2 className="text-xl font-semibold">Required Evidence</h2>
         <RequiredEvidences task={task} required={task.requiredEvidences} />
       </div>
       <Link href={{
-        pathname: "/evidence/add-required", 
+        pathname: "/required-evidence/add",
         query: { taskId: id, taskName: task.title }
       }}>
           <button className="btn btn-primary">Add Required Evidence</button>
@@ -55,7 +55,7 @@ export default async function Page({
         <Evidences evidences={task.evidences} />
       </div>
       <Link href={{
-        pathname: "/evidence/add", 
+        pathname: "/evidence/add",
         query: { actCode: task.actionCode, taskId: id, taskName: task.title, fromTask: 'true' }
       }}>
           <button className="btn btn-primary">Add Evidence</button>
@@ -63,4 +63,3 @@ export default async function Page({
     </div>
   );
 }
-

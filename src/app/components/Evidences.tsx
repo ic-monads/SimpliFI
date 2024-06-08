@@ -1,12 +1,12 @@
 "use server";
 
 import type { Evidence, Task } from "@prisma/client";
-import { deleteEvidence } from '@/app/lib/actions';
-import Submit from '@/app/ui/options/option/submit-error';
+import { deleteEvidence } from '@/app/server-actions/evidence';
+import DeleteButton from '@/app/components/DeleteButton';
 import Moment from "moment";
-import ShowModalButton from "@/app/ui/evidence-modal-button";
-import { EvidenceWithTaskAndParcels } from "@/app/lib/data";
-import { ParcelBadges } from "../parcel-badges";
+import ShowModalButton from "@/app/components/ShowModalButton";
+import { EvidenceWithTaskAndParcels } from "@/app/lib/types";
+import { ParcelBadges } from "@/app/components/ParcelBadges";
 
 export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
 
@@ -61,9 +61,9 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
               {evidence.notes}
             </td>
             <td className="flex space-x-2">
-              <ShowModalButton evidenceId={evidence.id} />
+              <ShowModalButton modalId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
-                <Submit />
+                <DeleteButton />
               </form>
             </td>
           </tr>

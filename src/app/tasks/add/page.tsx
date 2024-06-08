@@ -1,5 +1,6 @@
-import Form from "@/app/ui/tasks/form";
-import { fetchAllActions, fetchLandParcels } from '@/app/lib/data';
+import TaskForm from "../TaskForm";
+import { fetchAllActions } from '@/app/server-actions/action';
+import { fetchLandParcels } from '@/app/server-actions/land-parcel'
 
 export default async function Page({
   searchParams,
@@ -12,6 +13,6 @@ export default async function Page({
   const [actions, parcels] = await Promise.all([fetchAllActions(), fetchLandParcels()]);
 
   return(
-    <Form actCode={searchParams.actCode} parcelId={searchParams.parcelId} actions={actions} />
+    <TaskForm actCode={searchParams.actCode} parcelId={searchParams.parcelId} actions={actions} />
   )
 }

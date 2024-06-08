@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Action } from "@prisma/client";
-import { ParcelBadges } from "../parcel-badges";
-import { ActionWithParcels } from "@/app/lib/data";
+import { ParcelBadges } from "@/app/components/ParcelBadges";
+import { ActionWithParcels } from "@/app/lib/types";
 
-export function Card({ action } : { action: ActionWithParcels }) {
+export function ActionCard({ action } : { action: ActionWithParcels }) {
     function getParcels(action: ActionWithParcels) {
       return action.options.map((option) => option.parcel);
     }

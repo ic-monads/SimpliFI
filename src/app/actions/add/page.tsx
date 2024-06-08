@@ -1,12 +1,12 @@
-import { createOption } from '@/app/lib/actions';
-import { fetchLandParcels } from '@/app/lib/data';
-import Submit from '@/app/ui/submit';
-import CancelButton from "@/app/ui/cancel-button";
+import { createOption } from '@/app/server-actions/option';
+import { fetchLandParcels } from '@/app/server-actions/land-parcel';
+import Submit from '@/app/components/Submit';
+import CancelButton from "@/app/components/CancelButton";
 
-export default async function Page({ 
-  searchParams 
-} : { 
-  searchParams: { 
+export default async function Page({
+  searchParams
+} : {
+  searchParams: {
     actCode: string
   }
 }) {
