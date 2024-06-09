@@ -35,7 +35,7 @@ export default function TaskForm({ actCode, parcelId, actions }: { actCode?: str
     <div className="flex flex-col items-center">
       <h1 className="font-semibold text-2xl mb-3">New Task</h1>
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
-      <form className="w-1/2" action={handleSubmit}>
+      <form className="w-full sm:w-3/4 xl:w-1/2" action={handleSubmit}>
 
         <div className="label">
           <label htmlFor="title" className="label-text">Title</label>

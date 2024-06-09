@@ -58,7 +58,7 @@ export default function EvidenceForm({
     <div className="flex flex-col items-center">
       <h1 className="font-semibold text-2xl mb-3">Add Evidence</h1>
       { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
-      <form className="max-w-md" action={handleSubmit}>
+      <form className="w-full sm:w-3/4 xl:w-1/2" action={handleSubmit}>
         <p className="text-sm mb-2">SFI Action: {actCode}</p>
         { taskId && <p className="text-sm mb-2">Task: {taskName}</p>}
         <div className="label">

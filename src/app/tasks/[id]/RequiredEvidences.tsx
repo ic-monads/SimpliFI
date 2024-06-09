@@ -41,11 +41,11 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
                   pathname: "/evidence/add",
                   query: { actCode: task.actionCode, taskId: task.id, reqEvId: req.id, evTitle: req.title, fromTask: true }
                 }}>
-                    <button className="btn btn-primary">Add Evidence</button>
+                    <button className="btn btn-primary btn-sm">Add Evidence</button>
                 </Link>
                 : 'Complete'}
               </td>
-              <td>
+              <td className="text-end">
                 <form action={deleteRequiredEvidence.bind(null, req.id, task.id)}>
                   <DeleteButton />
                 </form>
