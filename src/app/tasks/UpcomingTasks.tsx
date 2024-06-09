@@ -13,7 +13,7 @@ function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {
                     .filter((task) => task.completed === false && task.deadline < new Date(Date.now() + fourWeeks))
                     .sort((a, b) => a.deadline.valueOf() - b.deadline.valueOf())
                     .map((task) => (
-                        <TaskCard key={task.id} task={task} />
+                        <TaskCard key={task.id} task={task} htmlClass="min-w-64" />
                     ))}
             </div>
         </>
