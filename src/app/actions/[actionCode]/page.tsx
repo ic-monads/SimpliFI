@@ -30,7 +30,7 @@ export default async function Page({
         </div>
 
         <div className='flex space-x-3'>
-          <Link href={{ pathname: `/actions/add`, query: { actCode: actionCode }}}>
+          <Link href={{ pathname: `/actions/${actionCode}/options/add` }}>
             <button className="btn btn-primary">Add Parcel</button>
           </Link>
           <GenerateReport />

@@ -3,19 +3,13 @@ import { fetchLandParcels } from '@/app/server-actions/land-parcel';
 import Submit from '@/app/components/Submit';
 import CancelButton from "@/app/components/CancelButton";
 
-export default async function Page({
-  searchParams
-} : {
-  searchParams: {
-    actCode: string
-  }
-}) {
+export default async function Page({ params }: { params: { actionCode: string } }) {
   /* TODO: Change to be actions that a farmer is performing */
   const parcels = await fetchLandParcels();
   return (
     <div className="flex flex-col items-center">
       <h1 className="font-semibold text-2xl mb-3">Add Option</h1>
-      <form className="max-w-md" action={createOption.bind(null, searchParams.actCode)}>
+      <form className="max-w-md" action={createOption.bind(null, params.actionCode)}>
         <div className="label">
           <label htmlFor="parcels" className="label-text">Select Land Parcel</label>
         </div>
