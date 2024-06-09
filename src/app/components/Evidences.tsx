@@ -60,7 +60,7 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
             <td>
               {evidence.notes}
             </td>
-            <td className="flex space-x-2">
+            <td className="flex space-x-2 justify-end">
               <ShowModalButton modalId={evidence.id} />
               <form action={deleteEvidence.bind(null, evidence.id)}>
                 <DeleteButton />
