@@ -35,9 +35,19 @@ export async function fetchFarmActionsWithParcels(sbi: string) {
   }
 }
 
-export async function fetchAllActions() {
+export async function fetchFarmActions(sbi: string) {
   try {
-    const actions = await prisma.action.findMany();
+    const actions = await prisma.action.findMany({
+      where: {
+        options: {
+          some: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      }
+    });
     return actions;
   } catch (e) {
     console.error('Database Error:', e);
