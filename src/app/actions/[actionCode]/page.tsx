@@ -4,6 +4,8 @@ import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
 import GenerateReport from '../GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
+import ParcelMap from './ParcelMap';
+import MaineMap from './MaineMap';
 
 export default async function Page({
   params
@@ -22,7 +24,7 @@ export default async function Page({
   ]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       <div className="flex w-full items-center justify-between">
         <div>
           <h2>{actionCode}</h2>
@@ -41,6 +43,12 @@ export default async function Page({
         <ParcelBadges parcels={parcels} />
       </div>
 
+      <div className="h-1/2">
+        <ParcelMap sbi={'106791068'}/>
+        {/* <MaineMap /> */}
+      </div>
+      
+      
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
