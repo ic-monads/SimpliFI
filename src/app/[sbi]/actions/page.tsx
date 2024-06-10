@@ -3,7 +3,8 @@ import { fetchAllActionsWithParcels } from '@/app/server-actions/action';
 import Link from 'next/link';
 import GenerateReport from './GenerateReport';
 
-export default async function Page() {
+export default async function Page({ params }: { params: { sbi: string } }) {
+  const { sbi } = params;
   const actions = await fetchAllActionsWithParcels();
   return (
     <div className="w-full">
@@ -14,7 +15,7 @@ export default async function Page() {
         </div>
       </div>
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {actions.map((action) => <ActionCard key={action.code} action={action} />)}
+        {actions.map((action) => <ActionCard key={action.code} sbi={sbi} action={action} />)}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const OptionFormSchema = z.object({
   parcelId: z.string(),
 });
 
-export async function createOption(actCode: string, formData: FormData) {
+export async function createOption(sbi: string, actCode: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: actCode,
     parcelId: formData.get('parcelId'),
@@ -21,7 +21,7 @@ export async function createOption(actCode: string, formData: FormData) {
       parcelId: parcelId,
     }
   });
-  const path = `/actions/${actionCode}`;
+  const path = `/${sbi}/actions/${actionCode}`;
   revalidatePath(path);
   redirect(path);
 }

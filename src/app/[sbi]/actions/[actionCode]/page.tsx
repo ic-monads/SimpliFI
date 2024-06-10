@@ -5,14 +5,8 @@ import Evidences from '@/app/components/Evidences';
 import GenerateReport from '../GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
 
-export default async function Page({
-  params
-}: {
-  params: {
-    actionCode: string
-  }
-}) {
-  const { actionCode } = params;
+export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
+  const { sbi, actionCode } = params;
 
   const [evidence, tasks, parcels, actionName] = await Promise.all([
     await fetchEvidencesForActionWithTaskAndParcels(actionCode),
@@ -30,7 +24,7 @@ export default async function Page({
         </div>
 
         <div className='flex space-x-3'>
-          <Link href={{ pathname: `/actions/${actionCode}/options/add` }}>
+          <Link href={{ pathname: `/${sbi}/actions/${actionCode}/options/add` }}>
             <button className="btn btn-primary">Add Parcel</button>
           </Link>
           <GenerateReport />
