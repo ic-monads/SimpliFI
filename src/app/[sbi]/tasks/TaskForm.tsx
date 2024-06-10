@@ -8,7 +8,7 @@ import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
 import { fetchActionParcels } from "@/app/server-actions/action";
 
-export default function TaskForm({ actCode, parcelId, actions }: { actCode?: string, parcelId?: string, actions: Action[] }) {
+export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: string, actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
   const [parcels, setParcels] = useState<LandParcel[]>([]);
 
@@ -20,7 +20,7 @@ export default function TaskForm({ actCode, parcelId, actions }: { actCode?: str
       formData.append('parcelId', parcelId);
     }
     try {
-      await createTask(formData);
+      await createTask(sbi, formData);
     } catch (error) {
       setError('Failed to submit form');
     }
@@ -75,7 +75,7 @@ export default function TaskForm({ actCode, parcelId, actions }: { actCode?: str
         <textarea id="description" name="description" className="textarea textarea-bordered w-full" required/>
 
         <div className="mt-6 flex justify-end gap-4">
-          <Link href={{ pathname: "/tasks" }}>
+          <Link href={{ pathname: `/${sbi}/tasks` }}>
             <button className="btn btn-content-neutral">Cancel</button>
           </Link>
           <Submit text="Create Task" />

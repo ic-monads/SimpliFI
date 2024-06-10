@@ -13,7 +13,7 @@ const TaskFormSchema = z.object({
   parcelIds: z.string(),
 });
 
-export async function createTask(formData: FormData) {
+export async function createTask(sbi: string, formData: FormData) {
   const { title, deadline, description, actCode, parcelIds } = 
     TaskFormSchema.parse({
       title: formData.get('title'),
@@ -40,15 +40,14 @@ export async function createTask(formData: FormData) {
     }
   });
 
-  revalidatePath('/tasks');
-  redirect('/tasks');
+  revalidatePath(`/${sbi}/tasks`);
+  redirect(`/${sbi}/tasks`);
 }
 
-export async function updateTaskCompleted(id: string, completed: boolean) {
+export async function updateTaskCompleted(sbi: string, id: string, completed: boolean) {
   const updatedTask = await prisma.task.update({ where: { id : id }, data: { completed: completed }});
-  revalidatePath(`/tasks/${id}`);
-  revalidatePath("/tasks");
-  revalidatePath("/options/option");
+  revalidatePath(`/${sbi}/tasks/${id}`);
+  revalidatePath(`/${sbi}/tasks`);
   return updatedTask;
 }
 

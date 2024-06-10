@@ -2,20 +2,14 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import Link from "next/link";
 import { fetchTask } from '@/app/server-actions/task';
 import Evidences from '@/app/components/Evidences';
-import RequiredEvidences from '@/app/tasks/[id]/RequiredEvidences';
-import { CompleteButton } from '@/app/tasks/[id]/CompleteButton';
+import RequiredEvidences from '@/app/[sbi]/tasks/[id]/RequiredEvidences';
+import { CompleteButton } from '@/app/[sbi]/tasks/[id]/CompleteButton';
 import { StatusBadge } from '@/app/components/tasks/StatusBadge';
 import Moment from "moment";
 import TaskParcels from '@/app/components/tasks/TaskParcels';
 
-export default async function Page({
-  params,
-}: {
-  params: {
-    id: string;
-  };
-}) {
-  const { id } = params;
+export default async function Page({ params }: { params: { sbi: string, id: string } }) {
+  const { sbi, id } = params;
   const task = await fetchTask(id);
 
   return (
@@ -28,7 +22,7 @@ export default async function Page({
             <StatusBadge task={task} />
           </div>
         </div>
-        <CompleteButton task={task} />
+        <CompleteButton sbi={sbi} task={task} />
       </div>
 
       <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>

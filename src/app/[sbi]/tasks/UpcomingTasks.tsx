@@ -1,7 +1,7 @@
 import { TaskWithAction } from "@/app/lib/types";
-import { TaskCard } from "../components/tasks/TaskCard";
+import { TaskCard } from "@/app/components/tasks/TaskCard";
 
-function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {
+function UpcomingTasks({ sbi, tasks }: { sbi: string, tasks: TaskWithAction[] }) {
     const fourWeeks = 28 * 24 * 60 * 60 * 1000;
     return (
         <>
@@ -13,7 +13,7 @@ function UpcomingTasks({ tasks }: { tasks: TaskWithAction[] }) {
                     .filter((task) => task.completed === false && task.deadline < new Date(Date.now() + fourWeeks))
                     .sort((a, b) => a.deadline.valueOf() - b.deadline.valueOf())
                     .map((task) => (
-                        <TaskCard key={task.id} task={task} htmlClass="min-w-64" />
+                        <TaskCard key={task.id} sbi={sbi} task={task} htmlClass="min-w-64" />
                     ))}
             </div>
         </>
