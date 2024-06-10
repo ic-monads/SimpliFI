@@ -20,6 +20,7 @@ async function main() {
   await prisma.option.deleteMany({});
   await prisma.landParcel.deleteMany({});
   await prisma.action.deleteMany({});
+  await prisma.farm.deleteMany({});
 
 
   const actions = await prisma.action.createMany({
@@ -41,20 +42,30 @@ async function main() {
       }
     ],
   });
+
+  const farm = await prisma.farm.create({
+    data: {
+      name: 'Bradshaw Farm',
+      sbi: '106791068',
+    }
+  });
   
   const landParcels = await prisma.landParcel.createMany({
     data: [
       {
         id: 'AB123456',
         name: 'Green Field',
+        sbi: farm.sbi
       },
       {
         id: 'PG987654',
         name: 'Flag Fen',
+        sbi: farm.sbi
       },
       {
         id: 'ZM13579',
         name: 'Box Moor',
+        sbi: farm.sbi
       }
     ],
   });

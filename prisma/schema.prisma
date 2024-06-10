@@ -8,6 +8,12 @@ datasource db {
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model Farm {
+  sbi     String  @id
+  name    String
+  parcels LandParcel[]
+}
+
 model Evidence {
   id              String            @id @default(cuid())
   date            DateTime          @default(now())
@@ -42,6 +48,8 @@ model LandParcel {
   id      String   @id
   name    String
   options Option[]
+  sbi     String
+  farm    Farm     @relation(fields: [sbi], references: [sbi])
 }
 
 model Task {
