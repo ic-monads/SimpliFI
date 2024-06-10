@@ -3,7 +3,8 @@
 import {
   HomeIcon,
   RectangleStackIcon,
-  WrenchIcon
+  WrenchIcon,
+  GiftTopIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,6 +17,7 @@ const links = [
   { name: 'My Actions', href: '/actions', icon: WrenchIcon },
   // { name: 'My Options', href: '/options', icon: HomeIcon },
   { name: 'Tasks', href: '/tasks', icon: RectangleStackIcon },
+  { name: 'Parcels', href: '/parcels', icon: GiftTopIcon },
   // { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 

@@ -28,3 +28,5 @@ export type ActionWithParcels = Prisma.ActionGetPayload<{
     }
   }
 }>
+
+export type Parcel = Prisma.LandParcelGetPayload<{}>
