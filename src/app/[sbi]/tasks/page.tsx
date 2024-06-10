@@ -1,11 +1,11 @@
-import { fetchAllTasks } from "@/app/server-actions/task";
+import { fetchFarmTasks } from "@/app/server-actions/task";
 import Link from "next/link";
 import UpcomingTasks from "./UpcomingTasks";
 import AllTasks from "../../components/tasks/AllTasks";
 
 export default async function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;
-  const tasks = await fetchAllTasks();
+  const tasks = await fetchFarmTasks(sbi);
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
