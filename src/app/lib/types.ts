@@ -29,4 +29,14 @@ export type ActionWithParcels = Prisma.ActionGetPayload<{
   }
 }>
 
+export type ParcelWithActions = Prisma.LandParcelGetPayload<{
+  include: {
+    options: {
+      include: {
+        action: true
+      }
+    }
+  }
+}>
+
 export type Parcel = Prisma.LandParcelGetPayload<{}>

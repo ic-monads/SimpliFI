@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { ParcelWithActions } from "@/app/lib/types";
 import { Action } from "@prisma/client";
-import { ParcelBadges } from "@/app/components/ParcelBadges";
-import { Parcel } from "@/app/lib/types";
+import ActionBadges from "@/app/components/ActionBadges";
 
-export function ParcelCard({ parcel } : { parcel: Parcel }) {
-    function getOptions(parcel: Parcel) {
-      return parcel.options
+export function ParcelCard({ parcel } : { parcel: ParcelWithActions }) {
+    function getActions(parcel: ParcelWithActions) {
+      return parcel.options.map((option) => option.action)
     }
 
     return (
@@ -13,7 +13,7 @@ export function ParcelCard({ parcel } : { parcel: Parcel }) {
         <div className="card shadow-sm p-3 border hover:bg-gray-100 transition-all">
           <p className="text-xs">{parcel.id}</p>
           <h2 className="text-md font-medium">{parcel.name}</h2>
-          {/* <ParcelBadges parcels={getParcels(action)} /> */}
+          <ActionBadges actions={getActions(parcel)} />
         </div>
       </Link>
     )

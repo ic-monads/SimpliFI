@@ -21,6 +21,24 @@ export async function fetchAllActionsWithParcels() {
   }
 }
 
+export async function fetchAllParcelsWithActions() {
+  try {
+    const parcels = await prisma.landParcel.findMany({
+      include: {
+        options: {
+          include: {
+            action: true
+          }
+        }
+      }
+    });
+    return parcels;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch parcels');
+  }
+}
+
 export async function fetchAllActions() {
   try {
     const actions = await prisma.action.findMany();

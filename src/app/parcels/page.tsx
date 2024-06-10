@@ -1,9 +1,9 @@
 import { ParcelCard } from './ParcelCard';
-import {fetchLandParcels} from '../server-actions/land-parcel';
+import { fetchAllParcelsWithActions } from '../server-actions/action';
 import Link from 'next/link';
 
 export default async function Page() {
-  const parcels = await fetchLandParcels();
+  const parcels = await fetchAllParcelsWithActions();
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">

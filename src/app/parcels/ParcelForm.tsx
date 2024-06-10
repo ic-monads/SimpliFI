@@ -10,26 +10,25 @@ export default function ParcelForm() {
     const [error, setError] = useState<string | null>(null);
     // const [actions, setActions] = useState<Action[]>([]);
 
-    const handleSubmit = async (formData: FormData) => {
-        try {
-            await createParcel(formData);
-        } catch (error) {
-            setError('Failed to submit form');
-        }
-    };
+    // const handleSubmit = async (formData: FormData) => {
+    //     try {
+    //         await createParcel(formData);
+    //     } catch (error) {
+    //         setError('Failed to submit form');
+    //     }
+    // };
 
     return (
         <div className="flex flex-col items-center">
             <h1 className="font-semibold text-2xl mb-3">New Parcel</h1>
             {error && <p className="text-red-500 text-sm mb-5">{error}</p>}
-            <form className="w-full sm:w-3/4 xl:w-1/2" action={handleSubmit}>
+            <form className="w-full sm:w-3/4 xl:w-1/2" action={createParcel}>
 
 
                 <div className="label">
-                    <label htmlFor="id" className="label-text">ID</label>
+                    <label htmlFor="id" className="label-text">RPA ID</label>
                 </div>
                 <input type="text" id="id" name="id" className="input input-bordered w-full" required />
-
 
                 <div className="label">
                     <label htmlFor="name" className="label-text">Name</label>
