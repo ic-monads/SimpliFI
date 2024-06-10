@@ -11,7 +11,7 @@ const RequiredEvidenceFormSchema = z.object({
   taskId: z.string()
 });
 
-export async function createRequiredEvidence(formData: FormData) {
+export async function createRequiredEvidence(sbi: string, formData: FormData) {
   const { title, desc, taskId } = 
     RequiredEvidenceFormSchema.parse({
       title: formData.get('title'),
@@ -21,8 +21,8 @@ export async function createRequiredEvidence(formData: FormData) {
   await prisma.requiredEvidence.create({
     data: { title, desc, taskId }
   })
-  revalidatePath(`/tasks/${taskId}`)
-  redirect(`/tasks/${taskId}`)
+  revalidatePath(`/${sbi}/tasks/${taskId}`)
+  redirect(`/${sbi}/tasks/${taskId}`)
 }
 
 export async function deleteRequiredEvidence(id: string, taskId: string) {
