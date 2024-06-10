@@ -59,7 +59,7 @@ export async function createEvidence(sbi: string, formData: FormData) {
       },
     })
   }
-  let path = fromTask == 'true' ? `${sbi}/tasks/${taskId}` : `${sbi}/actions/${actCode}`
+  let path = fromTask == 'true' ? `/${sbi}/tasks/${taskId}` : `/${sbi}/actions/${actCode}`
   revalidatePath(path);
   redirect(path);
 }
