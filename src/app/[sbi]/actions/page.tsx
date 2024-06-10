@@ -1,11 +1,10 @@
 import { ActionCard } from './ActionCard';
-import { fetchAllActionsWithParcels } from '@/app/server-actions/action';
-import Link from 'next/link';
+import { fetchFarmActionsWithParcels } from '@/app/server-actions/action';
 import GenerateReport from './GenerateReport';
 
 export default async function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;
-  const actions = await fetchAllActionsWithParcels();
+  const actions = await fetchFarmActionsWithParcels(sbi);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">

@@ -3,11 +3,25 @@
 import prisma from "../lib/prisma";
 import type { LandParcel } from "@prisma/client";
 
-export async function fetchAllActionsWithParcels() {
+export async function fetchFarmActionsWithParcels(sbi: string) {
   try {
     const actions = await prisma.action.findMany({
+      where: {
+        options: {
+          some: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      },
       include: {
         options: {
+          where: {
+            parcel: {
+              sbi
+            }
+          },
           include: {
             parcel: true
           }
