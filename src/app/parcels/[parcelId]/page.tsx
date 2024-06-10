@@ -3,6 +3,9 @@ import React from 'react';
 import GenerateReport from '@/app/actions/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
+import Evidences from '@/app/components/Evidences';
+import { fetchEvidencesForParcelWithTaskAndAction, fetchTasksForParcel } from '@/app/server-actions/action';
+import AllTasks from '@/app/components/tasks/AllTasks';
 
 export default async function Page({
   params
@@ -14,9 +17,11 @@ export default async function Page({
   
   const { parcelId } = params;
   
-  const [parcelName, actions] = await Promise.all([
+  const [parcelName, actions, evidence, tasks] = await Promise.all([
     await fetchParcelName(parcelId),
-    await fetchActionsForParcel(parcelId)
+    await fetchActionsForParcel(parcelId),
+    await fetchEvidencesForParcelWithTaskAndAction(parcelId),
+    await fetchTasksForParcel(parcelId)
   ]);
 
   return (
@@ -36,6 +41,31 @@ export default async function Page({
 
       <div className="flex w-full items-center justify-start gap-x-5"> 
         <ActionBadges actions={actions} />
+      </div>
+
+      <div role="tablist" className="tabs tabs-lifted mt-3">
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <Evidences evidences={evidence} showTasks={true} />
+
+          {/* <Link href={{ pathname: "/evidence/add", query: { actCode: actionCode, fromTask: 'false' } }}>
+            <button className="btn btn-primary">Add Evidence</button>
+          </Link> */}
+        </div>
+
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <AllTasks tasks={tasks} />
+
+          {/* <Link href={{ pathname: "/tasks/add", query: { actCode: actionCode, parcelId: parcels[0].id } }}>
+              <button className="mt-3 btn btn-primary">Add Task</button>
+          </Link> */}
+        </div>
+
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          {/* Government link */}
+        </div>
       </div>
     </div>
   );

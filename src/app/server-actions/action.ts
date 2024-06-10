@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from "../lib/prisma";
-import type { LandParcel } from "@prisma/client";
+import type { LandParcel, Task } from "@prisma/client";
 
 export async function fetchAllActionsWithParcels() {
   try {
@@ -75,10 +75,51 @@ export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: stri
   return evidences;
 }
 
+export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string) {
+  const evidences = await prisma.evidence.findMany({
+    where: {
+      optionEvidences: {
+        every: {
+          parcelId: parcelId
+        }
+      }
+    },
+    include: {
+      task: true,
+      optionEvidences: {
+        include: {
+          option: {
+            include: {
+              action: true
+            }
+          }
+        }
+      }
+    }
+  });
+  return evidences;
+}
+
 export async function fetchTasksForAction(actionCode: string) {
   const tasks = await prisma.task.findMany({
     where: {
       actionCode
+    },
+    include: {
+      action: true
+    }
+  });
+  return tasks;
+}
+
+export async function fetchTasksForParcel(parcelId: string) {
+  const tasks = await prisma.task.findMany({
+    where: {
+      options: {
+        some: {
+          parcelId
+        }
+      }
     },
     include: {
       action: true
