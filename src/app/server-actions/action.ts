@@ -94,24 +94,17 @@ export async function fetchTasksForAction(actionCode: string) {
 }
 
 export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
-  try {
-    const parcels = await prisma.option.findMany({
-      where: {
-        actionCode: actionCode
-      },
-      include: {
-        parcel: {
-          select: {
-            id: true,
-            name: true
-          }
+  const parcels = await prisma.landParcel.findMany({
+    where: {
+      options: {
+        some: {
+          actionCode
         }
       }
-    });
-    return parcels.map((p) => p.parcel);
-  } catch (e) {
-    throw new Error('failed to fetch tasks for action')
-  }
+    }
+  });
+
+  return parcels;
 }
 
 export async function fetchActionName(actCode: string) {
