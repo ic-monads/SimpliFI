@@ -9,10 +9,10 @@ import { LandParcel } from "@prisma/client";
 import { MultiSelect } from "@mantine/core";
 
 export default function EvidenceForm({
-  actCode, parcels, taskId, reqEvId,
+  sbi, actCode, parcels, taskId, reqEvId,
   evTitle, taskName, fromTask
 }: {
-  actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string,
+  sbi: string, actCode: string, parcels: LandParcel[], taskId?: string, reqEvId?: string,
   evTitle?: string, taskName?: string, fromTask: string
 }) {
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +45,7 @@ export default function EvidenceForm({
     }
     try {
       // Send the FormData object to the server action
-      await createEvidence(formData);
+      await createEvidence(sbi, formData);
     } catch (error) {
       setError('Failed to submit form');
     }
@@ -87,9 +87,9 @@ export default function EvidenceForm({
         <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" required />
         <div className="mt-6 flex justify-end gap-4">
           <Link href={(fromTask == 'true') ? {
-            pathname: `/tasks/${taskId}`
+            pathname: `/${sbi}/tasks/${taskId}`
           } : {
-            pathname: `/actions/${actCode}`
+            pathname: `/${sbi}/actions/${actCode}`
           }}>
             <button className="btn btn-content-neutral">Cancel</button>
           </Link>

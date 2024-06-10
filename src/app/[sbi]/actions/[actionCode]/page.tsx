@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <Evidences evidences={evidence} showTasks={true} />
 
-          <Link href={{ pathname: "/evidence/add", query: { actCode: actionCode, fromTask: 'false' } }}>
+          <Link href={{ pathname: `/${sbi}/evidence/add`, query: { actCode: actionCode, fromTask: 'false' } }}>
             <button className="btn btn-primary">Add Evidence</button>
           </Link>
         </div>

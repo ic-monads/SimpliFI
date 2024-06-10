@@ -18,7 +18,7 @@ const EvidenceFormSchema = z.object({
   fromTask: z.string()
 });
 
-export async function createEvidence(formData: FormData) {
+export async function createEvidence(sbi: string, formData: FormData) {
   const { title, inputDate, notes, fileUrl, actCode, parcelIds, taskId, reqEvId, fromTask } = EvidenceFormSchema.parse({
     title: formData.get('title'),
     inputDate: formData.get('date'),
@@ -59,7 +59,7 @@ export async function createEvidence(formData: FormData) {
       },
     })
   }
-  let path = fromTask == 'true' ? `/tasks/${taskId}` : `/actions/${actCode}`
+  let path = fromTask == 'true' ? `${sbi}/tasks/${taskId}` : `${sbi}/actions/${actCode}`
   revalidatePath(path);
   redirect(path);
 }
