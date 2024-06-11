@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import prisma from "../lib/prisma";
+import { fetchLandParcels } from './rpa-api';
 
 export async function fetchFarmLandParcels(sbi: string) {
   try {
@@ -80,4 +81,10 @@ export async function fetchActionsForParcel(parcelId: string) {
   });
 
   return actions;
+}
+
+export async function createParcelsFromSBI(sbi: string) {
+  console.log("Automating parcels for SBI:", sbi);
+  const parcels = await fetchLandParcels(sbi);
+  console.log("Fetched parcels:", parcels);
 }

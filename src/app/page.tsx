@@ -1,13 +1,24 @@
 import Submit from "@/app/components/Submit";
 import { createFarm } from "@/app/server-actions/farm";
+import { createParcelsFromSBI } from "./server-actions/land-parcel";
 
 
 export default function Home() {
 
+  async function initialiseFarm(formData: FormData) {
+    'use server'
+    createFarm(formData);
+    try {
+      createParcelsFromSBI(formData.get('sbi')!.toString());
+    } catch (e) {
+      console.error('Could not automate adding parcels from SBI');
+    }
+  };
+
   return(
     <div className="w-full flex justify-center">
       <div className="mx-auto mt-10">
-        <form className="max-w-sm" action={createFarm}>
+        <form className="max-w-sm" action={initialiseFarm}>
           <div className="label">
             <label htmlFor="sbi" className="label-text">SBI</label>
           </div>
