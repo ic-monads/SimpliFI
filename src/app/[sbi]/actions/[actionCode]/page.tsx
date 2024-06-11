@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
 
         <div className='flex space-x-3'>
           <Link href={{ pathname: `/${sbi}/actions/${actionCode}/options/add` }}>
-            <button className="btn btn-primary">Add Parcel</button>
+            <button className="btn btn-primary">Add Options</button>
           </Link>
           <GenerateReport sbi={sbi} />
         </div>

@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { sbi: string, parcelId
   const actions = await fetchActionsMissingForParcel(parcelId);
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-semibold text-2xl mb-3">Add Action to {name}</h1>
+      <h1 className="font-semibold text-2xl mb-3">Add Option for {name}</h1>
       <form className="max-w-md" action={createOptionsForParcel.bind(null, params.sbi, params.parcelId)}>
         <MultiSelect
           label="Select SFI actions to add on this parcel"
