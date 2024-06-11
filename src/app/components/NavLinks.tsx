@@ -1,10 +1,9 @@
 'use client';
 
 import {
-  HomeIcon,
+  RectangleGroupIcon,
   RectangleStackIcon,
-  WrenchIcon,
-  GiftTopIcon
+  WrenchIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -12,9 +11,9 @@ import clsx from 'clsx';
 
 export default function NavLinks({ sbi }: { sbi: string }) {
   const links = [
-    { name: 'My Actions', href: `/${sbi}/actions`, icon: WrenchIcon },
+    { name: 'Actions', href: `/${sbi}/actions`, icon: WrenchIcon },
     { name: 'Tasks', href: `/${sbi}/tasks`, icon: RectangleStackIcon },
-    { name: 'Parcels', href: `/${sbi}/parcels`, icon: GiftTopIcon },
+    { name: 'Land Parcels', href: `/${sbi}/parcels`, icon: RectangleGroupIcon },
   ];
 
   const pathname = usePathname();
