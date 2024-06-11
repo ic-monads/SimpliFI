@@ -26,7 +26,7 @@ export async function createOptionForAction(sbi: string, actCode: string, formDa
   redirect(path);
 }
 
-export async function createOptionForParcel(parcId: string, formData: FormData) {
+export async function createOptionForParcel(sbi: string, parcId: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: formData.get('actionCode'),
     parcelId: parcId,
@@ -37,7 +37,7 @@ export async function createOptionForParcel(parcId: string, formData: FormData) 
       parcelId: parcelId,
     }
   });
-  const path = `/parcels/${parcelId}`;
+  const path = `/${sbi}/parcels/${parcelId}`;
   revalidatePath(path);
   redirect(path);
 }

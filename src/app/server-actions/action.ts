@@ -76,6 +76,30 @@ export async function fetchFarmActions(sbi: string) {
   }
 }
 
+export async function fetchFarmParcels(sbi: string) {
+  try {
+    const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
+      }
+    });
+    return parcels;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch parcels');
+  }
+}
+
+export async function fetchAllActions() {
+  try {
+    const actions = await prisma.action.findMany();
+    return actions;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch actions');
+  }
+}
+
 export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
