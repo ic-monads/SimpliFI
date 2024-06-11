@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between mb-3">
         <div>
           <h2>{actionCode}</h2>
           <h1 className={`font-semibold text-2xl`}>{actionName}</h1>
