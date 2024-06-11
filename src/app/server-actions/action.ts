@@ -151,7 +151,8 @@ export async function fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi: string
         include: {
           option: {
             include: {
-              action: true
+              action: true,
+              parcel: true
             }
           }
         }
