@@ -14,46 +14,65 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-3">
-        <div>
-          <h2>{task.actionCode}: {task.action.name}</h2>
-          <div className="flex items-center">
-            <h1 className="font-semibold text-2xl mr-3">{task.title}</h1>
-            <StatusBadge task={task} />
-          </div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
+          <h1 className="font-semibold text-2xl mr-3">{task.title}</h1>
+          <StatusBadge task={task} />
         </div>
         <CompleteButton sbi={sbi} task={task} />
       </div>
 
-      <p className="mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-
-      <TaskParcels taskId={task.id} />
+      <table className="text-xs border-separate border-spacing-2">
+        <tbody>
+          <tr>
+            <td className="text-gray-500">Action</td>
+            <td>{task.actionCode}: {task.action.name}</td>
+          </tr>
+          <tr>
+            <td className="text-gray-500">Due date</td>
+            <td>{Moment(task.deadline).format("DD/MM/YYYY")}</td>
+          </tr>
+          <tr>
+            <td className="text-gray-500">Land parcels</td>
+            <td><TaskParcels taskId={task.id} /></td>
+          </tr>
+        </tbody>
+      </table>
 
       <h2 className="text-lg font-semibold mt-6">Description</h2>
       <p>
         {task.description}
       </p>
 
-      <div className="my-5">
-        <h2 className="text-xl font-semibold">Required Evidence</h2>
-        <RequiredEvidences sbi={sbi} task={task} required={task.requiredEvidences} />
+      <div className="my-9">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold">Required Evidence</h2>
+          <Link href={{
+            pathname: `/${sbi}/tasks/${id}/required-evidence/add`,
+            query: { taskName: task.title }
+          }}>
+              <button className="btn">Add Required Evidence</button>
+          </Link>
+        </div>
+        <div className="border rounded-xl mt-3">
+          <RequiredEvidences sbi={sbi} task={task} required={task.requiredEvidences} />
+        </div>
       </div>
-      <Link href={{
-        pathname: `/${sbi}/tasks/${id}/required-evidence/add`,
-        query: { taskName: task.title }
-      }}>
-          <button className="btn btn-primary">Add Required Evidence</button>
-      </Link>
-      <div className="my-6">
-        <h2 className="text-lg font-semibold">Evidence</h2>
-        <Evidences evidences={task.evidences} />
+
+      <div className="my-9">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold">Evidence</h2>
+          <Link href={{
+            pathname: `/${sbi}/evidence/add`,
+            query: { actCode: task.actionCode, taskId: id, taskName: task.title, fromTask: 'true' }
+          }}>
+              <button className="btn">Add Evidence</button>
+          </Link>
+        </div>
+        <div className="border rounded-xl mt-3">
+          <Evidences evidences={task.evidences} />
+          </div>
       </div>
-      <Link href={{
-        pathname: `/${sbi}/evidence/add`,
-        query: { actCode: task.actionCode, taskId: id, taskName: task.title, fromTask: 'true' }
-      }}>
-          <button className="btn btn-primary">Add Evidence</button>
-      </Link>
     </div>
   );
 }

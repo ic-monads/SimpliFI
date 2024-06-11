@@ -15,7 +15,7 @@ export function CompleteButton({ sbi, task }: { sbi: string, task: Task }) {
   return(
     <form action={handleClick}>
       <button className={`btn ${completed ? "" : "btn-primary"}`} type="submit">
-        Mark as {completed ? "incomplete" : "complete"}
+        Mark as {completed ? "pending" : "completed"}
       </button>
     </form>
   );
