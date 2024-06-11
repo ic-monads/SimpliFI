@@ -198,20 +198,6 @@ export async function fetchTasksForParcel(parcelId: string) {
   return tasks;
 }
 
-export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
-  const parcels = await prisma.landParcel.findMany({
-    where: {
-      options: {
-        some: {
-          actionCode
-        }
-      }
-    }
-  });
-
-  return parcels;
-}
-
 export async function fetchActionName(actCode: string) {
   try {
     const name = await prisma.action.findUniqueOrThrow({

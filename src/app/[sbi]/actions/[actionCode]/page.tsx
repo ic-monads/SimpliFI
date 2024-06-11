@@ -1,4 +1,4 @@
-import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnFarm, fetchParcelsForAction, fetchActionName } from '@/app/server-actions/action';
+import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnFarm, fetchActionParcelsOnFarm, fetchActionName } from '@/app/server-actions/action';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
   const [evidence, tasks, parcels, actionName] = await Promise.all([
     await fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi, actionCode),
     await fetchTasksForActionOnFarm(sbi, actionCode),
-    await fetchParcelsForAction(actionCode),
+    await fetchActionParcelsOnFarm(sbi, actionCode),
     await fetchActionName(actionCode)
   ]);
 
