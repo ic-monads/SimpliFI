@@ -26,17 +26,28 @@ export async function createOptionForAction(sbi: string, actCode: string, formDa
   redirect(path);
 }
 
-export async function createOptionForParcel(sbi: string, parcId: string, formData: FormData) {
+export async function createOptionsForParcel(sbi: string, parcId: string, formData: FormData) {
+  console.log(formData);
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: formData.get('actionCode'),
     parcelId: parcId,
   });
-  await prisma.option.create({
-    data: {
-      actionCode: actionCode,
-      parcelId: parcelId,
+  const options = actionCode.split(",").map((a) => {
+    return {
+      actionCode: a,
+      parcelId
     }
   });
+
+  await prisma.option.createMany({
+    data: options
+  });
+  // await prisma.option.create({
+  //   data: {
+  //     actionCode: actionCode,
+  //     parcelId: parcelId,
+  //   }
+  // });
   const path = `/${sbi}/parcels/${parcelId}`;
   revalidatePath(path);
   redirect(path);

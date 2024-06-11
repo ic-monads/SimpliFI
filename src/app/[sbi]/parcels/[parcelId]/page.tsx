@@ -34,7 +34,7 @@ export default async function Page({
         </div>
         <div className='flex space-x-3'>
           <Link href={`/${sbi}/parcels/${parcelId}/action/add`}>
-            <button className="btn btn-primary">Add Action</button>
+            <button className="btn btn-primary">Add Actions</button>
           </Link>
           <GenerateReport sbi={sbi} />
         </div>

@@ -81,3 +81,16 @@ export async function fetchActionsForParcel(parcelId: string) {
 
   return actions;
 }
+
+export async function fetchActionsMissingForParcel(parcelId: string) {
+  const actions = await prisma.action.findMany({
+    where: {
+      options: {
+        none: {
+          parcelId
+        }
+      }
+    }
+  });
+  return actions;
+}
