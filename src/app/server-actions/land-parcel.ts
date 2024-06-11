@@ -17,25 +17,25 @@ export async function fetchLandParcels() {
 
 const ParcelFormSchema = z.object({
   id: z.string(),
-  name: z.string()
+  name: z.string(),
+  sbi: z.string()
 });
 
 export async function createParcel(formData: FormData) {
-  const { id, name } = 
+  const { id, name, sbi } = 
   ParcelFormSchema.parse({
       id: formData.get('id'),
-      name: formData.get('name')
+      name: formData.get('name'),
+      sbi: formData.get('sbi')
     });
 
   await prisma.landParcel.create({
-    data: {
-      id: id,
-      name: name,
-    }
+    data: { id, name, sbi }
   });
 
-  revalidatePath('/parcels');
-  redirect('/parcels');
+  const path = `/${sbi}/parcels`
+  revalidatePath(path);
+  redirect(path);
 }
 
 export async function fetchParcelName(parcelId: string) {

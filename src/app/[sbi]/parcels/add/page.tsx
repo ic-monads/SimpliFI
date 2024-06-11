@@ -1,11 +1,10 @@
 import ParcelForm from '../ParcelForm';
-import { fetchAllActions } from '@/app/server-actions/action';
 // import { fetchLandParcels } from '@/app/server-actions/land-parcel'
 
-export default async function Page() {
+export default async function Page({ params }: { params: { sbi: string } }) {
 //   const actions = await Promise.all(fetchAllActions());
 
   return(
-    <ParcelForm />
+    <ParcelForm sbi={params.sbi}/>
   )
 }

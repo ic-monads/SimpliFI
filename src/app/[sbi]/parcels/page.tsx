@@ -1,15 +1,16 @@
 import { ParcelCard } from './ParcelCard';
-import { fetchAllParcelsWithActions } from '../server-actions/action';
+import { fetchFarmParcelsWithActions } from '@/app/server-actions/action'
 import Link from 'next/link';
 
-export default async function Page() {
-  const parcels = await fetchAllParcelsWithActions();
+export default async function Page({ params }: { params: { sbi: string } }) {
+  const { sbi } = params;
+  const parcels = await fetchFarmParcelsWithActions(sbi);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
         <h1 className="text-2xl font-semibold">My Parcels</h1>
         <div className='flex space-x-3'>
-          <Link href="/parcels/add">
+          <Link href={`/${sbi}/parcels/add`}>
             <button className="btn btn-primary">Add Parcel</button>
           </Link>
         </div>

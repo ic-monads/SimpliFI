@@ -1,6 +1,6 @@
 import { fetchParcelName, fetchActionsForParcel } from '@/app/server-actions/land-parcel';
 import React from 'react';
-import GenerateReport from '@/app/actions/GenerateReport';
+import GenerateReport from '@/app/[sbi]/parcels/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
@@ -11,11 +11,12 @@ export default async function Page({
   params
 }: {
   params: {
+    sbi: string,
     parcelId: string
   }
 }) {
   
-  const { parcelId } = params;
+  const { sbi, parcelId } = params;
   
   const [parcelName, actions, evidence, tasks] = await Promise.all([
     await fetchParcelName(parcelId),
@@ -55,7 +56,7 @@ export default async function Page({
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <AllTasks tasks={tasks} />
+          <AllTasks sbi={sbi} tasks={tasks} />
 
           {/* <Link href={{ pathname: "/tasks/add", query: { actCode: actionCode, parcelId: parcels[0].id } }}>
               <button className="mt-3 btn btn-primary">Add Task</button>

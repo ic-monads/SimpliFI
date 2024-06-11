@@ -1,7 +1,7 @@
 'use server';
 
-import prisma from "../lib/prisma";
-import type { LandParcel, Task } from "@prisma/client";
+import prisma from "@/app/lib/prisma";
+import type { LandParcel } from "@prisma/client";
 
 export async function fetchFarmActionsWithParcels(sbi: string) {
   try {
@@ -35,9 +35,12 @@ export async function fetchFarmActionsWithParcels(sbi: string) {
   }
 }
 
-export async function fetchAllParcelsWithActions() {
+export async function fetchFarmParcelsWithActions(sbi: string) {
   try {
     const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
+      },
       include: {
         options: {
           include: {
