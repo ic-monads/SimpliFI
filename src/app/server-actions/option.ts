@@ -10,7 +10,7 @@ const OptionFormSchema = z.object({
   parcelId: z.string(),
 });
 
-export async function createOptionForAction(actCode: string, formData: FormData) {
+export async function createOptionForAction(sbi: string, actCode: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: actCode,
     parcelId: formData.get('parcelId'),
@@ -21,12 +21,12 @@ export async function createOptionForAction(actCode: string, formData: FormData)
       parcelId: parcelId,
     }
   });
-  const path = `/actions/${actionCode}`;
+  const path = `/${sbi}/actions/${actionCode}`;
   revalidatePath(path);
   redirect(path);
 }
 
-export async function createOptionForParcel(parcId: string, formData: FormData) {
+export async function createOptionForParcel(sbi: string, parcId: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: formData.get('actionCode'),
     parcelId: parcId,
@@ -37,8 +37,19 @@ export async function createOptionForParcel(parcId: string, formData: FormData) 
       parcelId: parcelId,
     }
   });
-  const path = `/parcels/${parcelId}`;
+  const path = `/${sbi}/parcels/${parcelId}`;
   revalidatePath(path);
   redirect(path);
+}
+
+export async function fetchFarmOptions(sbi: string) {
+  const options = await prisma.option.findMany({
+    where: {
+      parcel: {
+        sbi
+      }
+    }
+  });
+  return options;
 }
 

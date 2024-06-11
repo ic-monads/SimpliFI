@@ -1,13 +1,27 @@
 'use server';
 
-import prisma from "../lib/prisma";
-import type { LandParcel, Task } from "@prisma/client";
+import prisma from "@/app/lib/prisma";
+import type { LandParcel } from "@prisma/client";
 
-export async function fetchAllActionsWithParcels() {
+export async function fetchFarmActionsWithParcels(sbi: string) {
   try {
     const actions = await prisma.action.findMany({
+      where: {
+        options: {
+          some: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      },
       include: {
         options: {
+          where: {
+            parcel: {
+              sbi
+            }
+          },
           include: {
             parcel: true
           }
@@ -21,15 +35,52 @@ export async function fetchAllActionsWithParcels() {
   }
 }
 
-export async function fetchAllParcelsWithActions() {
+export async function fetchFarmParcelsWithActions(sbi: string) {
   try {
     const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
+      },
       include: {
         options: {
           include: {
             action: true
           }
         }
+      }
+    });
+    return parcels;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch parcels');
+  }
+}
+
+export async function fetchFarmActions(sbi: string) {
+  try {
+    const actions = await prisma.action.findMany({
+      where: {
+        options: {
+          some: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      }
+    });
+    return actions;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch actions');
+  }
+}
+
+export async function fetchFarmParcels(sbi: string) {
+  try {
+    const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
       }
     });
     return parcels;
@@ -49,14 +100,19 @@ export async function fetchAllActions() {
   }
 }
 
-export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: string) {
+export async function fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi: string, actionCode: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
       optionEvidences: {
         every: {
-          actCode: actionCode
-        }
-      }
+          actCode: actionCode,
+          option: {
+            parcel: {
+              sbi
+            }
+          }
+        },
+      },
     },
     include: { 
       task: true,
@@ -75,12 +131,17 @@ export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: stri
   return evidences;
 }
 
-export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string) {
+export async function fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi: string, parcelId: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
       optionEvidences: {
         every: {
-          parcelId: parcelId
+          parcelId: parcelId,
+          option: {
+            parcel: {
+              sbi
+            }
+          }
         }
       }
     },
@@ -90,7 +151,8 @@ export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string)
         include: {
           option: {
             include: {
-              action: true
+              action: true,
+              parcel: true
             }
           }
         }
@@ -100,10 +162,19 @@ export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string)
   return evidences;
 }
 
-export async function fetchTasksForAction(actionCode: string) {
+export async function fetchTasksForActionOnFarm(sbi: string, actionCode: string) {
   const tasks = await prisma.task.findMany({
     where: {
-      actionCode
+      actionCode,
+      options: {
+        every: {
+          option: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      }
     },
     include: {
       action: true
@@ -128,27 +199,6 @@ export async function fetchTasksForParcel(parcelId: string) {
   return tasks;
 }
 
-export async function fetchParcelsForAction(actionCode: string): Promise<LandParcel[]> {
-  try {
-    const parcels = await prisma.option.findMany({
-      where: {
-        actionCode: actionCode
-      },
-      include: {
-        parcel: {
-          select: {
-            id: true,
-            name: true
-          }
-        }
-      }
-    });
-    return parcels.map((p) => p.parcel);
-  } catch (e) {
-    throw new Error('failed to fetch tasks for action')
-  }
-}
-
 export async function fetchActionName(actCode: string) {
   try {
     const name = await prisma.action.findUniqueOrThrow({
@@ -166,9 +216,10 @@ export async function fetchActionName(actCode: string) {
   }
 }
 
-export async function fetchActionParcels(actionCode: string) {
+export async function fetchActionParcelsOnFarm(sbi: string, actionCode: string) {
   const parcels = await prisma.landParcel.findMany({
     where: {
+      sbi,
       options: {
         some: {
           actionCode: actionCode

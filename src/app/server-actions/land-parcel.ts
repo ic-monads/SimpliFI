@@ -5,9 +5,13 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import prisma from "../lib/prisma";
 
-export async function fetchLandParcels() {
+export async function fetchFarmLandParcels(sbi: string) {
   try {
-    const parcels = await prisma.landParcel.findMany();
+    const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
+      }
+    });
     return parcels;
   } catch (e) {
     console.error('Database Error:', e);
@@ -17,25 +21,34 @@ export async function fetchLandParcels() {
 
 const ParcelFormSchema = z.object({
   id: z.string(),
-  name: z.string()
+  name: z.string(),
+  sbi: z.string(),
+  actions: z.string()
 });
 
 export async function createParcel(formData: FormData) {
-  const { id, name } = 
+  const { id, name, sbi, actions } = 
   ParcelFormSchema.parse({
       id: formData.get('id'),
-      name: formData.get('name')
+      name: formData.get('name'),
+      sbi: formData.get('sbi'),
+      actions: formData.get('actions')
     });
 
   await prisma.landParcel.create({
-    data: {
-      id: id,
-      name: name,
+    data: { 
+      id, 
+      name, 
+      sbi,
+      options: {
+        create: actions.split(',').map((actionCode: string) => { return { actionCode } })
+      }
     }
   });
 
-  revalidatePath('/parcels');
-  redirect('/parcels');
+  const path = `/${sbi}/parcels`
+  revalidatePath(path);
+  redirect(path);
 }
 
 export async function fetchParcelName(parcelId: string) {
