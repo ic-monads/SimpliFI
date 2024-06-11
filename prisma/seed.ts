@@ -39,7 +39,38 @@ async function main() {
         code: 'CSAM1',
         name: 'Soil Assessment and Management Plan',
         govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/csam1-assess-soil-produce-a-soil-management-plan-and-test-soil-organic-matter',
+      },
+      {
+        code: 'WBD1',
+        name: 'Manage Ponds',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/wbd1-manage-ponds',
+      },
+      {
+        code: 'CAHL3',
+        name: 'Grassy field corners or blocks',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/cahl3-grassy-field-corners-or-blocks'
+      },
+      {
+        code: 'AHW11',
+        name: 'Cultivated areas for arable plants',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/ahw11-cultivated-areas-for-arable-plants'
+      },
+      {
+        code: 'CIPM3',
+        name: 'Companion Crop on Arable and Horticultural Land',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/cipm3-companion-crop-on-arable-and-horticultural-land'
+      },
+      {
+        code: 'CNUM3',
+        name: 'Legume Fallow',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/cnum3-legume-fallow'
+      },
+      {
+        code: 'OFM4',
+        name: 'Organic Land Management - Rotational Land',
+        govUrl: 'https://www.gov.uk/find-funding-for-land-or-farms/ofm4-organic-land-management-rotational-land'
       }
+
     ],
   });
 
