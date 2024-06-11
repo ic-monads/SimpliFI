@@ -5,8 +5,10 @@ import { createParcel } from "@/app/server-actions/land-parcel";
 import { ChangeEvent, useState } from "react";
 import Submit from "@/app/components/Submit";
 import React from "react";
+import { Action } from "@prisma/client";
+import { MultiSelect } from "@mantine/core";
 
-export default function ParcelForm({ sbi }: { sbi: string}) {
+export default function ParcelForm({ sbi, actions }: { sbi: string, actions: Action[]}) {
     const [error, setError] = useState<string | null>(null);
     // const [actions, setActions] = useState<Action[]>([]);
 
@@ -36,32 +38,14 @@ export default function ParcelForm({ sbi }: { sbi: string}) {
                 </div>
                 <input type="text" id="name" name="name" className="input input-bordered w-full" required />
 
-                {/* { (actCode == null || parcelId == null) &&
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="label">
-                <label htmlFor="actCode" className="label-text">Select an action</label>
-              </div>
-              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} defaultValue="DEFAULT" >
-                <option value="DEFAULT" disabled>Choose actions</option>
-                { actions.map((action) => <option key={action.code} value={action.code}>{action.code}</option>) }
-              </select>
-            </div>
-            <MultiSelect
-              label="Select relevant land parcels"
-              placeholder="Select parcels"
-              name="parcelIds"
-              data={parcels.map((parcel) => { return { value: parcel.id, label: `${parcel.name} (${parcel.id})` }})}
-              classNames={{ label: "label-text p-2" }}
-              styles={{ label: { fontWeight: 400 }}}
-            />
-          </div>
-        } */}
-
-                {/* <div className="label">
-          <label htmlFor="description" className="label-text">Description</label>
-        </div>
-        <textarea id="description" name="description" className="textarea textarea-bordered w-full" required/> */}
+                <MultiSelect
+                  label="Select SFI actions performed on this parcel"
+                  placeholder="Select actions"
+                  name="actions"
+                  data={actions.map((action) => { return { value: action.code, label: `${action.code}: ${action.name})` }})}
+                  classNames={{ label: "label-text p-2" }}
+                  styles={{ label: { fontWeight: 400 }}}
+                />
 
                 <div className="mt-6 flex justify-end gap-4">
                     <Link href={`/${sbi}/parcels`}>

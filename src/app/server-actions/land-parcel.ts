@@ -22,19 +22,28 @@ export async function fetchFarmLandParcels(sbi: string) {
 const ParcelFormSchema = z.object({
   id: z.string(),
   name: z.string(),
-  sbi: z.string()
+  sbi: z.string(),
+  actions: z.string()
 });
 
 export async function createParcel(formData: FormData) {
-  const { id, name, sbi } = 
+  const { id, name, sbi, actions } = 
   ParcelFormSchema.parse({
       id: formData.get('id'),
       name: formData.get('name'),
-      sbi: formData.get('sbi')
+      sbi: formData.get('sbi'),
+      actions: formData.get('actions')
     });
 
   await prisma.landParcel.create({
-    data: { id, name, sbi }
+    data: { 
+      id, 
+      name, 
+      sbi,
+      options: {
+        create: actions.split(',').map((actionCode: string) => { return { actionCode } })
+      }
+    }
   });
 
   const path = `/${sbi}/parcels`

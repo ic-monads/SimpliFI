@@ -2,19 +2,22 @@ import EvidenceForm from "@/app/[sbi]/evidence/EvidenceForm";
 import { fetchActionParcelsOnFarm } from "@/app/server-actions/action";
 
 export default async function Page({
-    params,
+    params, searchParams
   }: {
     params: {
       sbi: string;
+    };
+    searchParams: {
       actCode: string;
       taskId?: string;
       reqEvId?: string
       evTitle?: string;
       taskName?: string;
       fromTask: string
-    };
+    }
   }) {
-    const { sbi, actCode, taskId, reqEvId, evTitle, taskName, fromTask } = params;
+    const { sbi } = params;
+    const { actCode, taskId, reqEvId, evTitle, taskName, fromTask } = searchParams;
     const parcels = await fetchActionParcelsOnFarm(sbi, actCode);
     return (
         <main>
