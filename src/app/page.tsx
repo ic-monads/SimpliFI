@@ -1,21 +1,21 @@
 import Submit from "@/app/components/Submit";
-import { createFarm } from "@/app/server-actions/farm";
-import { createParcelsFromSBI } from "./server-actions/land-parcel";
+import { fetchFarm } from "@/app/server-actions/farm";
+import { initialiseParcelsFromSBI } from "./server-actions/land-parcel";
 
 
 export default function Home() {
 
   async function initialiseFarm(formData: FormData) {
     'use server'
-    createFarm(formData);
+    fetchFarm(formData);
     try {
-      createParcelsFromSBI(formData.get('sbi')!.toString());
+      initialiseParcelsFromSBI(formData.get('sbi')!.toString());
     } catch (e) {
       console.error('Could not automate adding parcels from SBI');
     }
   };
 
-  return(
+  return (
     <div className="w-full flex justify-center">
       <div className="mx-auto mt-10">
         <form className="max-w-sm" action={initialiseFarm}>
