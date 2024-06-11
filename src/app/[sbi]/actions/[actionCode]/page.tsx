@@ -2,7 +2,7 @@ import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnF
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
-import GenerateReport from '../GenerateReport';
+import GenerateReport from '@/app/components/GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
 
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between mb-3">
         <div>
           <h2>{actionCode}</h2>
           <h1 className={`font-semibold text-2xl`}>{actionName}</h1>
@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
           <Link href={{ pathname: `/${sbi}/actions/${actionCode}/options/add` }}>
             <button className="btn btn-primary">Add Parcel</button>
           </Link>
-          <GenerateReport />
+          <GenerateReport sbi={sbi} />
         </div>
       </div>
 

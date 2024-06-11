@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { sbi: string } }) {
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className="text-2xl font-semibold">My Parcels</h1>
+        <h1 className="text-2xl font-semibold">Land Parcels</h1>
         <div className='flex space-x-3'>
           <Link href={`/${sbi}/parcels/add`}>
             <button className="btn btn-primary">Add Parcel</button>

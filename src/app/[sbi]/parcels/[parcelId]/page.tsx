@@ -1,6 +1,6 @@
 import { fetchParcelName, fetchActionsForParcel } from '@/app/server-actions/land-parcel';
 import React from 'react';
-import GenerateReport from '@/app/[sbi]/parcels/GenerateReport';
+import GenerateReport from '@/app/components/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
@@ -36,7 +36,7 @@ export default async function Page({
           <Link href={{ pathname: `/${sbi}/parcels/${parcelId}/options/add` }}>
             <button className="btn btn-primary">Add Option</button>
           </Link>
-          <GenerateReport />
+          <GenerateReport sbi={sbi} />
         </div>
       </div>
 

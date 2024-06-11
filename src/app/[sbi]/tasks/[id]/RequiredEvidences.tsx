@@ -19,6 +19,7 @@ export default async function RequiredEvidences(props: {sbi: string, task: Task,
             Description
           </th>
           <th scope="col">
+            Status
           </th>
           <th scope="col">
           </th>

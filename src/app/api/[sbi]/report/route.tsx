@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { compile } from "@fileforge/react-print";
 import { FileforgeClient } from "@fileforge/client"
@@ -8,6 +8,7 @@ import { MyDocument } from "./document";
 import type { ReportOption } from "./document";
 import { put, del } from "@vercel/blob";
 import { PDFDocument, StandardFonts }  from "pdf-lib";
+import { fetchFarmOptions } from "@/app/server-actions/option";
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
@@ -25,8 +26,9 @@ async function copyPagesAtUrl(from: string, to: PDFDocument) {
   }
 }
 
-export async function GET(request: Request) {
-  const options = await prisma.option.findMany();
+export async function GET(request: NextRequest, { params }: { params: { sbi: string }}) {
+  const { sbi } = params;
+  const options = await fetchFarmOptions(sbi);
   let reportOptions: ReportOption[] = [];
   let pdfEvidence: string[] = [];
 
@@ -73,7 +75,7 @@ export async function GET(request: Request) {
 
   const pdfDoc = await PDFDocument.create();
   const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  
+
   await copyPagesAtUrl(blob.url, pdfDoc);
 
   for (let i = 0; i < pdfEvidence.length; i++) {

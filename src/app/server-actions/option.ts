@@ -42,3 +42,14 @@ export async function createOptionForParcel(sbi: string, parcId: string, formDat
   redirect(path);
 }
 
+export async function fetchFarmOptions(sbi: string) {
+  const options = await prisma.option.findMany({
+    where: {
+      parcel: {
+        sbi
+      }
+    }
+  });
+  return options;
+}
+
