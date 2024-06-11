@@ -100,14 +100,19 @@ export async function fetchAllActions() {
   }
 }
 
-export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: string) {
+export async function fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi: string, actionCode: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
       optionEvidences: {
         every: {
-          actCode: actionCode
-        }
-      }
+          actCode: actionCode,
+          option: {
+            parcel: {
+              sbi
+            }
+          }
+        },
+      },
     },
     include: { 
       task: true,
@@ -126,12 +131,17 @@ export async function fetchEvidencesForActionWithTaskAndParcels(actionCode: stri
   return evidences;
 }
 
-export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string) {
+export async function fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi: string, parcelId: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
       optionEvidences: {
         every: {
-          parcelId: parcelId
+          parcelId: parcelId,
+          option: {
+            parcel: {
+              sbi
+            }
+          }
         }
       }
     },
@@ -151,10 +161,19 @@ export async function fetchEvidencesForParcelWithTaskAndAction(parcelId: string)
   return evidences;
 }
 
-export async function fetchTasksForAction(actionCode: string) {
+export async function fetchTasksForActionOnFarm(sbi: string, actionCode: string) {
   const tasks = await prisma.task.findMany({
     where: {
-      actionCode
+      actionCode,
+      options: {
+        every: {
+          option: {
+            parcel: {
+              sbi
+            }
+          }
+        }
+      }
     },
     include: {
       action: true

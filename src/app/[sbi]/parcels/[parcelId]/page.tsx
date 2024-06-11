@@ -4,7 +4,7 @@ import GenerateReport from '@/app/[sbi]/parcels/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
-import { fetchEvidencesForParcelWithTaskAndAction, fetchTasksForParcel } from '@/app/server-actions/action';
+import { fetchEvidencesForParcelWithTaskAndActionOnFarm, fetchTasksForParcel } from '@/app/server-actions/action';
 import AllTasks from '@/app/components/tasks/AllTasks';
 
 export default async function Page({
@@ -21,7 +21,7 @@ export default async function Page({
   const [parcelName, actions, evidence, tasks] = await Promise.all([
     await fetchParcelName(parcelId),
     await fetchActionsForParcel(parcelId),
-    await fetchEvidencesForParcelWithTaskAndAction(parcelId),
+    await fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi, parcelId),
     await fetchTasksForParcel(parcelId)
   ]);
 
