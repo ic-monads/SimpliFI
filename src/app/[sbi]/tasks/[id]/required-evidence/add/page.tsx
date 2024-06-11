@@ -4,13 +4,16 @@ import { useState } from "react";
 import Submit from "@/app/components/Submit";
 import { createRequiredEvidence } from "@/app/server-actions/required-evidence";
 import CancelButton from "@/app/components/CancelButton";
+import { useSearchParams } from "next/navigation";
 
-export default function Page({ params }: { params: { sbi: string, taskId: string, taskName: string } }) {
+export default function Page({ params }: { params: { sbi: string, id: string } }) {
     const [error, setError] = useState<string | null>(null);
-    const { sbi, taskId, taskName } = params;
+    const { sbi, id } = params;  
+    const searchParams = useSearchParams();
+    const taskName = searchParams.get('taskName');  
 
     const handleSubmit = async (formData: FormData) => {
-      formData.append('taskId', taskId);
+      formData.append('taskId', id);
       try {
         await createRequiredEvidence(sbi, formData);
       } catch (error) {

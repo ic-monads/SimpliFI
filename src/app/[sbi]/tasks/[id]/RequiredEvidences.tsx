@@ -5,9 +5,8 @@ import Link from "next/link";
 import DeleteButton from '@/app/components/DeleteButton';
 import { deleteRequiredEvidence } from "@/app/server-actions/required-evidence";
 
-export default async function RequiredEvidences(props: {task: Task, required: RequiredEvidence[]}) {
-  const required = props.required;
-  const task = props.task;
+export default async function RequiredEvidences(props: {sbi: string, task: Task, required: RequiredEvidence[]}) {
+  const { sbi, required, task } = props;
 
   return (
     <table className="table">
@@ -38,7 +37,7 @@ export default async function RequiredEvidences(props: {task: Task, required: Re
               <td>
                 {req.evId == null ?
                 <Link href={{
-                  pathname: "/evidence/add",
+                  pathname: `/${sbi}/evidence/add`,
                   query: { actCode: task.actionCode, taskId: task.id, reqEvId: req.id, evTitle: req.title, fromTask: true }
                 }}>
                     <button className="btn btn-primary btn-sm">Add Evidence</button>

@@ -138,3 +138,11 @@ export async function fetchTaskParcels(taskId: string) {
 
   return parcels;
 }
+
+export async function fetchTaskName(taskId: string) {
+  return (await prisma.task.findUnique({
+    where: {
+      id: taskId
+    }
+  }))?.title;
+}

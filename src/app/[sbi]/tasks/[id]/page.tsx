@@ -36,11 +36,11 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
 
       <div className="my-5">
         <h2 className="text-xl font-semibold">Required Evidence</h2>
-        <RequiredEvidences task={task} required={task.requiredEvidences} />
+        <RequiredEvidences sbi={sbi} task={task} required={task.requiredEvidences} />
       </div>
       <Link href={{
-        pathname: "/required-evidence/add",
-        query: { taskId: id, taskName: task.title }
+        pathname: `/${sbi}/tasks/${id}/required-evidence/add`,
+        query: { taskName: task.title }
       }}>
           <button className="btn btn-primary">Add Required Evidence</button>
       </Link>
