@@ -1,26 +1,15 @@
-import Submit from "@/app/components/Submit";
-import { createFarm } from "@/app/server-actions/farm";
-
+import Link from "next/link"
 
 export default function Home() {
 
-  return(
+  return (
     <div className="w-full flex justify-center">
-      <div className="mx-auto mt-10">
-        <form className="max-w-sm" action={createFarm}>
-          <div className="label">
-            <label htmlFor="sbi" className="label-text">SBI</label>
-          </div>
-          <input type="text" id="sbi" name="sbi" className="input input-bordered w-full" required />
-          <div className="label">
-            <label htmlFor="name" className="label-text">Farm Name</label>
-          </div>
-          <input type="text" id="name" name="name" className="input input-bordered w-full" required />
-          <div className="mt-6 flex justify-center gap-4">
-            <Submit text="Manage my farm" />
-          </div>
-        </form>
-      </div>
+      <Link href={{ pathname: "/login" }}>
+        <button className="btn btn-primary">Login</button>
+      </Link>
+      <Link href={{ pathname: "/signup" }}>
+        <button className="btn btn-primary">Sign Up</button>
+      </Link>
     </div>
   )
 }
