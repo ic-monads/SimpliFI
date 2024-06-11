@@ -20,5 +20,5 @@ export async function createFarm(formData: FormData) {
       name: name
     }
   });
-  redirect(`/${sbi}/actions`);
+  redirect(`/${sbi}/parcels`);
 }
