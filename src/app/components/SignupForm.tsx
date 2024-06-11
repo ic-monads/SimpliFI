@@ -5,7 +5,6 @@ export default function SignupForm() {
 
   return (
     <div className="w-full flex justify-center">
-      <h1>Sign Up</h1>
       <div className="mx-auto mt-10">
         <form className="max-w-sm" action={createFarm}>
           <div className="label">

@@ -12,7 +12,6 @@ export async function LoginForm() {
 
   return (
     <div className="w-full flex justify-center">
-      <h1>Login</h1>
       <div className="mx-auto mt-10">
         {!response!.success && <p className="text-red-500 text-sm mb-5">{response!.message}</p>}
         <form className="max-w-sm" action={submit}>
