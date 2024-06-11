@@ -2,7 +2,7 @@ import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnF
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
-import GenerateReport from '../GenerateReport';
+import GenerateReport from '@/app/components/GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
 
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {

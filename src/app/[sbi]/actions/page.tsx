@@ -1,6 +1,6 @@
 import { ActionCard } from './ActionCard';
 import { fetchFarmActionsWithParcels } from '@/app/server-actions/action';
-import GenerateReport from './GenerateReport';
+import GenerateReport from '@/app/components/GenerateReport';
 
 export default async function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;

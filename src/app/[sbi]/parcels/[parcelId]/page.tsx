@@ -1,6 +1,6 @@
 import { fetchParcelName, fetchActionsForParcel } from '@/app/server-actions/land-parcel';
 import React from 'react';
-import GenerateReport from '@/app/[sbi]/parcels/GenerateReport';
+import GenerateReport from '@/app/components/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
