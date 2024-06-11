@@ -65,6 +65,7 @@ export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: str
               data={parcels.map((parcel) => { return { value: parcel.id, label: `${parcel.name} (${parcel.id})` }})}
               classNames={{ label: "label-text p-2" }}
               styles={{ label: { fontWeight: 400 }}}
+              searchable
             />
           </div>
         }

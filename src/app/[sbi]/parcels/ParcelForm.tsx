@@ -45,6 +45,7 @@ export default function ParcelForm({ sbi, actions }: { sbi: string, actions: Act
                   data={actions.map((action) => { return { value: action.code, label: `${action.code}: ${action.name})` }})}
                   classNames={{ label: "label-text p-2" }}
                   styles={{ label: { fontWeight: 400 }}}
+                  searchable
                 />
 
                 <div className="mt-6 flex justify-end gap-4">
