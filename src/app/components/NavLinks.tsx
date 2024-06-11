@@ -3,7 +3,8 @@
 import {
   HomeIcon,
   RectangleStackIcon,
-  WrenchIcon
+  WrenchIcon,
+  GiftTopIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,6 +14,7 @@ export default function NavLinks({ sbi }: { sbi: string }) {
   const links = [
     { name: 'My Actions', href: `/${sbi}/actions`, icon: WrenchIcon },
     { name: 'Tasks', href: `/${sbi}/tasks`, icon: RectangleStackIcon },
+    { name: 'Parcels', href: `/${sbi}/parcels`, icon: GiftTopIcon },
   ];
 
   const pathname = usePathname();

@@ -19,6 +19,21 @@ export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
   }
 }>
 
+export type EvidenceWithTaskAndAction = Prisma.EvidenceGetPayload<{
+  include: {
+    task: true,
+    optionEvidences: {
+      include: {
+        option: {
+          include: {
+            action: true
+          }
+        }
+      }
+    }
+  }
+}>
+
 export type ActionWithParcels = Prisma.ActionGetPayload<{
   include: { 
     options: {
@@ -28,3 +43,15 @@ export type ActionWithParcels = Prisma.ActionGetPayload<{
     }
   }
 }>
+
+export type ParcelWithActions = Prisma.LandParcelGetPayload<{
+  include: {
+    options: {
+      include: {
+        action: true
+      }
+    }
+  }
+}>
+
+export type Parcel = Prisma.LandParcelGetPayload<{}>
