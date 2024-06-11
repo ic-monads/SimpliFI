@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { sbi: string } }) {
       <div className="flex w-full items-center justify-between">
         <h1 className="text-2xl font-semibold">My Actions</h1>
         <div className='flex space-x-3'>
-          <GenerateReport />
+          <GenerateReport sbi={sbi} />
         </div>
       </div>
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

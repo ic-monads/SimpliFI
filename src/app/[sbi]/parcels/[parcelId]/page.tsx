@@ -36,7 +36,7 @@ export default async function Page({
           <Link href={{ pathname: `/${sbi}/parcels/${parcelId}/options/add` }}>
             <button className="btn btn-primary">Add Option</button>
           </Link>
-          <GenerateReport />
+          <GenerateReport sbi={sbi} />
         </div>
       </div>
 

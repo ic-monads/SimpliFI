@@ -73,7 +73,7 @@ export async function GET(request: Request) {
 
   const pdfDoc = await PDFDocument.create();
   const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  
+
   await copyPagesAtUrl(blob.url, pdfDoc);
 
   for (let i = 0; i < pdfEvidence.length; i++) {
