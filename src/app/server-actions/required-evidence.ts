@@ -18,6 +18,7 @@ export async function createRequiredEvidence(sbi: string, formData: FormData) {
       desc: formData.get('desc'),
       taskId: formData.get('taskId')
     });
+  console.log(title, desc, taskId);
   await prisma.requiredEvidence.create({
     data: { title, desc, taskId }
   })
