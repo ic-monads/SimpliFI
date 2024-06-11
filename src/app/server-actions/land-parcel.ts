@@ -5,11 +5,16 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import prisma from "../lib/prisma";
 
-export async function fetchFarmLandParcels(sbi: string) {
+export async function fetchFarmLandParcelsMissingForAction(sbi: string, actionCode: string) {
   try {
     const parcels = await prisma.landParcel.findMany({
       where: {
-        sbi
+        sbi,
+        options: {
+          none: {
+            actionCode
+          }
+        }
       }
     });
     return parcels;

@@ -10,24 +10,24 @@ const OptionFormSchema = z.object({
   parcelId: z.string(),
 });
 
-export async function createOptionForAction(sbi: string, actCode: string, formData: FormData) {
+export async function createOptionsForAction(sbi: string, actCode: string, formData: FormData) {
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: actCode,
     parcelId: formData.get('parcelId'),
   });
-  await prisma.option.create({
-    data: {
-      actionCode: actionCode,
-      parcelId: parcelId,
+  const options = parcelId.split(",").map((p) => {
+    return {
+      actionCode: actCode,
+      parcelId: p
     }
-  });
+  })
+  await prisma.option.createMany({ data: options});
   const path = `/${sbi}/actions/${actionCode}`;
   revalidatePath(path);
   redirect(path);
 }
 
 export async function createOptionsForParcel(sbi: string, parcId: string, formData: FormData) {
-  console.log(formData);
   const { actionCode, parcelId } = OptionFormSchema.parse({
     actionCode: formData.get('actionCode'),
     parcelId: parcId,
