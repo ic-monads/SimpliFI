@@ -38,7 +38,7 @@ export default async function RequiredEvidences(props: {sbi: string, task: Task,
                 {req.evId == null ?
                 <Link href={{
                   pathname: `/${sbi}/evidence/add`,
-                  query: { actCode: task.actionCode, taskId: task.id, reqEvId: req.id, evTitle: req.title, fromTask: true }
+                  query: { actCode: task.actionCode, taskId: task.id, taskName: task.title, reqEvId: req.id, evTitle: req.title, fromTask: true }
                 }}>
                     <button className="btn btn-primary btn-sm">Add Evidence</button>
                 </Link>

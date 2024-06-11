@@ -6,11 +6,10 @@ import { createRequiredEvidence } from "@/app/server-actions/required-evidence";
 import CancelButton from "@/app/components/CancelButton";
 import { useSearchParams } from "next/navigation";
 
-export default function Page({ params }: { params: { sbi: string, id: string } }) {
+export default function Page({ params, searchParams }: { params: { sbi: string, id: string }, searchParams: { taskName: string,  } }) {
     const [error, setError] = useState<string | null>(null);
-    const { sbi, id } = params;  
-    const searchParams = useSearchParams();
-    const taskName = searchParams.get('taskName');  
+    const { sbi, id } = params;
+    const { taskName } = searchParams;
 
     const handleSubmit = async (formData: FormData) => {
       formData.append('taskId', id);
