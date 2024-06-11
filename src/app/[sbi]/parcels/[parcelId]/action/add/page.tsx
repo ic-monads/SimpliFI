@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { sbi: string, parcelId
   const actions = await fetchAllActions();
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-semibold text-2xl mb-3">Add Option</h1>
+      <h1 className="font-semibold text-2xl mb-3">Add Action</h1>
       <form className="max-w-md" action={createOptionForParcel.bind(null, params.sbi, params.parcelId)}>
         <div className="label">
           <label htmlFor="actions" className="label-text">Select SFI Action</label>
