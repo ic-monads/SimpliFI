@@ -5,9 +5,13 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import prisma from "../lib/prisma";
 
-export async function fetchLandParcels() {
+export async function fetchFarmLandParcels(sbi: string) {
   try {
-    const parcels = await prisma.landParcel.findMany();
+    const parcels = await prisma.landParcel.findMany({
+      where: {
+        sbi
+      }
+    });
     return parcels;
   } catch (e) {
     console.error('Database Error:', e);

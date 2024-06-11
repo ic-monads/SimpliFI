@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from "react";
 import Submit from "@/app/components/Submit";
 import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
-import { fetchActionParcels } from "@/app/server-actions/action";
+import { fetchActionParcelsOnFarm } from "@/app/server-actions/action";
 
 export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: string, actCode?: string, parcelId?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: str
   };
 
   const handleActionChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    const actionParcels = await fetchActionParcels(e.target.value);
+    const actionParcels = await fetchActionParcelsOnFarm(sbi, e.target.value);
     setParcels(actionParcels);
   };
 

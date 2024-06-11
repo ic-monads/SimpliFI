@@ -1,12 +1,12 @@
 import { createOptionForAction } from '@/app/server-actions/option';
-import { fetchLandParcels } from '@/app/server-actions/land-parcel';
+import { fetchFarmLandParcels } from '@/app/server-actions/land-parcel';
 import Submit from '@/app/components/Submit';
 import CancelButton from "@/app/components/CancelButton";
 
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
   /* TODO: Change to be actions that a farmer is performing */
   const { sbi, actionCode } = params;
-  const parcels = await fetchLandParcels();
+  const parcels = await fetchFarmLandParcels();
   return (
     <div className="flex flex-col items-center">
       <h1 className="font-semibold text-2xl mb-3">Add Option</h1>

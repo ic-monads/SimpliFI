@@ -229,9 +229,10 @@ export async function fetchActionName(actCode: string) {
   }
 }
 
-export async function fetchActionParcels(actionCode: string) {
+export async function fetchActionParcelsOnFarm(sbi: string, actionCode: string) {
   const parcels = await prisma.landParcel.findMany({
     where: {
+      sbi,
       options: {
         some: {
           actionCode: actionCode
