@@ -1,7 +1,6 @@
 import { Farm } from "@prisma/client";
 import prisma from "@/app/lib/prisma";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 
 const FarmFormSchema = z.object({
   sbi: z.string(),
@@ -28,5 +27,4 @@ export async function fetchFarm(formData: FormData) {
       },
     });
   }
-  redirect(`/${sbi}/actions`);
 }

@@ -112,7 +112,7 @@ type ParcelFeature = {
 export async function initialiseParcelsFromSBI(sbi: string) {
   const parcels: ParcelFeature[] = await fetchLandParcels(sbi).then((data: any) => data.features);
   parcels.forEach(async (parcel: ParcelFeature) => {
-    const currParcel = await prisma.landParcel.findUnique({ where: { id: parcel.id, sbi: sbi } });
+    const currParcel = await prisma.landParcel.findUnique({ where: { id: parcel.id } });
     if (currParcel === null) {
       await prisma.landParcel.create({
         data: {
