@@ -96,6 +96,7 @@ type ParcelFeature = {
     index: number;
     ID: string;
     SHEET_ID: string;
+    PARCEL_ID: string;
     VALID_FROM: string;
     VALID_TO: string;
     LFA_CODE: string;
@@ -115,8 +116,8 @@ export async function initialiseParcelsFromSBI(sbi: string) {
     if (currParcel === null) {
       await prisma.landParcel.create({
         data: {
-          id: parcel.id,
-          name: parcel.id,
+          id: parcel.properties.SHEET_ID + " " + parcel.properties.PARCEL_ID,
+          name: parcel.properties.SHEET_ID + " " + parcel.properties.PARCEL_ID,
           sbi: sbi,
         },
       });
