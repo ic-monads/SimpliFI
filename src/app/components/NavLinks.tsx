@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  HomeIcon,
+  RectangleGroupIcon,
   RectangleStackIcon,
   WrenchIcon
 } from '@heroicons/react/24/outline';
@@ -9,18 +9,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
+export default function NavLinks({ sbi }: { sbi: string }) {
+  const links = [
+    { name: 'Actions', href: `/${sbi}/actions`, icon: WrenchIcon },
+    { name: 'Tasks', href: `/${sbi}/tasks`, icon: RectangleStackIcon },
+    { name: 'Land Parcels', href: `/${sbi}/parcels`, icon: RectangleGroupIcon },
+  ];
 
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
-const links = [
-  { name: 'My Actions', href: '/actions', icon: WrenchIcon },
-  // { name: 'My Options', href: '/options', icon: HomeIcon },
-  { name: 'Tasks', href: '/tasks', icon: RectangleStackIcon },
-  // { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
-];
-
-export default function NavLinks() {
   const pathname = usePathname();
+
   return (
     <>
       {links.map((link) => {
