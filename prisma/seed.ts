@@ -375,75 +375,75 @@ async function main() {
     }
   });
 
-  let evidence: Evidence[] = [];
-  if (dev) {
-    evidence = await prisma.evidence.createManyAndReturn({
-      data: [
-        {
-          title: 'Soil Inspection',
-          fileUrl: 'https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Sarah_Benoit_Delbecq_Indiana_1.jpg?crop=0%2C233%2C4000%2C2200&wid=2000&hei=1100&scl=2.0',
-          // actCode: 'CSAM1',
-          // parcelId: 'PG987654'
-        },
-        {
-          title: 'Soil Plan',
-          fileUrl: 'https://ars.els-cdn.com/content/image/3-s2.0-B9780123869418000022-f02-08-9780123869418.jpg',
-          // actCode: 'CSAM1',
-          // parcelId: 'PG987654',
-          taskId: task.id
-        },
-        {
-          title: 'Field Map',
-          fileUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6bO6HF46cmtaj27ZUpa-arz84OeX6i7KtYg&s',
-          // actCode: 'CSAM1',
-          // parcelId: 'PG987654',
-          taskId: task.id
-        },
-        {
-          title: 'Soil Profile',
-          fileUrl: 'https://www.researchgate.net/publication/344607020/figure/fig2/AS:1022807496482818@1620867718338/Soil-profile-with-measurements-in-inches-Reprinted-from.jpg',
-          // actCode: 'CSAM1',
-          // parcelId: 'PG987654'
-        }
-      ]
-    });
-    const optionEvidence = await prisma.optionEvidence.createMany({
-      data: [
-        {
-          evId: evidence[0].id,
-          actCode: 'CSAM1',
-          parcelId: 'PG987654'
-        },
-        {
-          evId: evidence[1].id,
-          actCode: 'CSAM1',
-          parcelId: 'PG987654'
-        },
-        {
-          evId: evidence[2].id,
-          actCode: 'CSAM1',
-          parcelId: 'PG987654'
-        },
-        {
-          evId: evidence[3].id,
-          actCode: 'CSAM1',
-          parcelId: 'PG987654'
-        },
-        { // Store purchase orders shared on two fields
-          evId: evidence[3].id,
-          actCode: 'CSAM1',
-          parcelId: 'ZM13579'
-        }
-      ]
-    });
-  }
+  // let evidence: Evidence[] = [];
+  // if (dev) {
+  //   evidence = await prisma.evidence.createManyAndReturn({
+  //     data: [
+  //       {
+  //         title: 'Soil Inspection',
+  //         fileUrl: 'https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Sarah_Benoit_Delbecq_Indiana_1.jpg?crop=0%2C233%2C4000%2C2200&wid=2000&hei=1100&scl=2.0',
+  //         // actCode: 'CSAM1',
+  //         // parcelId: 'PG987654'
+  //       },
+  //       {
+  //         title: 'Soil Plan',
+  //         fileUrl: 'https://ars.els-cdn.com/content/image/3-s2.0-B9780123869418000022-f02-08-9780123869418.jpg',
+  //         // actCode: 'CSAM1',
+  //         // parcelId: 'PG987654',
+  //         taskId: task.id
+  //       },
+  //       {
+  //         title: 'Field Map',
+  //         fileUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6bO6HF46cmtaj27ZUpa-arz84OeX6i7KtYg&s',
+  //         // actCode: 'CSAM1',
+  //         // parcelId: 'PG987654',
+  //         taskId: task.id
+  //       },
+  //       {
+  //         title: 'Soil Profile',
+  //         fileUrl: 'https://www.researchgate.net/publication/344607020/figure/fig2/AS:1022807496482818@1620867718338/Soil-profile-with-measurements-in-inches-Reprinted-from.jpg',
+  //         // actCode: 'CSAM1',
+  //         // parcelId: 'PG987654'
+  //       }
+  //     ]
+  //   });
+  //   const optionEvidence = await prisma.optionEvidence.createMany({
+  //     data: [
+  //       {
+  //         evId: evidence[0].id,
+  //         actCode: 'CSAM1',
+  //         parcelId: 'PG987654'
+  //       },
+  //       {
+  //         evId: evidence[1].id,
+  //         actCode: 'CSAM1',
+  //         parcelId: 'PG987654'
+  //       },
+  //       {
+  //         evId: evidence[2].id,
+  //         actCode: 'CSAM1',
+  //         parcelId: 'PG987654'
+  //       },
+  //       {
+  //         evId: evidence[3].id,
+  //         actCode: 'CSAM1',
+  //         parcelId: 'PG987654'
+  //       },
+  //       { // Store purchase orders shared on two fields
+  //         evId: evidence[3].id,
+  //         actCode: 'CSAM1',
+  //         parcelId: 'ZM13579'
+  //       }
+  //     ]
+  //   });
+  // }
 
   const required = await prisma.requiredEvidence.createMany({
     data: [
       {
         title: 'Produce Soil Report',
         desc: 'Compile all evidence into report',
-        evId: dev ? evidence[0].id : null,
+        // evId: dev ? evidence[0].id : null,
         taskId: task.id
       },
       {
