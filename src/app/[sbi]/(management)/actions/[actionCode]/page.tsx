@@ -51,11 +51,14 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <AllTasks sbi={sbi} tasks={tasks} />
-
-          <Link href={{ pathname: `/${sbi}/tasks/add`, query: { actCode: actionCode, parcelId: parcels[0].id } }}>
-              <button className="mt-3 btn btn-primary">Add Task</button>
-          </Link>
+          <AllTasks
+            sbi={sbi}
+            tasks={tasks}
+            addTask={
+              <Link href={{ pathname: `/${sbi}/tasks/add`, query: { actCode: actionCode, parcelId: parcels[0].id } }}>
+                <button className="mt-3 btn btn-primary">Add Task</button>
+              </Link>
+            } />
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
