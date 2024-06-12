@@ -1,9 +1,10 @@
 "use server";
 
-import { Farm } from "@prisma/client";
 import prisma from "@/app/lib/prisma";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { ParcelFeature } from "../lib/types";
+import { fetchLandParcels } from "./rpa-api";
 
 const FarmFormSchema = z.object({
   sbi: z.string(),
@@ -95,4 +96,26 @@ export async function attemptLogin(formData: FormData) {
   } 
   // If farm does not exist, leave on sign in
 
+}
+
+export async function fetchFarmParcelIds(sbi: string) {
+  const parcels: ParcelFeature[] = await fetchLandParcels(sbi).then((data: any) => data.features);
+  return parcels.map((parcel) => parcel.properties.SHEET_ID + parcel.properties.PARCEL_ID);
+}
+
+export async function createFarmParcels(sbi: string, parcels: { id: string, name: string }[]) {
+  console.log(parcels);
+  
+  await prisma.farm.update({
+    where: {
+      sbi: sbi,
+    },
+    data: {
+      parcels: {
+        create: parcels,
+      },
+    },
+  });
+
+  redirect(`/${sbi}/parcels`);
 }
