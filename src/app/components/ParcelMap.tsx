@@ -3,6 +3,7 @@
 import Map, { Source, Layer, type FillLayer, MapEvent } from "react-map-gl";
 import { Feature } from "geojson";
 import centroid from "@turf/centroid";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const layerStyle: FillLayer = {
   id: 'parcel-boundary',
