@@ -1,20 +1,14 @@
-"use client"
-
 import Submit from "./Submit";
-import { useFormState } from 'react-dom';
-import { getSbi } from "../server-actions/farm";
+import { attemptLogin } from "@/app/server-actions/farm";
 
 export async function LoginForm() {
-  const [response, submit] = useFormState(getSbi, {
-    success: false,
-    message: ''
-  });
+
 
   return (
     <div className="w-full flex justify-center">
       <div className="mx-auto mt-10">
-        {!response!.success && <p className="text-red-500 text-sm mb-5">{response!.message}</p>}
-        <form className="max-w-sm" action={submit}>
+        {/* {!response!.success && <p className="text-red-500 text-sm mb-5">{response!.message}</p>} */}
+        <form className="max-w-sm" action={attemptLogin}>
           <div className="label">
             <label htmlFor="sbi" className="label-text">SBI</label>
           </div>

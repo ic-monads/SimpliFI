@@ -47,31 +47,52 @@ export async function createFarm(formData: FormData) {
   redirect(`/${sbi}/parcels`);
 }
 
-export type validateAndUseInputType = {
-  success: boolean;
-  message: string;
-};
+// export type validateAndUseInputType = {
+//   success: boolean;
+//   message: string;
+// };
 
-export async function getSbi(prevState: validateAndUseInputType | null, formData: FormData) {
-  const sbi = FarmFormSchema.safeParse({ sbi: formData.get("sbi") }).data?.sbi;
-  let success = false;
-  try {
-    const result = await prisma.farm.findUnique({
-      where: {
-        sbi: sbi,
-      },
-    });
-    if (result) {
-      success = true;
+// export async function getSbi(prevState: validateAndUseInputType | null, formData: FormData) {
+//   const sbi = FarmFormSchema.safeParse({ sbi: formData.get("sbi") }).data?.sbi;
+//   let success = false;
+//   try {
+//     const result = await prisma.farm.findUnique({
+//       where: {
+//         sbi: sbi,
+//       },
+//     });
+//     if (result) {
+//       success = true;
+//     }
+//     // return { success: success, message: "" };
+//   } catch (error) {
+//     console.error(error);
+//     // throw error;
+//     return { success: false, message: "Failed to submit form" };
+//   } finally {
+//     if (success) {
+//       redirect(`/${sbi}/parcels`);
+//     }
+//   }
+// }
+
+const FarmLoginSchema = z.object({
+  sbi: z.string()
+})
+
+export async function attemptLogin(formData: FormData) {
+  const { sbi } = FarmLoginSchema.parse({
+    sbi: formData.get("sbi")
+  });
+  const farm = await prisma.farm.findUnique({
+    where: {
+      sbi
     }
-    // return { success: success, message: "" };
-  } catch (error) {
-    console.error(error);
-    // throw error;
-    return { success: false, message: "Failed to submit form" };
-  } finally {
-    if (success) {
-      redirect(`/${sbi}/parcels`);
-    }
-  }
+  });
+  if (farm) {
+    // Farm exists, can sign in 
+    redirect(`/${sbi}/actions`);
+  } 
+  // If farm does not exist, leave on sign in
+
 }

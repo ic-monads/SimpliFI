@@ -7,7 +7,7 @@ export default function Page() {
     <div className="w-full p-x">
       <div className="flex flex-col py-52 w-full items-center justify-between">
         <h1 className="text-2xl font-semibold">Login</h1>
-        <LoginForm></LoginForm>
+        <LoginForm />
       </div>
     </div>
   )
