@@ -32,16 +32,6 @@ export async function fetchFarm(formData: FormData) {
   }
 }
 
-const FarmSignupFormSchema = z.object({
-  sbi: z.string(),
-  name: z.string(),
-});
-
-const FarmLoginFormSchema = z.object({
-  sbi: z.string(),
-  name: z.string()
-});
-
 export async function createFarm(formData: FormData) {
   'use server';
   const { sbi, name } = FarmFormSchema.parse({
@@ -63,7 +53,7 @@ export type validateAndUseInputType = {
 };
 
 export async function getSbi(prevState: validateAndUseInputType | null, formData: FormData) {
-  const sbi = FarmLoginFormSchema.safeParse({ sbi: formData.get("sbi") }).data?.sbi;
+  const sbi = FarmFormSchema.safeParse({ sbi: formData.get("sbi") }).data?.sbi;
   let success = false;
   try {
     const result = await prisma.farm.findUnique({
