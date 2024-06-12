@@ -1,27 +1,22 @@
 "use client";
 
+import React from "react";
 import mapboxgl from "mapbox-gl";
 import type { Map } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { FeatureCollection } from "geojson";
+import { Feature, FeatureCollection } from "geojson";
+import centroid from "@turf/centroid";
 
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
-export default function ParcelMap({ sbi }: { sbi: string }) {
+export default function ParcelMap({ feature }: { feature: Feature }) {
   const map = useRef<Map | null>(null);
   const mapContainer = useRef(null);
   const [lng, setLng] = useState(-0.25);
   const [lat, setLat] = useState(52.57);
   const [zoom, setZoom] = useState(10);
-
-  async function fetchData(): Promise<FeatureCollection> {
-    const response = await fetch(`/api/map?sbi=${sbi}`);
-    const geojson = await response.json();
-    console.log(geojson.data);
-    return geojson.data as FeatureCollection;
-  }
 
   useEffect(() => {
     if (map.current) return;
@@ -33,21 +28,33 @@ export default function ParcelMap({ sbi }: { sbi: string }) {
     });
 
     map.current.on("load", async () => {
-      const data = await fetchData();
-      map.current!.addSource("parcels", {
+      map.current!.addSource("parcel", {
         type: "geojson",
-        data: data
+        data: feature
       });
 
       map.current!.addLayer({
-        id: "parcel-boundaries",
+        id: "parcel-boundary",
         type: "fill",
-        source: "parcels",
+        source: "parcel",
         paint: {
-          "fill-color": "green",
+          "fill-color": "blue",
           "fill-opacity": 0.5
         }
       });
+
+      const target = {
+        center: centroid(feature).geometry.coordinates as [number, number],
+        zoom: 14,
+        pitch: 0,
+        bearing: 0
+      }
+      map.current!.flyTo({
+        ...target,
+        duration: 2000,
+        essential: true
+      });
+      // map.current!.fitBounds([[feature.bbox![0], feature.bbox![1]], [feature.bbox![2], feature.bbox![3]]]);
     });
   }, []); 
 

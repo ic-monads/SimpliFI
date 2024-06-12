@@ -49,6 +49,7 @@ model LandParcel {
   name    String
   options Option[]
   sbi     String
+  feature Json?
   farm    Farm     @relation(fields: [sbi], references: [sbi])
 }
 

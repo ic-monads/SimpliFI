@@ -1,6 +1,7 @@
-import { Evidence } from "@prisma/client";
+import { Evidence, Prisma } from "@prisma/client";
 import prisma from "../src/app/lib/prisma";
 import { parseArgs } from "node:util";
+import { FeatureCollection } from "geojson";
 
 interface ParsedArgs {
   values: { [key: string]: any };
@@ -14,6 +15,12 @@ const args = parseArgs({
 
 const dev = args.values.env != 'production';
 
+function takeOneFeature(fc: FeatureCollection, index: number) {
+  const feature = fc.features.at(index)!;
+  fc.features = [feature];
+  return fc;
+}
+
 async function main() {
   await prisma.task.deleteMany({});
   await prisma.evidence.deleteMany({});
@@ -21,6 +28,12 @@ async function main() {
   await prisma.landParcel.deleteMany({});
   await prisma.action.deleteMany({});
   await prisma.farm.deleteMany({});
+
+  const response = await fetch(
+    `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=106791068&srsname=CRS:84&outputFormat=application/json`
+  );
+  const geojson = await response.json();
+  const parcels = geojson as FeatureCollection;
 
 
   const actions = await prisma.action.createMany({
@@ -86,17 +99,20 @@ async function main() {
       {
         id: 'AB123456',
         name: 'Green Field',
-        sbi: farm.sbi
+        sbi: farm.sbi,
+        feature: parcels.features[0]! as unknown as Prisma.JsonObject
       },
       {
         id: 'PG987654',
         name: 'Flag Fen',
-        sbi: farm.sbi
+        sbi: farm.sbi,
+        feature: parcels.features[1]! as unknown as Prisma.JsonObject
       },
       {
         id: 'ZM13579',
         name: 'Box Moor',
-        sbi: farm.sbi
+        sbi: farm.sbi,
+        feature: parcels.features[2]! as unknown as Prisma.JsonObject
       }
     ],
   });
