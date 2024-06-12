@@ -15,7 +15,7 @@ const layerStyle: FillLayer = {
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-export default function ParcelMap2({ feature }: { feature: Feature }) {
+export default function ParcelMap({ feature }: { feature: Feature }) {
   const center = centroid(feature).geometry.coordinates as [number, number];
   const flyOnLoad = (event: MapEvent) => {
     const map = event.target;
