@@ -50,7 +50,7 @@ model LandParcel {
   options Option[]
   sbi     String
   feature Json?
-  farm    Farm     @relation(fields: [sbi], references: [sbi])
+  farm    Farm     @relation(fields: [sbi], references: [sbi], onDelete: Cascade)
 }
 
 model Task {
