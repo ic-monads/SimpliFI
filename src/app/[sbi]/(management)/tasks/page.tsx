@@ -1,7 +1,7 @@
 import { fetchFarmTasks } from "@/app/server-actions/task";
 import Link from "next/link";
 import UpcomingTasks from "./UpcomingTasks";
-import AllTasks from "../../components/tasks/AllTasks";
+import AllTasks from "@/app/components/tasks/AllTasks";
 
 export default async function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;
