@@ -22,13 +22,13 @@ export default async function SideNav({ sbi }: { sbi: string }) {
           )}
         { farm.endAg && (
           <>
-            <h3 className="text-lg">Agreement Start</h3>
+            <h3 className="text-lg">Agreement End</h3>
             <p className="text-sm">{Moment(farm.endAg).format('DD/MM/YYYY')}</p>
             </>
           )}
         { farm.renewAg && (
         <>
-          <h3 className="text-lg">Agreement Start</h3>
+          <h3 className="text-lg">Agreement Renewal</h3>
           <p className="text-sm">{Moment(farm.renewAg).format('DD/MM/YYYY')}</p>
           </>
         )}

@@ -1,6 +1,7 @@
 import { ParcelCard } from './ParcelCard';
 import { fetchFarmParcelsWithActions } from '@/app/server-actions/action'
 import ParcelsMap from "@/app/components/ParcelsMap";
+import ParcelsMap2 from '@/app/components/ParcelsMap2';
 import Link from 'next/link';
 
 export default async function Page({ params }: { params: { sbi: string } }) {
@@ -17,7 +18,7 @@ export default async function Page({ params }: { params: { sbi: string } }) {
         </div>
       </div>
 
-      <ParcelsMap parcels={parcels} />
+      <ParcelsMap2 parcels={parcels} />
 
       <div className="pt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {parcels.map((parcel) => <ParcelCard key={parcel.id} parcel={parcel}/>)}
