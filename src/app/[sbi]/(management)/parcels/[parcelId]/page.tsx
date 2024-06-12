@@ -1,4 +1,4 @@
-import { fetchParcelName, fetchActionsForParcel } from '@/app/server-actions/land-parcel';
+import { fetchParcelName, fetchActionsForParcel, fetchParcelFeature } from '@/app/server-actions/land-parcel';
 import React from 'react';
 import GenerateReport from '@/app/components/GenerateReport';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
 import { fetchEvidencesForParcelWithTaskAndActionOnFarm, fetchTasksForParcel } from '@/app/server-actions/action';
 import AllTasks from '@/app/components/tasks/AllTasks';
+import ParcelMap from "@/app/components/ParcelMap";
 
 export default async function Page({
   params
@@ -18,8 +19,9 @@ export default async function Page({
   
   const { sbi, parcelId } = params;
   
-  const [parcelName, actions, evidence, tasks] = await Promise.all([
+  const [parcelName, feature, actions, evidence, tasks] = await Promise.all([
     await fetchParcelName(parcelId),
+    await fetchParcelFeature(parcelId),
     await fetchActionsForParcel(parcelId),
     await fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi, parcelId),
     await fetchTasksForParcel(parcelId)
@@ -43,6 +45,8 @@ export default async function Page({
       <div className="flex w-full items-center justify-start gap-x-5"> 
         <ActionBadges actions={actions} />
       </div>
+
+      <ParcelMap feature={feature} />
 
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />

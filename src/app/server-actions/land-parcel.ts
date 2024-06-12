@@ -4,8 +4,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
-import { fetchLandParcels } from "./rpa-api";
-import { ParcelFeature } from "../lib/types";
+import { Feature } from 'geojson';
 
 export async function fetchFarmLandParcelsMissingForAction(sbi: string, actionCode: string) {
   try {
@@ -32,6 +31,20 @@ const ParcelFormSchema = z.object({
   sbi: z.string(),
   actions: z.string(),
 });
+
+export async function fetchParcelFeature(parcelId: string) {
+  try {
+    const parcel = await prisma.landParcel.findUniqueOrThrow({
+      where: {
+        id: parcelId
+      }
+    });
+    return parcel.feature as unknown as Feature;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('failed to fetch parcel feature');
+  }
+}
 
 export async function createParcel(formData: FormData) {
   const { id, name, sbi, actions } = ParcelFormSchema.parse({
