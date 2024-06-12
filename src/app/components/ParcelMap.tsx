@@ -9,7 +9,7 @@ const layerStyle: FillLayer = {
   id: 'parcel-boundary',
   type: 'fill',
   paint: {
-    'fill-color': 'blue',
+    'fill-color': '#FEEA00',
     'fill-opacity': 0.5
   }
 }
@@ -27,20 +27,22 @@ export default function ParcelMap({ feature }: { feature: Feature }) {
     })
   }
   return (
-    <Map
-      mapboxAccessToken={MAPBOX_TOKEN}
-      initialViewState={{
-        longitude: -0.25,
-        latitude: 52.57,
-        zoom: 10
-      }}
-      style={{width: '100%', height: '400px'}}
-      mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-      onLoad={flyOnLoad}
-    >
-      <Source id="my-data" type="geojson" data={feature}>
-        <Layer {...layerStyle} />
-      </Source>
-    </Map> 
+    <div className="my-4 rounded-lg overflow-hidden">
+      <Map
+        mapboxAccessToken={MAPBOX_TOKEN}
+        initialViewState={{
+          longitude: -0.25,
+          latitude: 52.57,
+          zoom: 10
+        }}
+        style={{width: '100%', height: '400px'}}
+        mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+        onLoad={flyOnLoad}
+      >
+        <Source id="my-data" type="geojson" data={feature}>
+          <Layer {...layerStyle} />
+        </Source>
+      </Map>
+    </div>
   )
 }

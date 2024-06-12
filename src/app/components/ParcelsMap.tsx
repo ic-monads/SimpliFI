@@ -1,85 +1,86 @@
 "use client";
 
 import React from "react";
-import Map, { Source, Layer, type FillLayer, MapEvent, Popup, MapLayerMouseEvent } from "react-map-gl";
-import { Feature } from "geojson";
+import mapboxgl from "mapbox-gl";
+import type { Map } from "mapbox-gl";
+import { useEffect, useRef, useState } from "react";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { Feature, FeatureCollection } from "geojson";
+import { LandParcel } from "@prisma/client";
 import centroid from "@turf/centroid";
 import { featureCollection } from "@turf/helpers";
-import type { LandParcel } from "@prisma/client";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { createRoot } from "react-dom/client";
+import Link from "next/link";
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-export default function ParcelMap({ parcels }: { parcels: LandParcel[] }) {
-  const parcelFeatures = parcels.map((p) => { return {
-    feature: p.feature as unknown as Feature,
-    center: centroid(p.feature as unknown as Feature).geometry.coordinates as [number, number],
-    id: p.id,
-    name: p.name,
-    sbi: p.sbi
-  }});
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
-  const center = centroid(featureCollection(parcelFeatures.map((p) => p.feature))).geometry.coordinates as [number, number];
-  const [showPopups, setShowPopups] = React.useState<boolean[]>(Array(parcelFeatures.length).fill(false));
-  const flyOnLoad = (event: MapEvent) => {
-    const map = event.target;
-    map.flyTo( {
-      center: center,
-      zoom: 15,
-      essential: true
-    })
-  }
+export default function ParcelsMap({ parcels }: { parcels: LandParcel[] }) {
+  const map = useRef<Map | null>(null);
+  const mapContainer = useRef(null);
+  const [lng, setLng] = useState(-0.25);
+  const [lat, setLat] = useState(52.57);
+  const [zoom, setZoom] = useState(10);
 
-  const mapClick = (e: MapLayerMouseEvent) => {
-    e.preventDefault();
-    if (e.features) {
-      const id = e.features[0].layer.id.split("-")[0];
-      const i = parcelFeatures.findIndex((p) => p.id == id);
-      console.log(i);
-      console.log(showPopups);
-      setShowPopups((curr) => {
-        curr[i] = true;
-        return curr;
+  useEffect(() => {
+    if (map.current) return;
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current!,
+      style: "mapbox://styles/mapbox/satellite-streets-v12",
+      center: [lng, lat],
+      zoom: zoom
+    });
+
+    map.current.on("load", async () => {
+      for (const parcel of parcels) {
+        map.current!.addSource(`parcel-${parcel.id}`, {
+          type: "geojson",
+          data: parcel.feature as unknown as Feature
+        });
+  
+        map.current!.addLayer({
+          id: `parcel-${parcel.id}-boundary`,
+          type: "fill",
+          source: `parcel-${parcel.id}`,
+          paint: {
+            "fill-color": "#FEEA00",
+            "fill-opacity": 0.5
+          }
+        });
+
+        map.current!.on("click", `parcel-${parcel.id}-boundary`, (e) => {
+          const content = (
+            <div className="p-4">
+              <h2 className="font-semibold text-sm pb-2">{parcel.name}</h2>
+              <Link href={`/${parcel.sbi}/parcels/${parcel.id}`} className="btn btn-sm">Inspect</Link>
+            </div>
+          );
+          new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(`<div id="popup-${parcel.id}"></div>`)
+            .addTo(map.current!);
+
+          createRoot(document.getElementById(`popup-${parcel.id}`)!).render(content);
+        });
+      }
+
+      const target = {
+        center: centroid(featureCollection(parcels.map((p) => p.feature as unknown as Feature))).geometry.coordinates as [number, number],
+        zoom: 14,
+        pitch: 0,
+        bearing: 0
+      }
+      map.current!.flyTo({
+        ...target,
+        duration: 2000,
+        essential: true
       });
-    }
-  }
+    });
+  }, []); 
 
   return (
-    <Map
-      mapboxAccessToken={MAPBOX_TOKEN}
-      initialViewState={{
-        longitude: -0.25,
-        latitude: 52.57,
-        zoom: 10
-      }}
-      style={{width: '100%', height: '400px'}}
-      mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-      onLoad={flyOnLoad}
-      onClick={mapClick}
-      interactiveLayerIds={parcelFeatures.map((p) => `${p.id}-layer`)}
-    >
-      { parcelFeatures.map((p, index) => {
-        return (
-
-          <Source key={p.id} id={p.id} type="geojson" data={p.feature as unknown as Feature}>
-            <Layer id={`${p.id}-layer`} type="fill" paint={{"fill-color": "blue", "fill-opacity": 0.5 }} />
-            {showPopups[index] && 
-              <Popup
-                longitude={p.center[0]}
-                latitude={p.center[1]}
-                anchor="center"
-                onClose={() => setShowPopups((curr) => {
-                  curr[index] = false;
-                  return curr;
-                })}
-              >
-                Hi
-              </Popup>
-            }
-          </Source>
-        )
-      })}
-      
-    </Map> 
-  )
+    <div className="my-4 rounded-lg overflow-hidden">
+      <div ref={mapContainer} style={{ height: "400px" }} />
+    </div>
+  );
 }
