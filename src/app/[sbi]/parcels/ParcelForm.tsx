@@ -42,7 +42,7 @@ export default function ParcelForm({ sbi, actions }: { sbi: string, actions: Act
                   label="Select SFI actions performed on this parcel"
                   placeholder="Select actions"
                   name="actions"
-                  data={actions.map((action) => { return { value: action.code, label: `${action.code}: ${action.name})` }})}
+                  data={actions.map((action) => { return { value: action.code, label: `${action.code}: ${action.name}` }})}
                   classNames={{ label: "label-text p-2" }}
                   styles={{ label: { fontWeight: 400 }}}
                   searchable

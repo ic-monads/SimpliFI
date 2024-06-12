@@ -33,8 +33,8 @@ export default async function Page({
           <h1 className={`font-semibold text-2xl`}>{parcelName}</h1>
         </div>
         <div className='flex space-x-3'>
-          <Link href={{ pathname: `/${sbi}/parcels/${parcelId}/options/add` }}>
-            <button className="btn btn-primary">Add Option</button>
+          <Link href={`/${sbi}/parcels/${parcelId}/options/add`}>
+            <button className="btn btn-primary">Add Options</button>
           </Link>
           <GenerateReport sbi={sbi} />
         </div>

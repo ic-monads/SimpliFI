@@ -6,12 +6,17 @@ import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
 import { fetchLandParcels } from "./rpa-api";
 
-export async function fetchFarmLandParcels(sbi: string) {
+export async function fetchFarmLandParcelsMissingForAction(sbi: string, actionCode: string) {
   try {
     const parcels = await prisma.landParcel.findMany({
       where: {
         sbi,
-      },
+        options: {
+          none: {
+            actionCode
+          }
+        }
+      }
     });
     return parcels;
   } catch (e) {
@@ -123,4 +128,17 @@ export async function initialiseParcelsFromSBI(sbi: string) {
       });
     }
   });
+}
+
+export async function fetchActionsMissingForParcel(parcelId: string) {
+  const actions = await prisma.action.findMany({
+    where: {
+      options: {
+        none: {
+          parcelId
+        }
+      }
+    }
+  });
+  return actions;
 }
