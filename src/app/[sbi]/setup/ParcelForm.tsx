@@ -1,11 +1,12 @@
 import Submit from "@/app/components/Submit";
+import { ParcelFeature } from "@/app/lib/types";
 import { useRef } from "react";
 
-export default function ParcelForm({ parcel, updateParcel, nextParcel }: { parcel: { id: string, name: string }, updateParcel: Function, nextParcel: Function }) {
+export default function ParcelForm({ parcel, updateParcel, nextParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function }) {
   const ref = useRef<HTMLFormElement>(null);
 
   function handleSubmit(formData: FormData) {
-    updateParcel({ id: parcel.id, name: formData.get("name") });
+    updateParcel({ id: parcel.id, name: formData.get("name"), feature: parcel.feature });
     ref.current?.reset()
     nextParcel();
   }

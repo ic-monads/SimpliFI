@@ -45,7 +45,7 @@ export async function createFarm(formData: FormData) {
       name: name
     }
   });
-  redirect(`/${sbi}/parcels`);
+  redirect(`/${sbi}/setup`);
 }
 
 // export type validateAndUseInputType = {
@@ -98,12 +98,12 @@ export async function attemptLogin(formData: FormData) {
 
 }
 
-export async function fetchFarmParcelIds(sbi: string) {
+export async function fetchFarmFeatures(sbi: string) {
   const parcels: ParcelFeature[] = await fetchLandParcels(sbi).then((data: any) => data.features);
-  return parcels.map((parcel) => parcel.properties.SHEET_ID + parcel.properties.PARCEL_ID);
+  return parcels;
 }
 
-export async function createFarmParcels(sbi: string, parcels: { id: string, name: string }[]) {
+export async function createFarmParcels(sbi: string, parcels: { id: string, name: string, feature: ParcelFeature }[]) {
   console.log(parcels);
   
   await prisma.farm.update({
