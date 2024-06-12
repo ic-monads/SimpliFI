@@ -90,22 +90,6 @@ export async function fetchActionsForParcel(parcelId: string) {
   return actions;
 }
 
-export async function initialiseParcelsFromSBI(sbi: string) {
-  const parcels: ParcelFeature[] = await fetchLandParcels(sbi).then((data: any) => data.features);
-  parcels.forEach(async (parcel: ParcelFeature) => {
-    const currParcel = await prisma.landParcel.findUnique({ where: { id: parcel.id } });
-    if (currParcel === null) {
-      await prisma.landParcel.create({
-        data: {
-          id: parcel.properties.SHEET_ID + " " + parcel.properties.PARCEL_ID,
-          name: parcel.properties.SHEET_ID + " " + parcel.properties.PARCEL_ID,
-          sbi: sbi,
-        },
-      });
-    }
-  });
-}
-
 export async function fetchActionsMissingForParcel(parcelId: string) {
   const actions = await prisma.action.findMany({
     where: {
