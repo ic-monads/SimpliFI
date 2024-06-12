@@ -7,16 +7,21 @@ import Moment from "moment";
 import ShowModalButton from "@/app/components/ShowModalButton";
 import { EvidenceWithTaskAndParcels } from "@/app/lib/types";
 import { ParcelBadges } from "@/app/components/ParcelBadges";
+import EmptyCollection from "./EmptyCollection";
+import { ReactElement } from "react";
 
-export default async function Evidences({ evidences, showTasks }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean }) {
+export default async function Evidences({ evidences, showTasks, addEvidence, emptyMessage }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean, addEvidence?: ReactElement, emptyMessage?: string}) {
+  const message = emptyMessage ?? "No evidence has been uploaded.";
 
   function getParcels(evidence: EvidenceWithTaskAndParcels) {
     return evidence.optionEvidences.map((optionEvidence) => optionEvidence.option.parcel);
   }
 
+  if (evidences.length === 0) return (<EmptyCollection message={message} action={addEvidence} />);
+
   return(
     <>
-    <table className="table">
+    <table className="table mb-3">
       <thead>
         <tr>
           <th scope="col">
@@ -70,6 +75,8 @@ export default async function Evidences({ evidences, showTasks }: { evidences: E
         ))}
       </tbody>
     </table>
+
+    {addEvidence}
 
     {evidences.map((evidence: Evidence) => (
       <dialog key={evidence.id} id={`${evidence.id}-modal`} className="modal">

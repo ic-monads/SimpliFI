@@ -21,24 +21,26 @@ export default function Page({ params, searchParams }: { params: { sbi: string, 
 
     }
     return (
-      <div className="mx-auto">
-        <h1 className="font-semibold text-xl mb-2">Add Required Evidence</h1>
-        <p className="font-semibold mb-2">For Task: {taskName}</p>
-        { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
-        <form className="max-w-sm" action={handleSubmit}>
-          <div className="label">
-            <label htmlFor="title" className="label-text">Title</label>
-          </div>
-          <input type="text" id="title" name="title" className="input input-bordered w-full" required />
-          <div className="label">
-            <label htmlFor="desc" className="label-text">Description</label>
-          </div>
-          <textarea id="desc" name="desc" className="textarea textarea-bordered w-full" required/>
-          <div className="mt-6 flex justify-end gap-4">
-            <CancelButton />
-            <Submit text="Add Required Evidence" />
-          </div>
-        </form>
+      <div className="w-full flex justify-center">
+        <div className="w-1/2">
+          <h1 className="font-semibold text-xl mb-2">Add Required Evidence</h1>
+          <p className="text-sm">Task: {taskName}</p>
+          { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
+          <form action={handleSubmit}>
+            <div className="label">
+              <label htmlFor="title" className="label-text">Title</label>
+            </div>
+            <input type="text" id="title" name="title" className="input input-bordered w-full" required />
+            <div className="label">
+              <label htmlFor="desc" className="label-text">Description</label>
+            </div>
+            <textarea id="desc" name="desc" className="textarea textarea-bordered w-full" required/>
+            <div className="mt-6 flex justify-end gap-4">
+              <CancelButton />
+              <Submit text="Add Required Evidence" />
+            </div>
+          </form>
+        </div>
       </div>
     )
 }
