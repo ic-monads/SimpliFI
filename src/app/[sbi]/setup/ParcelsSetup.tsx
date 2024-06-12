@@ -28,8 +28,8 @@ export default function ParcelsSetup({ sbi, features }: { sbi: string, features:
   return (
     <div className="w-full flex justify-center">
       <div className="w-1/2 my-10">
-        <h1 className="text-2xl font-semibold">Setup your parcels</h1>
-        <ParcelForm parcel={parcels[parcelIndex]} updateParcel={updateParcel} nextParcel={nextParcel} />
+        <h1 className="text-2xl font-semibold text-center">Set up your parcels</h1>
+        <ParcelForm parcel={parcels[parcelIndex]} updateParcel={updateParcel} nextParcel={nextParcel} lastParcel={parcelIndex === parcels.length - 1} />
       </div>
 
     </div>

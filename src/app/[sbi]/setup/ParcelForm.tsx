@@ -2,7 +2,7 @@ import Submit from "@/app/components/Submit";
 import { ParcelFeature } from "@/app/lib/types";
 import { useRef } from "react";
 
-export default function ParcelForm({ parcel, updateParcel, nextParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function }) {
+export default function ParcelForm({ parcel, updateParcel, nextParcel, lastParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function, lastParcel: boolean }) {
   const ref = useRef<HTMLFormElement>(null);
 
   function handleSubmit(formData: FormData) {
@@ -22,8 +22,9 @@ export default function ParcelForm({ parcel, updateParcel, nextParcel }: { parce
         <label htmlFor="name" className="label-text">Parcel Name</label>
       </div>
       <input type="text" name="name" className="input input-bordered w-full mb-3" required defaultValue={parcel.name} />
-
-      <Submit text="Next" />
+      <div className="flex justify-center">
+        <Submit text={lastParcel ? "Finish" : "Next Parcel"} />
+      </div>
     </form>
   )
 }
