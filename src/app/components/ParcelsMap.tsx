@@ -66,7 +66,7 @@ export default function ParcelsMap({ parcels }: { parcels: LandParcel[] }) {
 
       const target = {
         center: centroid(featureCollection(parcels.map((p) => p.feature as unknown as Feature))).geometry.coordinates as [number, number],
-        zoom: 14,
+        zoom: 12,
         pitch: 0,
         bearing: 0
       }
