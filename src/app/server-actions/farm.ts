@@ -33,7 +33,11 @@ export async function createFarm(formData: FormData) {
   })
   await prisma.farm.create({
     data: {
-      sbi, name, startAg, endAg, renewAg
+      sbi: sbi,
+      name: name,
+      startAg: new Date(startAg),
+      endAg: new Date(endAg),
+      renewAg: new Date(renewAg)
     }
   });
   redirect(`/${sbi}/setup`);
