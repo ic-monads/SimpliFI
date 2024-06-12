@@ -38,11 +38,15 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={evidence} showTasks={true} />
-
-          <Link href={{ pathname: `/${sbi}/evidence/add`, query: { actCode: actionCode, fromTask: 'false' } }}>
-            <button className="btn btn-primary mt-3">Add Evidence</button>
-          </Link>
+          <Evidences 
+            evidences={evidence}
+            showTasks={true}
+            addEvidence={
+              <Link href={{ pathname: `/${sbi}/evidence/add`, query: { actCode: actionCode, fromTask: 'false' } }}>
+                <button className="btn btn-primary">Add Evidence</button>
+              </Link>
+            }
+          />
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
