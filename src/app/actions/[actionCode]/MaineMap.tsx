@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Map, { Source, Layer, NavigationControl, GeolocateControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Feature, FeatureCollection } from "geojson";

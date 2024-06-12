@@ -5,7 +5,6 @@ import Evidences from '@/app/components/Evidences';
 import GenerateReport from '../GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
 import ParcelMap from './ParcelMap';
-import MaineMap from './MaineMap';
 
 export default async function Page({
   params
@@ -44,8 +43,7 @@ export default async function Page({
       </div>
 
       <div className="h-1/2">
-        <ParcelMap sbi={'106791068'}/>
-        {/* <MaineMap /> */}
+        <ParcelMap sbi={'106791068'} />
       </div>
       
       
