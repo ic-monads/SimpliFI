@@ -49,7 +49,7 @@ model LandParcel {
   name    String
   options Option[]
   sbi     String
-  farm    Farm     @relation(fields: [sbi], references: [sbi])
+  farm    Farm     @relation(fields: [sbi], references: [sbi], onDelete: Cascade)
 }
 
 model Task {
