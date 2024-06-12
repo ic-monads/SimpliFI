@@ -7,7 +7,7 @@ export const prismaJsonToFeature = (json: Prisma.JsonValue) => json as unknown a
 export const centerOfFeature = (feat: Feature | FeatureCollection) => centroid(feat).geometry.coordinates as [number, number]
 
 // Modification of LandParcel
-export interface ParcelFeature {
+export type MapParcel = {
   id: string,
   name: string,
   sbi: string,
@@ -15,7 +15,7 @@ export interface ParcelFeature {
   center: [number, number]
 }
 
-export function makeParcelFeature(p: LandParcel) {
+export function makeMapParcel(p: LandParcel) {
   return {
     id: p.id,
     name: p.name,

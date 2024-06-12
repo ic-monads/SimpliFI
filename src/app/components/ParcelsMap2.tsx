@@ -6,15 +6,15 @@ import { LandParcel } from "@prisma/client";
 import { featureCollection } from "@turf/helpers";
 import { useState } from "react";
 import Link from "next/link";
-import { MAPBOX_TOKEN, prismaJsonToFeature, centerOfFeature, type ParcelFeature, makeParcelFeature } from "../lib/maps";
+import { MAPBOX_TOKEN, centerOfFeature, type MapParcel, makeMapParcel } from "../lib/maps";
 
 
 
 
 export default function ParcelsMap2({ parcels }: { parcels: LandParcel[]}) {
-  const [popupParcel, setPopupParcel] = useState<ParcelFeature | null>(null);
-  const parcelFeatures: ParcelFeature[] = parcels.map(makeParcelFeature);
-  const featureLayerId = (feat: ParcelFeature) => `${feat.id}-layer`
+  const [popupParcel, setPopupParcel] = useState<MapParcel | null>(null);
+  const parcelFeatures: MapParcel[] = parcels.map(makeMapParcel);
+  const featureLayerId = (feat: MapParcel) => `${feat.id}-layer`
   const farm = featureCollection(parcelFeatures.map((p) => p.feature));
   const farmCentre = centerOfFeature(farm);
 

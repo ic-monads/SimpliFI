@@ -2,7 +2,6 @@
 
 import Map, { Source, Layer, type FillLayer, MapEvent } from "react-map-gl";
 import { Feature } from "geojson";
-import centroid from "@turf/centroid";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { centerOfFeature, MAPBOX_TOKEN } from "@/app/lib/maps";
 
