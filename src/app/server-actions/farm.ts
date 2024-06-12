@@ -6,76 +6,38 @@ import { redirect } from "next/navigation";
 import { ParcelFeature } from "../lib/types";
 import { fetchLandParcels } from "./rpa-api";
 
-const FarmFormSchema = z.object({
-  sbi: z.string(),
-  name: z.string(),
-});
-
-export async function fetchFarm(formData: FormData) {
-  "use server";
-  const { sbi, name } = FarmFormSchema.parse({
-    sbi: formData.get("sbi"),
-    name: formData.get("name"),
-  });
-
-  const farm = await prisma.farm.findUnique({
+export async function fetchFarm(sbi: string) {
+  const farm = await prisma.farm.findUniqueOrThrow({
     where: {
       sbi,
     },
   });
-  if (farm === null) {
-    await prisma.farm.create({
-      data: {
-        sbi: sbi,
-        name: name,
-      },
-    });
-  }
+  return farm;
 }
 
+const CreateFarmFormSchema = z.object({
+  sbi: z.string(),
+  name: z.string(),
+  startAg: z.string(),
+  endAg: z.string(),
+  renewAg: z.string(),
+});
+
 export async function createFarm(formData: FormData) {
-  'use server';
-  const { sbi, name } = FarmFormSchema.parse({
+  const { sbi, name, startAg, endAg, renewAg } = CreateFarmFormSchema.parse({
     sbi: formData.get('sbi'),
-    name: formData.get('name')
+    name: formData.get('name'),
+    startAg: formData.get('startAg'),
+    endAg: formData.get('endAg'),
+    renewAg: formData.get('renewAg')
   })
   await prisma.farm.create({
     data: {
-      sbi: sbi,
-      name: name
+      sbi, name, startAg, endAg, renewAg
     }
   });
   redirect(`/${sbi}/setup`);
 }
-
-// export type validateAndUseInputType = {
-//   success: boolean;
-//   message: string;
-// };
-
-// export async function getSbi(prevState: validateAndUseInputType | null, formData: FormData) {
-//   const sbi = FarmFormSchema.safeParse({ sbi: formData.get("sbi") }).data?.sbi;
-//   let success = false;
-//   try {
-//     const result = await prisma.farm.findUnique({
-//       where: {
-//         sbi: sbi,
-//       },
-//     });
-//     if (result) {
-//       success = true;
-//     }
-//     // return { success: success, message: "" };
-//   } catch (error) {
-//     console.error(error);
-//     // throw error;
-//     return { success: false, message: "Failed to submit form" };
-//   } finally {
-//     if (success) {
-//       redirect(`/${sbi}/parcels`);
-//     }
-//   }
-// }
 
 const FarmLoginSchema = z.object({
   sbi: z.string()

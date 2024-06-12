@@ -11,6 +11,9 @@ datasource db {
 model Farm {
   sbi     String  @id
   name    String
+  startAg DateTime?
+  endAg   DateTime?
+  renewAg DateTime?
   parcels LandParcel[]
 }
 
