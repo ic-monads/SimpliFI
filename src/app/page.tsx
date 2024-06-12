@@ -1,17 +1,41 @@
-import Link from "next/link"
+import Submit from "@/app/components/Submit";
+import { fetchFarm } from "@/app/server-actions/farm";
+import { initialiseParcelsFromSBI } from "./server-actions/land-parcel";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
+
 
 export default function Home() {
 
+  async function initialiseFarm(formData: FormData) {
+    'use server'
+    fetchFarm(formData);
+    const sbi = formData.get('sbi')?.toString() || "";
+    try {
+      initialiseParcelsFromSBI(sbi);
+    } catch (e) {
+      console.error('Could not automate adding parcels from SBI');
+    }
+    redirect(`/${sbi}/actions`);
+  };
+
   return (
-    <div className="flex flex-col h-screen">
-      <h1 className='text-center font-semibold mt-52 mb-12 text-2xl'><span className="text-green-600">S</span>impli<span className="text-green-600">FI</span></h1>
-      <div className="w-full flex justify-center items-center gap-6">
-        <Link href={{ pathname: "/login" }}>
-          <button className="btn btn-primary">Login</button>
-        </Link>
-        <Link href={{ pathname: "/signup" }}>
-          <button className="btn btn-primary">Sign Up</button>
-        </Link>
+    <div className="w-full flex justify-center">
+      <div className="mx-auto mt-10">
+        <form className="max-w-sm" action={initialiseFarm}>
+          <div className="label">
+            <label htmlFor="sbi" className="label-text">SBI</label>
+          </div>
+          <input type="text" id="sbi" name="sbi" className="input input-bordered w-full" required />
+          <div className="label">
+            <label htmlFor="name" className="label-text">Farm Name</label>
+          </div>
+          <input type="text" id="name" name="name" className="input input-bordered w-full" required />
+          <div className="mt-6 flex justify-center gap-4">
+            <Submit text="Manage my farm" />
+          </div>
+        </form>
       </div>
 
     </div>
