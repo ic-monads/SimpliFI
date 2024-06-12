@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
 import { fetchLandParcels } from "./rpa-api";
+import { ParcelFeature } from "../lib/types";
 
 export async function fetchFarmLandParcelsMissingForAction(sbi: string, actionCode: string) {
   try {
@@ -88,31 +89,6 @@ export async function fetchActionsForParcel(parcelId: string) {
 
   return actions;
 }
-
-type ParcelFeature = {
-  type: string;
-  id: string;
-  geometry: {
-    type: string;
-    coordinates: number[][][];
-  };
-  geometry_name: string;
-  properties: {
-    index: number;
-    ID: string;
-    SHEET_ID: string;
-    PARCEL_ID: string;
-    VALID_FROM: string;
-    VALID_TO: string;
-    LFA_CODE: string;
-    CREATED_ON: string;
-    AREA_HA: number;
-    SBI: string;
-    SHAPE_AREA: number;
-    SHAPE_PERIMETER: number;
-  };
-  bbox: number[];
-};
 
 export async function initialiseParcelsFromSBI(sbi: string) {
   const parcels: ParcelFeature[] = await fetchLandParcels(sbi).then((data: any) => data.features);

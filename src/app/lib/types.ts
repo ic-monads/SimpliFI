@@ -54,4 +54,27 @@ export type ParcelWithActions = Prisma.LandParcelGetPayload<{
   }
 }>
 
-export type Parcel = Prisma.LandParcelGetPayload<{}>
+export type ParcelFeature = {
+  type: string;
+  id: string;
+  geometry: {
+    type: string;
+    coordinates: number[][][];
+  };
+  geometry_name: string;
+  properties: {
+    index: number;
+    ID: string;
+    SHEET_ID: string;
+    PARCEL_ID: string;
+    VALID_FROM: string;
+    VALID_TO: string;
+    LFA_CODE: string;
+    CREATED_ON: string;
+    AREA_HA: number;
+    SBI: string;
+    SHAPE_AREA: number;
+    SHAPE_PERIMETER: number;
+  };
+  bbox: number[];
+};
