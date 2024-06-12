@@ -4,7 +4,6 @@ import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
 import GenerateReport from '@/app/components/GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
-import ParcelMap from '@/app/[sbi]/actions/[actionCode]/ParcelMap';
 
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
   const { sbi, actionCode } = params;
@@ -34,10 +33,6 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
 
       <div className="flex w-full items-center justify-start gap-x-5">
         <ParcelBadges parcels={parcels} />
-      </div>
-      
-      <div className="flex justify-center w-2/3">
-        <ParcelMap sbi={sbi} />
       </div>
       
       <div role="tablist" className="tabs tabs-lifted mt-3">
