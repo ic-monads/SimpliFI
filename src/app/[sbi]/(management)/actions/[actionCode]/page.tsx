@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
           <Evidences evidences={evidence} showTasks={true} />
 
           <Link href={{ pathname: `/${sbi}/evidence/add`, query: { actCode: actionCode, fromTask: 'false' } }}>
-            <button className="btn btn-primary">Add Evidence</button>
+            <button className="btn btn-primary mt-3">Add Evidence</button>
           </Link>
         </div>
 
