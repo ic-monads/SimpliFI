@@ -1,4 +1,4 @@
-import EvidenceForm from "@/app/[sbi]/evidence/EvidenceForm";
+import EvidenceForm from "@/app/[sbi]/(management)/evidence/EvidenceForm";
 import { fetchActionParcelsOnFarm } from "@/app/server-actions/action";
 
 export default async function Page({
