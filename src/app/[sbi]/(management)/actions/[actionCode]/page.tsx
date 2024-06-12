@@ -1,4 +1,4 @@
-import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnFarm, fetchActionParcelsOnFarm, fetchActionName } from '@/app/server-actions/action';
+import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnFarm, fetchActionParcelsOnFarm, fetchAction } from '@/app/server-actions/action';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
@@ -8,11 +8,11 @@ import { ParcelBadges } from '@/app/components/ParcelBadges';
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
   const { sbi, actionCode } = params;
 
-  const [evidence, tasks, parcels, actionName] = await Promise.all([
+  const [evidence, tasks, parcels, action] = await Promise.all([
     await fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi, actionCode),
     await fetchTasksForActionOnFarm(sbi, actionCode),
     await fetchActionParcelsOnFarm(sbi, actionCode),
-    await fetchActionName(actionCode)
+    await fetchAction(actionCode),
   ]);
 
   return (
@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
       <div className="flex w-full items-center justify-between mb-3">
         <div>
           <h2>{actionCode}</h2>
-          <h1 className={`font-semibold text-2xl`}>{actionName}</h1>
+          <h1 className={`font-semibold text-2xl`}>{action.name}</h1>
         </div>
 
         <div className='flex space-x-3'>
@@ -60,11 +60,9 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
               </Link>
             } />
         </div>
-
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
-        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          {/* Government link */}
-        </div>
+        <Link href={action.govUrl}>
+          <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
+        </Link>
       </div>
     </div>
   );

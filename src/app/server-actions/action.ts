@@ -199,21 +199,13 @@ export async function fetchTasksForParcel(parcelId: string) {
   return tasks;
 }
 
-export async function fetchActionName(actCode: string) {
-  try {
-    const name = await prisma.action.findUniqueOrThrow({
-      where: {
-        code: actCode
-      },
-      select: {
-        name: true
-      }
-    });
-    return name.name;
-  } catch (e) {
-    console.error('Database Error:', e);
-    throw new Error('failed to fetch action name');
-  }
+export async function fetchAction(actCode: string) {
+  const action = await prisma.action.findUniqueOrThrow({
+    where: {
+      code: actCode
+    }
+  });
+  return action;
 }
 
 export async function fetchActionParcelsOnFarm(sbi: string, actionCode: string) {
