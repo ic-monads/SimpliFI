@@ -1,11 +1,11 @@
 import React from "react";
 import ParcelsSetup from "./ParcelsSetup";
-import { fetchFarmFeatures, fetchFarmOptions } from "@/app/server-actions/farm";
+import { fetchFarmFeatures, fetchFarmOptionsFromAgreement } from "@/app/server-actions/farm";
 
 export default async function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;
   const features = await fetchFarmFeatures(sbi);
-  const options = await fetchFarmOptions(sbi);
+  const options = await fetchFarmOptionsFromAgreement(sbi);
 
   return (
     <div className="w-full flex justify-center">

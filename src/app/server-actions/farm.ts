@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { ParcelFeature } from "../lib/types";
 import { fetchLandParcels } from "./rpa-api";
 import { Prisma } from "@prisma/client";
-import { parseAgreement, PdfData, formatResult } from "./pdf";
+import { parseAgreement } from "./agreement-pdf-parser";
 
 export async function fetchFarm(sbi: string) {
   const farm = await prisma.farm.findUniqueOrThrow({
@@ -42,12 +42,9 @@ export async function createFarm(formData: FormData) {
   redirect(`/${sbi}/setup`);
 }
 
-export async function fetchFarmOptions(sbi: string) {
+export async function fetchFarmOptionsFromAgreement(sbi: string) {
   const { agreementUrl } = await prisma.farm.findUniqueOrThrow({ where: { sbi }, select: { agreementUrl: true } });
-  const parsedString =  await parseAgreement(agreementUrl);
-  const dataJson = JSON.parse(parsedString) as PdfData;
-  const formattedData = await formatResult(dataJson);
-  return formattedData;
+  return await parseAgreement(agreementUrl);
 }
 
 const FarmLoginSchema = z.object({
@@ -75,12 +72,15 @@ export async function fetchFarmFeatures(sbi: string) {
   return parcels;
 }
 
-export async function createFarmParcels(sbi: string, parcels: { id: string; name: string; feature: ParcelFeature }[]) {
+export async function createFarmParcels(sbi: string, parcels: { id: string; name: string; feature: ParcelFeature; options: Prisma.OptionUncheckedCreateWithoutParcelInput[] }[]) {
   const jsonParcels = parcels.map((p) => {
     return {
       id: p.id,
       name: p.name,
       feature: p.feature as unknown as Prisma.JsonObject,
+      options: {
+        create: p.options,
+      },
     };
   });
 
@@ -90,7 +90,7 @@ export async function createFarmParcels(sbi: string, parcels: { id: string; name
     },
     data: {
       parcels: {
-        create: jsonParcels,
+        create: jsonParcels
       },
     },
   });
