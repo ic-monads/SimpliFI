@@ -7,7 +7,6 @@ import { parseAgreement, formatResult, PdfData } from "../server-actions/pdf";
 
 function PDFForm() {
 
-  // const status = useFormStatus();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [parcelNumsAndCodes, setParcelNumsAndCodes] = useState<{ parcelNumber: string; code: string }[]>([]);
 
