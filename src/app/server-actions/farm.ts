@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { ParcelFeature } from "../lib/types";
 import { fetchLandParcels } from "./rpa-api";
 import { Prisma } from "@prisma/client";
+import { parseAgreement, PdfData, formatResult } from "./pdf";
 
 export async function fetchFarm(sbi: string) {
   const farm = await prisma.farm.findUniqueOrThrow({
@@ -39,20 +40,10 @@ export async function createFarm(formData: FormData, fileUrl: string) {
 }
 
 export async function fetchFarmOptions(sbi: string, fileUrl: string) {
-  optionsData: {
-    parcelNumber: string;
-    code: string;
-  }
-  [];
-  const options = optionsData.map((o) => {
-    return {
-      actionCode: o.code,
-      parcelId: o.parcelNumber,
-    };
-  });
-  await prisma.option.createMany({
-    data: options,
-  });
+  const parsedString = await parseAgreement(fileUrl);
+  const dataJson = JSON.parse(parsedString) as PdfData;
+  const formattedData = await formatResult(dataJson);
+  return formattedData;
 }
 
 const FarmLoginSchema = z.object({
