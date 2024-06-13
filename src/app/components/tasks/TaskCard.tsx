@@ -18,7 +18,7 @@ export function TaskCard({ sbi, task, htmlClass }: { sbi: string, task: TaskWith
           {task.actionCode}: {task.action.name}
         </p>
         <p className="text-xs mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-        <ParcelBadges parcels={parcels} />
+        <ParcelBadges sbi={sbi} parcels={parcels} link={false} />
       </div>
     </Link>
   )

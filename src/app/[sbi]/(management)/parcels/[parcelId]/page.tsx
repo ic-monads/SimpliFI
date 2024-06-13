@@ -43,7 +43,7 @@ export default async function Page({
       </div>
 
       <div className="flex w-full items-center justify-start gap-x-5"> 
-        <ActionBadges actions={actions} />
+        <ActionBadges sbi={sbi} actions={actions} link={true} />
       </div>
 
       <ParcelMap feature={feature} height={400} />
@@ -51,20 +51,12 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences evidences={evidence} showTasks={true} />
-
-          {/* <Link href={{ pathname: "/evidence/add", query: { actCode: actionCode, fromTask: 'false' } }}>
-            <button className="btn btn-primary">Add Evidence</button>
-          </Link> */}
+          <Evidences sbi={sbi} evidences={evidence} showTasks={true} />
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <AllTasks sbi={sbi} tasks={tasks} />
-
-          {/* <Link href={{ pathname: "/tasks/add", query: { actCode: actionCode, parcelId: parcels[0].id } }}>
-              <button className="mt-3 btn btn-primary">Add Task</button>
-          </Link> */}
         </div>
       </div>
     </div>

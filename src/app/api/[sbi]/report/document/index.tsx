@@ -46,12 +46,12 @@ const OptionSection = ({ option } : { option: ReportOption }) => {
   )
 }
 
-export const MyDocument = ({ options } : { options: ReportOption[] }) => {
+export const MyDocument = ({ sbi, options } : { sbi: string, options: ReportOption[] }) => {
   return (
     <Tailwind>
       <PageTop>
         <div className="mt-4 flex justify-between">
-          <span className="font-semibold">SFI Report For SBI 123456789</span>
+          <span className="font-semibold">SFI Report For SBI {sbi}</span>
           <span>Generated on {moment().format("DD/MM/YYYY")}</span>
         </div>
       </PageTop>

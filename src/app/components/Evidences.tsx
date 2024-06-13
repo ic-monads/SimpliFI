@@ -10,7 +10,7 @@ import { ParcelBadges } from "@/app/components/ParcelBadges";
 import EmptyCollection from "./EmptyCollection";
 import { ReactElement } from "react";
 
-export default async function Evidences({ evidences, showTasks, addEvidence, emptyMessage }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean, addEvidence?: ReactElement, emptyMessage?: string}) {
+export default async function Evidences({ evidences, showTasks, addEvidence, emptyMessage, sbi }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean, addEvidence?: ReactElement, emptyMessage?: string, sbi: string }) {
   const message = emptyMessage ?? "No evidence has been uploaded.";
 
   function getParcels(evidence: EvidenceWithTaskAndParcels) {
@@ -55,7 +55,7 @@ export default async function Evidences({ evidences, showTasks, addEvidence, emp
               {Moment(evidence.date).format("DD/MM/YYYY")}
             </td>
             <td>
-              <ParcelBadges parcels={getParcels(evidence)} />
+              <ParcelBadges sbi={sbi} parcels={getParcels(evidence)} link={true} />
             </td>
             { showTasks &&
               <td>

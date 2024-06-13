@@ -67,7 +67,7 @@ export async function GET(request: NextRequest, { params }: { params: { sbi: str
     });
   }
 
-  const html = await compile(<MyDocument options={reportOptions} />);
+  const html = await compile(<MyDocument sbi={sbi} options={reportOptions} />);
   const pdf = await ff.pdf.generate(html, {});
   const blob = await put("report.pdf", pdf, {
     access: "public"
