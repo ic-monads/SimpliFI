@@ -31,9 +31,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-start gap-x-5">
-        <ParcelBadges sbi={sbi} parcels={parcels} link={true} />
-      </div>
+      <ParcelBadges sbi={sbi} parcels={parcels} link={true} />
       
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
