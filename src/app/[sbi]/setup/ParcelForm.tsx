@@ -1,18 +1,25 @@
 import Submit from "@/app/components/Submit";
 import { ParcelFeature } from "@/app/lib/types";
 import { useRef } from "react";
+import SkipButton from "./SkipButton";
+import NextButton from "./NextButton";
 
-export default function ParcelForm({ parcel, updateParcel, nextParcel, lastParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function, lastParcel: boolean }) {
+export default function ParcelForm({ parcel, updateParcel, nextParcel, skipParcel, lastParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function, skipParcel: Function, lastParcel: boolean }) {
   const ref = useRef<HTMLFormElement>(null);
 
-  function handleSubmit(formData: FormData) {
+  function updateAction(formData: FormData) {
     updateParcel({ id: parcel.id, name: formData.get("name"), feature: parcel.feature });
     ref.current?.reset()
     nextParcel();
   }
 
+  function skipAction(formData: FormData) {
+    ref.current?.reset()
+    skipParcel();
+  }
+
   return (
-    <form ref={ref} action={handleSubmit}>
+    <form ref={ref}>
       <div className="label">
         <label htmlFor="id" className="label-text">Parcel ID</label>
       </div>
@@ -22,9 +29,11 @@ export default function ParcelForm({ parcel, updateParcel, nextParcel, lastParce
         <label htmlFor="name" className="label-text">Parcel Name</label>
       </div>
       <input type="text" name="name" className="input input-bordered w-full mb-3" required defaultValue={parcel.name} />
-      <div className="flex justify-center">
-        <Submit text={lastParcel ? "Finish" : "Next Parcel"} />
+      <div className="flex flex-row space-x-3">
+        <SkipButton action={skipAction} />
+        <NextButton action={updateAction} lastParcel={lastParcel} />
       </div>
+      
     </form>
   )
 }

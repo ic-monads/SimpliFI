@@ -46,7 +46,7 @@ export default async function Page({
         <ActionBadges actions={actions} />
       </div>
 
-      <ParcelMap feature={feature} />
+      <ParcelMap feature={feature} height={400} />
 
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />

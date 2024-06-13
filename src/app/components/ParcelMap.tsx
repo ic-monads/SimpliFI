@@ -14,7 +14,7 @@ const layerStyle: FillLayer = {
   }
 }
 
-export default function ParcelMap({ feature }: { feature: Feature }) {
+export default function ParcelMap({ feature, height }: { feature: Feature, height: number }) {
   const [long, lat] = centerOfFeature(feature);
   return (
     <div className="my-4 rounded-lg overflow-hidden">
@@ -25,7 +25,7 @@ export default function ParcelMap({ feature }: { feature: Feature }) {
           latitude: lat,
           zoom: 15
         }}
-        style={{width: '100%', height: '400px'}}
+        style={{width: '100%', height: `${height}px`}}
         mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
       >
         <Source id="my-data" type="geojson" data={feature}>
