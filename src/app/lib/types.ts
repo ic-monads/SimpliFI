@@ -1,8 +1,19 @@
 import type { Prisma } from "@prisma/client";
 import { BBox, Geometry } from "geojson";
 
-export type TaskWithAction = Prisma.TaskGetPayload<{
-  include: { action: true }
+export type TaskWithActionAndParcels = Prisma.TaskGetPayload<{
+  include: {
+    action: true,
+    options: {
+      include: {
+        option: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    }
+  }
 }>
 
 export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
