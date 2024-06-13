@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
       </div>
 
       <div className="flex w-full items-center justify-start gap-x-5">
-        <ParcelBadges parcels={parcels} />
+        <ParcelBadges sbi={sbi} parcels={parcels} link={true} />
       </div>
       
       <div role="tablist" className="tabs tabs-lifted mt-3">
@@ -46,6 +46,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
                 <button className="btn btn-primary">Add Evidence</button>
               </Link>
             }
+            sbi={sbi}
           />
         </div>
 

@@ -1,7 +1,19 @@
 import type { Prisma } from "@prisma/client";
+import { BBox, Geometry } from "geojson";
 
-export type TaskWithAction = Prisma.TaskGetPayload<{
-  include: { action: true }
+export type TaskWithActionAndParcels = Prisma.TaskGetPayload<{
+  include: {
+    action: true,
+    options: {
+      include: {
+        option: {
+          include: {
+            parcel: true
+          }
+        }
+      }
+    }
+  }
 }>
 
 export type EvidenceWithTaskAndParcels = Prisma.EvidenceGetPayload<{
@@ -55,12 +67,13 @@ export type ParcelWithActions = Prisma.LandParcelGetPayload<{
 }>
 
 export type ParcelFeature = {
-  type: string;
+  type: "Feature";
   id: string;
-  geometry: {
-    type: string;
-    coordinates: number[][][];
-  };
+  // geometry: {
+  //   type: string;
+  //   coordinates: number[][][];
+  // };
+  geometry: Geometry;
   geometry_name: string;
   properties: {
     index: number;
@@ -76,5 +89,5 @@ export type ParcelFeature = {
     SHAPE_AREA: number;
     SHAPE_PERIMETER: number;
   };
-  bbox: number[];
+  bbox: BBox;
 };

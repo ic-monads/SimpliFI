@@ -13,7 +13,7 @@ export function ParcelCard({ parcel } : { parcel: ParcelWithActions }) {
         <div className="card shadow-sm p-3 border hover:bg-gray-100 transition-all">
           <p className="text-xs">{parcel.id}</p>
           <h2 className="text-md font-medium mb-3">{parcel.name}</h2>
-          <ActionBadges actions={getActions(parcel)} />
+          <ActionBadges sbi={parcel.sbi} actions={getActions(parcel)} link={false} />
         </div>
       </Link>
     )

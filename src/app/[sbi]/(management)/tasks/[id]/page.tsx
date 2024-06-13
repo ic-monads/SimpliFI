@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
           </tr>
           <tr>
             <td className="text-gray-500">Land parcels</td>
-            <td><TaskParcels taskId={task.id} /></td>
+            <td><TaskParcels sbi={sbi} taskId={task.id} /></td>
           </tr>
         </tbody>
       </table>
@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
           </Link>
         </div>
         <div className="border rounded-xl mt-3">
-          <Evidences evidences={task.evidences} />
+          <Evidences evidences={task.evidences} sbi={sbi} />
           </div>
       </div>
     </div>

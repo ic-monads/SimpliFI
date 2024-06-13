@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { sbi: string } }) {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-1/2 my-10">
+      <div className="w-3/4 my-10">
         <ParcelsSetup features={features} sbi={sbi} />
       </div>
     </div>

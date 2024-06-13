@@ -1,6 +1,6 @@
 import { ParcelCard } from './ParcelCard';
 import { fetchFarmParcelsWithActions } from '@/app/server-actions/action'
-import ParcelsMap from "@/app/components/ParcelsMap";
+import ParcelsMap from '@/app/components/ParcelsMap';
 import Link from 'next/link';
 
 export default async function Page({ params }: { params: { sbi: string } }) {

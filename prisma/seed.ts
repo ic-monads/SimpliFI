@@ -15,12 +15,6 @@ const args = parseArgs({
 
 const dev = args.values.env != 'production';
 
-function takeOneFeature(fc: FeatureCollection, index: number) {
-  const feature = fc.features.at(index)!;
-  fc.features = [feature];
-  return fc;
-}
-
 async function main() {
   await prisma.task.deleteMany({});
   await prisma.evidence.deleteMany({});
@@ -91,9 +85,7 @@ async function main() {
     data: {
       name: 'Bradshaw Farm',
       sbi: '106791068',
-      startAg: new Date(2024, 6, 12),
-      endAg: new Date(2027, 6, 12),
-      renewAg: new Date(2025, 6, 12),
+      agreementStart: new Date(2024, 6, 12)
     }
   });
   
