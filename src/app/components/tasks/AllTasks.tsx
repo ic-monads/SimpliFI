@@ -1,10 +1,10 @@
 import type { Task } from "@prisma/client"
 import { TaskCard } from "./TaskCard"
-import { TaskWithAction } from "@/app/lib/types"
+import { TaskWithActionAndParcels } from "@/app/lib/types"
 import EmptyCollection from "../EmptyCollection"
 import { ReactElement } from "react"
 
-function AllTasks({ sbi, tasks, addTask }: { sbi: string, tasks: TaskWithAction[], addTask?: ReactElement}) {
+function AllTasks({ sbi, tasks, addTask }: { sbi: string, tasks: TaskWithActionAndParcels[], addTask?: ReactElement}) {
   if (tasks.length === 0) return <EmptyCollection message="No tasks found." action={addTask} />
 
   return (
