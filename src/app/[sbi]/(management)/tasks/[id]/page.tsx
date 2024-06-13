@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
           </Link>
         </div>
         <div className="border rounded-xl mt-3">
-          <Evidences evidences={task.evidences} />
+          <Evidences evidences={task.evidences} sbi={sbi} />
           </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export function ActionCard({ sbi, action } : { sbi: string, action: ActionWithPa
         <div className="card shadow-sm p-3 border hover:bg-gray-100 transition-all">
           <p className="text-xs">{action.code}</p>
           <h2 className="text-md font-medium mb-3">{action.name}</h2>
-          <ParcelBadges parcels={getParcels(action)} />
+          <ParcelBadges sbi={sbi} parcels={getParcels(action)} link={false} />
         </div>
       </Link>
     )
