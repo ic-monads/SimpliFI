@@ -58,9 +58,15 @@ export async function fetchFarmOptions(sbi: string) {
     where: {
       parcel: {
         sbi
+      },
+      optionEvidences: {
+        some: {}
       }
+    },
+    include: {
+      parcel: true,
+      action: true
     }
   });
   return options;
 }
-

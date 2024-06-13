@@ -12,7 +12,7 @@ export default function GenerateReport({ sbi }: { sbi: string }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "report.pdf";
+    a.download = `${sbi}_SFI_Report.pdf`;
     a.click();
     buttonRef.current!.disabled = false;
   };
