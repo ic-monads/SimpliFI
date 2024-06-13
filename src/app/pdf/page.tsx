@@ -3,7 +3,7 @@
 import { upload } from "@vercel/blob/client";
 import { useRef } from "react";
 import Submit from "../components/Submit";
-import { parseAgreement } from "../server-actions/pdf";
+import { parseAgreement, formatResult, PdfData } from "../server-actions/pdf";
 
 function PDFForm() {
 
@@ -11,21 +11,24 @@ function PDFForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
-    let fileUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
-    // if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
-    //   console.log("Attempting file upload");
-    //   const file = fileInputRef.current.files[0];
-    //   const blob = await upload(file.name, file, {
-    //     access: "public",
-    //     handleUploadUrl: "/api/agreement/handle-upload",
-    //   });
+    // let fileUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
+    let fileUrl = "";
+    if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
+      console.log("Attempting file upload");
+      const file = fileInputRef.current.files[0];
+      const blob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/agreement/handle-upload",
+      });
 
-    //   console.log("File uploaded successfully.");
-    //   fileUrl = blob.url;
-    // }
+      console.log("File uploaded successfully.");
+      fileUrl = blob.url;
+    }
 
-    const parsed = await parseAgreement(fileUrl);
-    console.log(parsed);
+    const parsedString = await parseAgreement(fileUrl);
+    const dataJson = JSON.parse(parsedString) as PdfData;
+    const formattedData = await formatResult(dataJson);
+    console.log(formattedData);
 
   }
 
