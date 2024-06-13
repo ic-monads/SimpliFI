@@ -1,3 +1,5 @@
+import exampleResponse from "./response.json";
+
 export interface PdfData {
   body: {
     objects: {
@@ -35,28 +37,39 @@ export interface PdfData {
   };
 }
 
-export async function parseAgreement(fileUrl: string) {
-  const response = await fetch(`/api/agreement/parse`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ fileUrl }),
-  });
+export async function parseAgreement(agreementUrl: string) {
+  // const response = await fetch("https://api.pdf.co/v1/pdf/documentparser", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "x-api-key": process.env.PDF_CO_TOKEN!,
+  //   },
+  //   body: JSON.stringify({
+  //     url: agreementUrl,
+  //     outputFormat: "JSON",
+  //     templateId: "9504",
+  //     async: false,
+  //     inline: "true",
+  //     password: "",
+  //     profiles: "",
+  //   }),
+  // });
 
-  return response.json();
+  // const pdfData = await response.json() as PdfData;
+
+  return formatResult(exampleResponse);
 }
 
-export async function formatResult(result: PdfData) {
+function formatResult(result: PdfData) {
   const objects = result.body.objects;
-  const options: { parcelNumber: string; code: string }[] = [];
+  const options: { parcelNumber: string; actionCode: string }[] = [];
   for (const object of objects) {
     const rows = object.rows;
     for (const row of rows) {
       if (row.column1.value.length === 10 && row.column2.value.length === 4) {
         options.push({
           parcelNumber: row.column1.value,
-          code: row.column2.value,
+          actionCode: row.column2.value,
         });
       }
     }
