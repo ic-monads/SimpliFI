@@ -30,7 +30,7 @@ export default function ParcelsSetup({ sbi, features }: { sbi: string, features:
     <div className="w-full flex justify-center">
       <div className="w-1/2 my-10">
         <h1 className="text-2xl font-semibold text-center">Set up your parcels</h1>
-        <ParcelMap feature={parcels[parcelIndex].feature} />
+        {parcelIndex < parcels.length && (<ParcelMap key={parcels[parcelIndex].id} feature={parcels[parcelIndex].feature} /> )}
         <ParcelForm parcel={parcels[parcelIndex]} updateParcel={updateParcel} nextParcel={nextParcel} lastParcel={parcelIndex === parcels.length - 1} />
       </div>
 
