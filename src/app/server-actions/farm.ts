@@ -18,22 +18,18 @@ export async function fetchFarm(sbi: string) {
 const CreateFarmFormSchema = z.object({
   sbi: z.string(),
   name: z.string(),
-  startAg: z.string(),
-  endAg: z.string(),
-  renewAg: z.string(),
+  agreementStart: z.string()
 });
 
 export async function createFarm(formData: FormData) {
-  const { sbi, name, startAg, endAg, renewAg } = CreateFarmFormSchema.parse({
+  const { sbi, name, agreementStart } = CreateFarmFormSchema.parse({
     sbi: formData.get('sbi'),
     name: formData.get('name'),
-    startAg: formData.get('startAg'),
-    endAg: formData.get('endAg'),
-    renewAg: formData.get('renewAg')
+    agreementStart: formData.get('agreementStart')
   })
   await prisma.farm.create({
     data: {
-      sbi, name, startAg, endAg, renewAg
+      sbi, name, agreementStart
     }
   });
   redirect(`/${sbi}/setup`);
