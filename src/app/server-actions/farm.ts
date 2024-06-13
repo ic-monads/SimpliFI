@@ -5,6 +5,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { ParcelFeature } from "../lib/types";
 import { fetchLandParcels } from "./rpa-api";
+import { Prisma } from "@prisma/client";
 
 export async function fetchFarm(sbi: string) {
   const farm = await prisma.farm.findUniqueOrThrow({
@@ -29,7 +30,9 @@ export async function createFarm(formData: FormData) {
   })
   await prisma.farm.create({
     data: {
-      sbi, name, agreementStart
+      sbi,
+      name,
+      agreementStart: new Date(agreementStart)
     }
   });
   redirect(`/${sbi}/setup`);
@@ -62,7 +65,11 @@ export async function fetchFarmFeatures(sbi: string) {
 }
 
 export async function createFarmParcels(sbi: string, parcels: { id: string, name: string, feature: ParcelFeature }[]) {
-  console.log(parcels);
+  const jsonParcels = parcels.map((p) => { return {
+    id: p.id,
+    name: p.name,
+    feature: p.feature as unknown as Prisma.JsonObject
+  }})
   
   await prisma.farm.update({
     where: {
@@ -70,7 +77,7 @@ export async function createFarmParcels(sbi: string, parcels: { id: string, name
     },
     data: {
       parcels: {
-        create: parcels,
+        create: jsonParcels,
       },
     },
   });

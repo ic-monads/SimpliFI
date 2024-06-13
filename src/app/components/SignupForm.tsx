@@ -17,7 +17,19 @@ export default function SignupForm() {
             <label htmlFor="name" className="label-text">Farm Name</label>
           </div>
           <input type="text" id="name" name="name" className="input input-bordered w-full" required />
-          <div className="mt-6 flex justify-center gap-4">
+          <div className="label">
+            <label htmlFor="startAg" className="label-text">Agreement Start Date</label>
+          </div>
+          <input type="date" id="startAg" name="startAg" className="input input-bordered w-full" />
+          <div className="label">
+            <label htmlFor="endAg" className="label-text">Agreement End Date</label>
+          </div>
+          <input type="date" id="endAg" name="endAg" className="input input-bordered w-full" />
+          <div className="label">
+            <label htmlFor="renewAg" className="label-text">Agreement Renewal Date</label>
+          </div>
+          <input type="date" id="renewAg" name="renewAg" className="input input-bordered w-full" />
+          <div className="mt-6 flex justify-center gap-4">          
             <Link href="/login">
               <button className="btn">Log In Instead</button>
             </Link>

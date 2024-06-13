@@ -15,12 +15,6 @@ const args = parseArgs({
 
 const dev = args.values.env != 'production';
 
-function takeOneFeature(fc: FeatureCollection, index: number) {
-  const feature = fc.features.at(index)!;
-  fc.features = [feature];
-  return fc;
-}
-
 async function main() {
   await prisma.task.deleteMany({});
   await prisma.evidence.deleteMany({});
