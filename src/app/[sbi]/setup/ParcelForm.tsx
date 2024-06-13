@@ -4,11 +4,11 @@ import { useRef } from "react";
 import SkipButton from "./SkipButton";
 import NextButton from "./NextButton";
 
-export default function ParcelForm({ parcel, updateParcel, nextParcel, skipParcel, lastParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcel: Function, nextParcel: Function, skipParcel: Function, lastParcel: boolean }) {
+export default function ParcelForm({ parcel, updateParcelName, nextParcel, skipParcel, lastParcel }: { parcel: { id: string, name: string, feature: ParcelFeature }, updateParcelName: Function, nextParcel: Function, skipParcel: Function, lastParcel: boolean }) {
   const ref = useRef<HTMLFormElement>(null);
 
   function updateAction(formData: FormData) {
-    updateParcel({ id: parcel.id, name: formData.get("name"), feature: parcel.feature });
+    updateParcelName(formData.get("name"));
     ref.current?.reset()
     nextParcel();
   }

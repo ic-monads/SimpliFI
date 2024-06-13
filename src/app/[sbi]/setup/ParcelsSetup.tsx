@@ -5,18 +5,25 @@ import ParcelForm from "./ParcelForm";
 import { createFarmParcels } from "@/app/server-actions/farm";
 import { ParcelFeature } from "@/app/lib/types";
 import ParcelMap from "@/app/components/ParcelMap";
+import { Prisma } from "@prisma/client";
 
-export default function ParcelsSetup({ sbi, features, options }: { sbi: string, features: ParcelFeature[], options: { parcelNumber: string, code: string }[] }) {
+export default function ParcelsSetup({ sbi, features, options }: { sbi: string, features: ParcelFeature[], options: { actionCode: string, parcelNumber: string  }[] }) {
 
-  const [parcels, setParcels] = React.useState<{ id: string, name: string, feature: ParcelFeature }[]>(
-    features.map((feature) => ({ id: feature.properties.SHEET_ID + feature.properties.PARCEL_ID, name: "", feature }))
+  const [parcels, setParcels] = React.useState<{ id: string, name: string, feature: ParcelFeature, options: Prisma.OptionUncheckedCreateWithoutParcelInput[] }[]>(
+    features.map((feature) => {
+      const parcelId = feature.properties.SHEET_ID + feature.properties.PARCEL_ID;
+      const parcelOptions = options.filter((option) => option.parcelNumber === parcelId).map((option) => ({ actionCode: option.actionCode }));
+      return { id: parcelId, name: "", feature, options: parcelOptions }
+    })
   );
+
   const [parcelIndex, setParcelIndex] = React.useState(0);
   const [completedParcels, setCompletedParcels] = React.useState(0);
 
-  const updateParcel = (parcel: { id: string, name: string, feature: ParcelFeature }) => {
+  const updateParcelName = (name: string) => {
     const updatedParcels = parcels;
-    updatedParcels[parcelIndex] = parcel;
+    const { id, feature, options } = parcels[parcelIndex];
+    updatedParcels[parcelIndex] = { id, name, feature, options };
     setParcels(updatedParcels);
   }
 
@@ -49,7 +56,7 @@ export default function ParcelsSetup({ sbi, features, options }: { sbi: string, 
         </div>
         <div className="w-1/4 my-4">
           <h1 className="text-2xl font-semibold">Set up your parcels</h1>
-          <ParcelForm parcel={parcels[parcelIndex]} updateParcel={updateParcel} nextParcel={nextParcel} skipParcel={skipParcel} lastParcel={parcelIndex === parcels.length - 1} />
+          <ParcelForm parcel={parcels[parcelIndex]} updateParcelName={updateParcelName} nextParcel={nextParcel} skipParcel={skipParcel} lastParcel={parcelIndex === parcels.length - 1} />
         </div>
       </div>
     </div>
