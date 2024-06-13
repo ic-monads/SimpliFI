@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { compile } from "@fileforge/react-print";
 import { FileforgeClient } from "@fileforge/client"
-import { MyDocument } from "./document";
+import { SFIReport } from "./document";
 import type { ReportOption } from "./document";
 import { put, del } from "@vercel/blob";
 import { PDFDocument, StandardFonts }  from "pdf-lib";
@@ -37,7 +37,8 @@ export async function GET(request: NextRequest, { params }: { params: { sbi: str
       where: {
         optionEvidences: {
           some: {
-            option: option
+            actCode: option.actionCode,
+            parcelId: option.parcelId
           }
         }
       }
@@ -54,6 +55,12 @@ export async function GET(request: NextRequest, { params }: { params: { sbi: str
     reportOptions.push({
       actionCode: option.actionCode,
       parcelId: option.parcelId,
+      action: {
+        name: option.action.name
+      },
+      parcel: {
+        name: option.parcel.name
+      },
       evidences: evidences.map((evidence) => {
         return {
           id: evidence.id,
@@ -67,8 +74,9 @@ export async function GET(request: NextRequest, { params }: { params: { sbi: str
     });
   }
 
-  const html = await compile(<MyDocument sbi={sbi} options={reportOptions} />);
-  const pdf = await ff.pdf.generate(html, {});
+  const html = await compile(<SFIReport sbi={sbi} options={reportOptions} />);
+  const pdf = await ff.pdf.generate(html, { options: { test: false } });
+  
   const blob = await put("report.pdf", pdf, {
     access: "public"
   });
@@ -81,10 +89,12 @@ export async function GET(request: NextRequest, { params }: { params: { sbi: str
   for (let i = 0; i < pdfEvidence.length; i++) {
     const appendixPage = pdfDoc.addPage();
     const { width, height } = appendixPage.getSize();
-    appendixPage.drawText(`Appendix ${i + 1}`, {
-      x: 50,
-      y: height - (50 + 24),
-      size: 24,
+    const text = `Appendix ${i + 1}`;
+    const size = 24;
+    appendixPage.drawText(text, {
+      x: (width - helveticaBoldFont.widthOfTextAtSize(text, size)) / 2,
+      y: height / 2,
+      size,
       font: helveticaBoldFont
     });
     await copyPagesAtUrl(pdfEvidence[i], pdfDoc);

@@ -14,53 +14,63 @@ export type ReportEvidence = {
 export type ReportOption = {
   actionCode: string;
   parcelId: string;
+  action: {
+    name: string;
+  };
+  parcel: {
+    name: string;
+  };
   evidences: ReportEvidence[];
 }
 
 const EvidenceSection = ({ evidence } : { evidence: ReportEvidence }) => {
   return (
     <NoBreak>
-      <div className="flex">
-        <h2 className="font-semibold text-xl inline-block align-bottom mr-4">{evidence.title}</h2>
-        <p className="inline-block align-bottom">{moment(evidence.date).format("DD/MM/YYYY")}</p>
+      <div className="my-6">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold text-lg">{evidence.title}</h3>
+          <p className="">{moment(evidence.date).format("DD/MM/YYYY")}</p>
+        </div>
+        
+        <p>{evidence.notes}</p>
+        {evidence.fileUrl.endsWith(".pdf") ?
+          <p className="border rounded-xl p-3 text-gray-500 my-6">This evidence was a document. It can be found at Appendix {evidence.appendixPos!}.</p> :
+          <div className="my-6 flex justify-center">
+            <img className="max-w-xl max-h-xl" src={evidence.fileUrl} />
+          </div>
+        }
       </div>
-      
-      <p>{evidence.notes}</p>
-      {evidence.fileUrl.endsWith(".pdf") ?
-        <p>This evidence was a document. It can be found at Appendix {evidence.appendixPos!}.</p> :
-        <img className="my-3 max-w-xl max-h-xl" src={evidence.fileUrl} />
-      }
     </NoBreak>
   )
 }
 
 const OptionSection = ({ option } : { option: ReportOption }) => {
   return (
-    <div>
-      <h1 className="font-semibold text-2xl">Evidence for {option.actionCode} Action on Parcel {option.parcelId}</h1>
-      { option.evidences.map((evidence) => (
-        <EvidenceSection key={evidence.id} evidence={evidence} />
-      )) }
+    <>
+      <h2 className="font-semibold text-xl mb-3"> {option.actionCode}: {option.action.name}</h2>
+      <h3 className="text-lg"><span className="text-gray-500">Parcel</span> <span className="font-semibold">{option.parcelId}</span> ({option.parcel.name})</h3>
+      { option.evidences.map((evidence) => <EvidenceSection key={evidence.id} evidence={evidence} />) }
       <PageBreak />
-    </div>
+    </>
   )
 }
 
-export const MyDocument = ({ sbi, options } : { sbi: string, options: ReportOption[] }) => {
+export const SFIReport = ({ sbi, options } : { sbi: string, options: ReportOption[] }) => {
   return (
     <Tailwind>
-      <PageTop>
-        <div className="mt-4 flex justify-between">
-          <span className="font-semibold">SFI Report For SBI {sbi}</span>
-          <span>Generated on {moment().format("DD/MM/YYYY")}</span>
-        </div>
-      </PageTop>
-      <h1 className="font-semibold text-4xl">SFI Compliance Report</h1>
-      <PageBreak />
-      { options.filter((option) => option.evidences.length > 0).map((option) => (
-        <OptionSection key={`${option.actionCode}${option.parcelId}`} option={option} />
-      )) }
-      {/* <h1 className="text-4xl font-semibold">Appendix</h1> */}
+      <head><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" /></head>
+      <body style={{
+        fontFamily: "Roboto, sans-serif"
+      }}>
+        <h1 className="font-semibold text-4xl text-center mt-32 mb-3">SFI Compliance Report</h1>
+        <p className="text-center mb-3">Single Business Identifier: {sbi}</p>
+        <p className="text-center font-normal">Generated on {moment().format("DD/MM/YYYY")}</p>
+        <PageBreak />
+        <PageTop>
+          <p className="mt-6">SBI: {sbi}</p>
+        </PageTop>
+        { options.map((option) => <OptionSection key={`${option.actionCode}${option.parcelId}`} option={option} />) }
+      </body>
     </Tailwind>
   )
 }
