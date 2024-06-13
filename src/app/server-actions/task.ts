@@ -54,6 +54,11 @@ export async function updateTaskCompleted(sbi: string, id: string, completed: bo
 export async function fetchFarmTasks(sbi: string) {
   try {
     const tasks = await prisma.task.findMany({
+      orderBy: [
+        {
+          deadline: 'asc',
+        }
+      ],
       where: {
         options: {
           every: {
@@ -66,7 +71,16 @@ export async function fetchFarmTasks(sbi: string) {
         }
       },
       include: {
-        action: true
+        action: true,
+        options: {
+          include: {
+            option: {
+              include: {
+                parcel: true
+              }
+            }
+          }
+        }
       }
     });
     return tasks;
