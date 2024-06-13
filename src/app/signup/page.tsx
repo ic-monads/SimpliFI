@@ -20,9 +20,9 @@ export default function Page() {
             <label htmlFor="agreementStart" className="label-text">Agreement Start Date</label>
           </div>
           <input type="date" id="agreementStart" name="agreementStart" className="input input-bordered w-full" />
-          <div className="mt-6 flex justify-center gap-4">          
-            <Link href="/login">
-              <button className="btn">Log In Instead</button>
+          <div className="mt-6 flex justify-center gap-4">
+            <Link href="/login" type="button">
+              <button className="btn" type="button">Log In Instead</button>
             </Link>
             <Submit text="Sign Up" />
           </div>
