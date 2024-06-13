@@ -11,11 +11,23 @@ function PDFForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
-    if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
-      const file = fileInputRef.current.files[0];
-      parseAgreement(file.name);
-    }
-  };
+    let fileUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
+    // if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
+    //   console.log("Attempting file upload");
+    //   const file = fileInputRef.current.files[0];
+    //   const blob = await upload(file.name, file, {
+    //     access: "public",
+    //     handleUploadUrl: "/api/agreement/handle-upload",
+    //   });
+
+    //   console.log("File uploaded successfully.");
+    //   fileUrl = blob.url;
+    // }
+
+    const parsed = await parseAgreement(fileUrl);
+    console.log(parsed);
+
+  }
 
   return (
     <div className="flex flex-col items-center">
