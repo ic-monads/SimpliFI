@@ -4,11 +4,9 @@ import Submit from "@/app/components/Submit";
 import { createFarm } from "@/app/server-actions/farm";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { parseAgreement, PdfData, formatResult } from "../server-actions/pdf";
 
 export default function Page() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [parcelNumsAndCodes, setParcelNumsAndCodes] = useState<{ parcelNumber: string; code: string }[]>([]);
 
   const handleSubmit = async (formData: FormData) => {
     let agreementUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
@@ -51,7 +49,7 @@ export default function Page() {
           <div className="label">
             <label htmlFor="file" className="label-text">SFI Agreement PDF</label>
           </div>
-          <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" required />
+          <input className="file-input file-input-bordered w-full" type="file" ref={fileInputRef} id="file" />
           <div className="mt-6 flex justify-center gap-4">
             <Link href="/login" type="button">
               <button className="btn" type="button">Log In Instead</button>
