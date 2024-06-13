@@ -5,8 +5,12 @@ import ParcelForm from "./ParcelForm";
 import { createFarmParcels } from "@/app/server-actions/farm";
 import { ParcelFeature } from "@/app/lib/types";
 import ParcelMap from "@/app/components/ParcelMap";
+import { parseAgreement, PdfData, formatResult } from "@/app/server-actions/pdf";
 
 export default function ParcelsSetup({ sbi, features, options }: { sbi: string, features: ParcelFeature[], options: { parcelName: string, code: string } }) {
+  // const parsedString = await parseAgreement(fileUrl);
+  // const dataJson = JSON.parse(parsedString) as PdfData;
+  // const formattedData = await formatResult(dataJson);
   const [parcels, setParcels] = React.useState<{ id: string, name: string, feature: ParcelFeature }[]>(
     features.map((feature) => ({ id: feature.properties.SHEET_ID + feature.properties.PARCEL_ID, name: "", feature }))
   );
