@@ -177,7 +177,16 @@ export async function fetchTasksForActionOnFarm(sbi: string, actionCode: string)
       }
     },
     include: {
-      action: true
+      action: true,
+      options: {
+        include: {
+          option: {
+            include: {
+              parcel: true
+            }
+          }
+        }
+      }
     }
   });
   return tasks;
@@ -193,7 +202,16 @@ export async function fetchTasksForParcel(parcelId: string) {
       }
     },
     include: {
-      action: true
+      action: true,
+      options: {
+        include: {
+          option: {
+            include: {
+              parcel: true
+            }
+          }
+        }
+      }
     }
   });
   return tasks;

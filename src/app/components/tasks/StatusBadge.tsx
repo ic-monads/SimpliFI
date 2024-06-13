@@ -1,8 +1,6 @@
-"use server";
-
 import type { Task } from "@prisma/client";
 
-export async function StatusBadge({ task, empty }: { task: Task, empty?: boolean }) {
+export function StatusBadge({ task, empty }: { task: Task, empty?: boolean }) {
   var status, badgeClass;
   if (task.completed) {
     status = "Completed";
