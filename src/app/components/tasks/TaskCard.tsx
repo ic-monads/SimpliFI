@@ -16,7 +16,7 @@ export async function TaskCard({ sbi, task, htmlClass }: { sbi: string, task: Ta
           {task.actionCode}: {task.action.name}
         </p>
         <p className="text-xs mb-3">Due on {Moment(task.deadline).format("DD/MM/YYYY")}</p>
-        <TaskParcels taskId={task.id} />
+        <TaskParcels sbi={sbi} taskId={task.id} />
       </div>
     </Link>
   )
