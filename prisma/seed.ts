@@ -86,6 +86,7 @@ async function main() {
       name: "Bradshaw Farm",
       sbi: "106791068",
       agreementStart: new Date(2024, 6, 12),
+      agreementUrl: ""
     },
   });
 

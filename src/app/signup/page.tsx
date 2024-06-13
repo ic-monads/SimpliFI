@@ -11,7 +11,7 @@ export default function Page() {
   const [parcelNumsAndCodes, setParcelNumsAndCodes] = useState<{ parcelNumber: string; code: string }[]>([]);
 
   const handleSubmit = async (formData: FormData) => {
-    let fileUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
+    let agreementUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
     // let fileUrl = "";
     // if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
     //   console.log("Attempting file upload");
@@ -25,7 +25,9 @@ export default function Page() {
     //   fileUrl = blob.url;
     // }
 
-    createFarm(formData, fileUrl);
+    formData.append('agreementUrl', agreementUrl);
+
+    createFarm(formData);
   }
 
 

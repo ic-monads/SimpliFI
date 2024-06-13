@@ -2,10 +2,10 @@ import React from "react";
 import ParcelsSetup from "./ParcelsSetup";
 import { fetchFarmFeatures, fetchFarmOptions } from "@/app/server-actions/farm";
 
-export default async function Page({ params }: { params: { sbi: string, fileUrl: string } }) {
-  const { sbi, fileUrl } = params;
+export default async function Page({ params }: { params: { sbi: string } }) {
+  const { sbi } = params;
   const features = await fetchFarmFeatures(sbi);
-  const options = await fetchFarmOptions(sbi, fileUrl);
+  const options = await fetchFarmOptions(sbi);
 
   return (
     <div className="w-full flex justify-center">

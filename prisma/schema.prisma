@@ -13,6 +13,7 @@ model Farm {
   name            String
   agreementStart  DateTime?
   parcels         LandParcel[]
+  agreementUrl    String
 }
 
 model Evidence {

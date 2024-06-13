@@ -21,26 +21,30 @@ const CreateFarmFormSchema = z.object({
   sbi: z.string(),
   name: z.string(),
   agreementStart: z.string(),
+  agreementUrl: z.string(),
 });
 
-export async function createFarm(formData: FormData, fileUrl: string) {
-  const { sbi, name, agreementStart } = CreateFarmFormSchema.parse({
+export async function createFarm(formData: FormData) {
+  const { sbi, name, agreementStart, agreementUrl } = CreateFarmFormSchema.parse({
     sbi: formData.get("sbi"),
     name: formData.get("name"),
     agreementStart: formData.get("agreementStart"),
+    agreementUrl: formData.get("agreementUrl"),
   });
   await prisma.farm.create({
     data: {
       sbi,
       name,
       agreementStart: new Date(agreementStart),
+      agreementUrl
     },
   });
-  redirect(`/${sbi}/setup?fileUrl=${fileUrl}`);
+  redirect(`/${sbi}/setup`);
 }
 
-export async function fetchFarmOptions(sbi: string, fileUrl: string) {
-  const parsedString = await parseAgreement(fileUrl);
+export async function fetchFarmOptions(sbi: string) {
+  const { agreementUrl } = await prisma.farm.findUniqueOrThrow({ where: { sbi }, select: { agreementUrl: true } });
+  const parsedString =  await parseAgreement(agreementUrl);
   const dataJson = JSON.parse(parsedString) as PdfData;
   const formattedData = await formatResult(dataJson);
   return formattedData;
