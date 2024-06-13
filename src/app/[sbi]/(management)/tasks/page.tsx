@@ -1,11 +1,20 @@
-import { fetchFarmTasks } from "@/app/server-actions/task";
+"use client"
+
 import Link from "next/link";
 import UpcomingTasks from "./UpcomingTasks";
 import AllTasks from "@/app/components/tasks/AllTasks";
+import useSWR from 'swr'
 
-export default async function Page({ params }: { params: { sbi: string } }) {
+export default function Page({ params }: { params: { sbi: string } }) {
   const { sbi } = params;
-  const tasks = await fetchFarmTasks(sbi);
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data } = useSWR(`/api/${sbi}/tasks`, fetcher);
+
+  if (!data) return <></>;
+
+  const tasks = data.tasks;
+  
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
