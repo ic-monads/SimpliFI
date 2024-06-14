@@ -59,9 +59,10 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
               </Link>
             } />
         </div>
-        <Link href={action.govUrl}>
-          <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
-        </Link>
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Information" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+            <p>Information regarding the {action.code} action can be found <a href={action.govUrl} target="_blank" className="text-green-600 hover:text-green-800">here</a>.</p>
+        </div>
       </div>
     </div>
   );
