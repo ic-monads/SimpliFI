@@ -18,28 +18,32 @@ export async function fetchFarm(sbi: string) {
 }
 
 const CreateFarmFormSchema = z.object({
-  sbi: z.string(),
+  sbi: z.number().min(100000000).max(999999999),
   name: z.string(),
   agreementStart: z.string(),
   agreementUrl: z.string(),
 });
 
 export async function createFarm(formData: FormData) {
-  const { sbi, name, agreementStart, agreementUrl } = CreateFarmFormSchema.parse({
-    sbi: formData.get("sbi"),
-    name: formData.get("name"),
-    agreementStart: formData.get("agreementStart"),
-    agreementUrl: formData.get("agreementUrl"),
-  });
-  await prisma.farm.create({
-    data: {
-      sbi,
-      name,
-      agreementStart: new Date(agreementStart),
-      agreementUrl
-    },
-  });
-  redirect(`/${sbi}/setup`);
+  try {
+    const { sbi, name, agreementStart, agreementUrl } = CreateFarmFormSchema.parse({
+      sbi: formData.get("sbi"),
+      name: formData.get("name"),
+      agreementStart: formData.get("agreementStart"),
+      agreementUrl: formData.get("agreementUrl"),
+    });
+    await prisma.farm.create({
+      data: {
+        sbi: sbi.toString(),
+        name,
+        agreementStart: new Date(agreementStart),
+        agreementUrl
+      },
+    });
+    redirect(`/${sbi}/setup`);
+  } catch (e) {
+    return { message: 'Invalid input' }
+  }
 }
 
 export async function fetchFarmOptionsFromAgreement(sbi: string) {

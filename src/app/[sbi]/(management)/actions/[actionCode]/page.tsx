@@ -54,7 +54,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
             sbi={sbi}
             tasks={tasks}
             addTask={
-              <Link href={{ pathname: `/${sbi}/tasks/add`, query: { actCode: actionCode, parcelId: parcels[0].id } }}>
+              <Link href={{ pathname: `/${sbi}/tasks/add`, query: { actCode: actionCode } }}>
                 <button className="mt-3 btn btn-primary">Add Task</button>
               </Link>
             } />

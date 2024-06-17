@@ -7,6 +7,7 @@ import { upload } from "@vercel/blob/client";
 import Submit from "@/app/components/Submit";
 import { LandParcel } from "@prisma/client";
 import { MultiSelect } from "@mantine/core";
+import Moment from "moment";
 
 export default function EvidenceForm({
   sbi, actCode, parcels, taskId, reqEvId,
@@ -68,7 +69,7 @@ export default function EvidenceForm({
         <div className="label">
           <label htmlFor="date" className="label-text">Date</label>
         </div>
-        <input type="date" id="date" name="date" className="input input-bordered w-full" required/>
+        <input type="date" id="date" name="date" className="input input-bordered w-full" defaultValue={Moment().format("YYYY-MM-DD")} required/>
         <div className="label">
           <label htmlFor="notes" className="label-text">Notes</label>
         </div>
