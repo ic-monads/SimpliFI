@@ -7,10 +7,12 @@ export default async function SideNav({ sbi }: { sbi: string }) {
   const farm = await fetchFarm(sbi);
   
   let renewalDate = Moment();
+  let today: Moment.Moment = Moment();
   const agreementYears = [1, 2, 3];
   const remindOfRenewal = agreementYears.some((year) => {
     const yearsFromStart = Moment(farm.agreementStart).add(year, 'year');
-    const renewalSoon = Moment().isBetween(yearsFromStart.subtract(1, 'month'), yearsFromStart);
+    const date = yearsFromStart.clone().subtract(1, 'month');    
+    const renewalSoon = today.isBetween(date, yearsFromStart);
     if (renewalSoon) {
       renewalDate = yearsFromStart;
     }

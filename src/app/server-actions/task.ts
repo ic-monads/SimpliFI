@@ -28,7 +28,7 @@ export async function createTask(sbi: string, formData: FormData) {
     return { actionCode: actCode, parcelId };
   });
 
-  await prisma.task.create({
+  const task = await prisma.task.create({
     data: {
       title: title,
       deadline: new Date(deadline),
@@ -41,7 +41,7 @@ export async function createTask(sbi: string, formData: FormData) {
   });
 
   revalidatePath(`/${sbi}/tasks`);
-  redirect(`/${sbi}/tasks`);
+  redirect(`/${sbi}/tasks/${task.id}`);
 }
 
 export async function updateTaskCompleted(sbi: string, id: string, completed: boolean) {

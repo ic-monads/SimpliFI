@@ -2,22 +2,18 @@
 
 import Link from "next/link";
 import { createTask } from "@/app/server-actions/task";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import Submit from "@/app/components/Submit";
 import { Action, LandParcel } from "@prisma/client";
 import { MultiSelect } from '@mantine/core';
 import { fetchActionParcelsOnFarm } from "@/app/server-actions/action";
 
-export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: string, actCode?: string, parcelId?: string, actions: Action[] }) {
+export default function TaskForm({ sbi, actCode, actions }: { sbi: string, actCode?: string, actions: Action[] }) {
   const [error, setError] = useState<string | null>(null);
   const [parcels, setParcels] = useState<LandParcel[]>([]);
-
   const handleSubmit = async (formData: FormData) => {
     if (actCode) {
       formData.append('actCode', actCode);
-    }
-    if (parcelId) {
-      formData.append('parcelId', parcelId);
     }
     try {
       await createTask(sbi, formData);
@@ -30,6 +26,16 @@ export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: str
     const actionParcels = await fetchActionParcelsOnFarm(sbi, e.target.value);
     setParcels(actionParcels);
   };
+  useEffect(() => {
+    async function fetchParcels() {
+      if (actCode) {
+        const actionParcels = await fetchActionParcelsOnFarm(sbi, actCode);
+        setParcels(actionParcels);
+      }
+    }
+
+    fetchParcels();
+  }, []);
 
   return (
     <div className="flex flex-col items-center">
@@ -47,13 +53,12 @@ export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: str
         </div>
         <input type="date" id="deadline" name="deadline" className="input input-bordered w-full" required/>
 
-        { (actCode == null || parcelId == null) &&
           <div className="grid grid-cols-2 gap-3">
             <div>
               <div className="label">
                 <label htmlFor="actCode" className="label-text">Select an action</label>
               </div>
-              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} defaultValue="DEFAULT" >
+              <select id="actCode" name="actCode" className="select select-bordered w-full" onChange={handleActionChange} defaultValue={actCode ? actCode : "DEFAULT"} disabled={actCode != null}>
                 <option value="DEFAULT" disabled>Choose action</option>
                 { actions.map((action) => <option key={action.code} value={action.code}>{action.code}</option>) }
               </select>
@@ -68,7 +73,6 @@ export default function TaskForm({ sbi, actCode, parcelId, actions }: { sbi: str
               searchable
             />
           </div>
-        }
 
         <div className="label">
           <label htmlFor="description" className="label-text">Description</label>
