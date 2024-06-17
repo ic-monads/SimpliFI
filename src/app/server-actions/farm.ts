@@ -18,7 +18,7 @@ export async function fetchFarm(sbi: string) {
 }
 
 const CreateFarmFormSchema = z.object({
-  sbi: z.number().min(100000000).max(999999999),
+  sbi: z.number(),
   name: z.string(),
   agreementStart: z.string(),
   agreementUrl: z.string(),
@@ -32,6 +32,9 @@ export async function createFarm(formData: FormData) {
       agreementStart: formData.get("agreementStart"),
       agreementUrl: formData.get("agreementUrl"),
     });
+    if (sbi.toString().length !== 9) {
+      return { message: 'Invalid SBI' }
+    }
     await prisma.farm.create({
       data: {
         sbi: sbi.toString(),
