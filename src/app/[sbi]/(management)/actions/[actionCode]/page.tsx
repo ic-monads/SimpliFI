@@ -1,15 +1,15 @@
-import { fetchEvidencesForActionWithTaskAndParcelsOnFarm, fetchTasksForActionOnFarm, fetchActionParcelsOnFarm, fetchAction } from '@/app/server-actions/action';
+import { fetchTasksForActionOnFarm, fetchActionParcelsOnFarm, fetchAction } from '@/app/server-actions/action';
 import Link from 'next/link';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import Evidences from '@/app/components/Evidences';
 import GenerateReport from '@/app/components/GenerateReport';
 import { ParcelBadges } from '@/app/components/ParcelBadges';
+import useSWR from 'swr';
 
 export default async function Page({ params }: { params: { sbi: string, actionCode: string } }) {
   const { sbi, actionCode } = params;
 
-  const [evidence, tasks, parcels, action] = await Promise.all([
-    await fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi, actionCode),
+  const [tasks, parcels, action] = await Promise.all([
     await fetchTasksForActionOnFarm(sbi, actionCode),
     await fetchActionParcelsOnFarm(sbi, actionCode),
     await fetchAction(actionCode),
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { sbi: string, actionCo
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <Evidences 
-            evidences={evidence}
+            evidenceApiPath={`/api/${sbi}/actions/${actionCode}/evidence`}
             showTasks={true}
             addEvidence={
               <Link href={{ pathname: `/${sbi}/evidence/add`, query: { actCode: actionCode, fromTask: 'false' } }}>

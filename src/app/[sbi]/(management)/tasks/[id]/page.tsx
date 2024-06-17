@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
           </Link>
         </div>
         <div className="border rounded-xl mt-3">
-          <RequiredEvidences sbi={sbi} task={task} required={task.requiredEvidences} />
+          <RequiredEvidences sbi={sbi} task={task} />
         </div>
       </div>
 
@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: { sbi: string, id: stri
           </Link>
         </div>
         <div className="border rounded-xl mt-3">
-          <Evidences evidences={task.evidences} sbi={sbi} />
+          <Evidences evidenceApiPath={`/api/${sbi}/tasks/${id}/evidence`} sbi={sbi} />
           </div>
       </div>
     </div>

@@ -115,3 +115,29 @@ export async function fetchActionsMissingForParcel(parcelId: string) {
   });
   return actions;
 }
+
+export async function fetchParcelEvidences(parcelId: string) {
+  const evidences = await prisma.evidence.findMany({
+    where: {
+      optionEvidences: {
+        some: {
+          parcelId: parcelId,
+        }
+      }
+    },
+    include: {
+      task: true,
+      optionEvidences: {
+        include: {
+          option: {
+            include: {
+              action: true,
+              parcel: true
+            }
+          }
+        }
+      }
+    }
+  });
+  return evidences;
+}

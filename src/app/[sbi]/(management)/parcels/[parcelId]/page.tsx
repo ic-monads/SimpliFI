@@ -4,7 +4,7 @@ import GenerateReport from '@/app/components/GenerateReport';
 import Link from 'next/link';
 import ActionBadges from '@/app/components/ActionBadges';
 import Evidences from '@/app/components/Evidences';
-import { fetchEvidencesForParcelWithTaskAndActionOnFarm, fetchTasksForParcel } from '@/app/server-actions/action';
+import { fetchTasksForParcel } from '@/app/server-actions/action';
 import AllTasks from '@/app/components/tasks/AllTasks';
 import ParcelMap from "@/app/components/ParcelMap";
 
@@ -19,11 +19,10 @@ export default async function Page({
   
   const { sbi, parcelId } = params;
   
-  const [parcelName, feature, actions, evidence, tasks] = await Promise.all([
+  const [parcelName, feature, actions, tasks] = await Promise.all([
     await fetchParcelName(parcelId),
     await fetchParcelFeature(parcelId),
     await fetchActionsForParcel(parcelId),
-    await fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi, parcelId),
     await fetchTasksForParcel(parcelId)
   ]);
 
@@ -51,7 +50,7 @@ export default async function Page({
       <div role="tablist" className="tabs tabs-lifted mt-3">
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Evidence" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-          <Evidences sbi={sbi} evidences={evidence} showTasks={true} />
+          <Evidences sbi={sbi} evidenceApiPath={`/api/${sbi}/parcels/${parcelId}/evidence`} showTasks={true} />
         </div>
 
         <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Tasks" />
