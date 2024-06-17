@@ -44,8 +44,8 @@ export async function createFarm(formData: FormData) {
       },
     });
     redirect(`/${sbi}/setup`);
-  } catch (e) {
-    return { message: 'Invalid input' }
+  } catch (e: any) {
+    return { message: e.message }
   }
 }
 
