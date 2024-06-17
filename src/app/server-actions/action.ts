@@ -100,7 +100,7 @@ export async function fetchAllActions() {
   }
 }
 
-export async function fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi: string, actionCode: string) {
+export async function fetchFarmActionEvidence(sbi: string, actionCode: string) {
   const evidences = await prisma.evidence.findMany({
     where: {
       optionEvidences: {
@@ -128,37 +128,6 @@ export async function fetchEvidencesForActionWithTaskAndParcelsOnFarm(sbi: strin
     }
   })
 
-  return evidences;
-}
-
-export async function fetchEvidencesForParcelWithTaskAndActionOnFarm(sbi: string, parcelId: string) {
-  const evidences = await prisma.evidence.findMany({
-    where: {
-      optionEvidences: {
-        every: {
-          parcelId: parcelId,
-          option: {
-            parcel: {
-              sbi
-            }
-          }
-        }
-      }
-    },
-    include: {
-      task: true,
-      optionEvidences: {
-        include: {
-          option: {
-            include: {
-              action: true,
-              parcel: true
-            }
-          }
-        }
-      }
-    }
-  });
   return evidences;
 }
 

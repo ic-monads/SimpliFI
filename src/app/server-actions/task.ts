@@ -97,21 +97,6 @@ export async function fetchTask(id: string) {
         id: id
       },
       include: {
-        evidences: {
-          include: {
-            task: true,
-            optionEvidences: {
-              include: {
-                option: {
-                  include: {
-                    parcel: true
-                  }
-                }
-              }
-            } 
-          }
-        },
-        requiredEvidences: true,
         options: {
           include: {
             option: {
@@ -159,4 +144,35 @@ export async function fetchTaskName(taskId: string) {
       id: taskId
     }
   }))?.title;
+}
+
+export async function fetchTaskEvidences(taskId: string) {
+  const evidences = await prisma.evidence.findMany({
+    where: {
+      taskId
+    },
+    include: {
+      optionEvidences: {
+        include: {
+          option: {
+            include: {
+              parcel: true
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return evidences;
+}
+
+export async function fetchTaskRequiredrequiredEvidences(taskId: string) {
+  const requiredEvidences = await prisma.requiredEvidence.findMany({
+    where: {
+      taskId
+    }
+  });
+
+  return requiredEvidences;
 }

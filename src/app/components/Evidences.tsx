@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import type { Evidence, Task } from "@prisma/client";
 import { deleteEvidence } from '@/app/server-actions/evidence';
@@ -9,9 +9,17 @@ import { EvidenceWithTaskAndParcels } from "@/app/lib/types";
 import { ParcelBadges } from "@/app/components/ParcelBadges";
 import EmptyCollection from "./EmptyCollection";
 import { ReactElement } from "react";
+import useSWR from "swr";
 
-export default async function Evidences({ evidences, showTasks, addEvidence, emptyMessage, sbi }: { evidences: EvidenceWithTaskAndParcels[], showTasks?: boolean, addEvidence?: ReactElement, emptyMessage?: string, sbi: string }) {
+export default function Evidences({ evidenceApiPath, showTasks, addEvidence, emptyMessage, sbi }: { evidenceApiPath: string, showTasks?: boolean, addEvidence?: ReactElement, emptyMessage?: string, sbi: string }) {
   const message = emptyMessage ?? "No evidence has been uploaded.";
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data } = useSWR(evidenceApiPath, fetcher);
+  
+  if (!data) return <></>;
+
+  const evidences: EvidenceWithTaskAndParcels[] = data.evidence;
 
   function getParcels(evidence: EvidenceWithTaskAndParcels) {
     return evidence.optionEvidences.map((optionEvidence) => optionEvidence.option.parcel);
