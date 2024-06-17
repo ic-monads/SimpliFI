@@ -25,6 +25,7 @@ const CreateFarmFormSchema = z.object({
 });
 
 export async function createFarm(formData: FormData) {
+  let sbi;
   try {
     const { sbi, name, agreementStart, agreementUrl } = CreateFarmFormSchema.parse({
       sbi: formData.get("sbi"),
@@ -43,9 +44,11 @@ export async function createFarm(formData: FormData) {
         agreementUrl
       },
     });
-    redirect(`/${sbi}/setup`);
+    
   } catch (e: any) {
     return { message: e.message }
+  } finally {
+    redirect(`/${sbi}/setup`);  
   }
 }
 
