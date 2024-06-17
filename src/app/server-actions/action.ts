@@ -1,7 +1,6 @@
 'use server';
 
 import prisma from "@/app/lib/prisma";
-import type { LandParcel } from "@prisma/client";
 
 export async function fetchFarmActionsWithParcels(sbi: string) {
   try {

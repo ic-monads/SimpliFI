@@ -76,6 +76,7 @@ export async function deleteEvidence(id: string) {
   if (url != null) {
     await del(url.fileUrl);
   }
+
   const deleteEv = await prisma.evidence.delete({
     where: {
       id

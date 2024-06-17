@@ -31,6 +31,7 @@ export async function createFarm(formData: FormData) {
     agreementStart: formData.get("agreementStart"),
     agreementUrl: formData.get("agreementUrl"),
   });
+  
   await prisma.farm.create({
     data: {
       sbi,

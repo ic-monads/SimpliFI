@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 
 export default function Page() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (formData: FormData) => {
     let agreementUrl = "https://9c0ncerxleyeoepb.public.blob.vercel-storage.com/sfi-ZWlXpxPsAepGWSGUYZkLNhHDWaMt50.pdf";
@@ -22,10 +23,17 @@ export default function Page() {
     //   console.log("File uploaded successfully.");
     //   fileUrl = blob.url;
     // }
+    if (+isNaN(+formData.get("sbi")!)) {
+      setError("SBI must be a number");
+      return;
+    }
 
     formData.append('agreementUrl', agreementUrl);
-
-    createFarm(formData);
+    try {
+      await createFarm(formData);
+    } catch (error) {
+      console.error("Error creating farm", error);
+    }
   }
 
 
@@ -34,6 +42,7 @@ export default function Page() {
       <div className="mx-auto mt-10">
         <h1 className="text-2xl font-semibold text-center">Sign Up</h1>
         <form className="" action={handleSubmit}>
+          { error && <p className="text-red-500 text-sm mb-5">{error}</p> }
           <div className="label">
             <label htmlFor="sbi" className="label-text">SBI</label>
           </div>
